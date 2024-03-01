@@ -1,6 +1,6 @@
 # freethings
 
-![alt text](freethings-logo-512.png "freethings-logo")
+![freethings-logo](freethings-logo.webp "freethings-logo")
 
 ## Idea
 
