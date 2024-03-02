@@ -1,0 +1,6 @@
+@Freethings_HostAddress = http://localhost:5289
+
+GET {{Freethings_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
