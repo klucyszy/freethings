@@ -22,7 +22,7 @@ Behind building the working MVP of the project, I want to to focus on delivering
 
 ### Tech stack
 - **.NET 8.0, Minimal API** - this is my main technology stack. I want to use the newest version of .NET and the new Minimal API feature, which is a really interesting approach to building Web APIs. I feel comfortable with C# and .NET, so I think it's a good choice for me.
-- **Vue.js with Typescript** - I have lack of experience in using frontend frameworks so this will be a great opportunity for me to finally build some working concept with Vue.js. I want to use Typescript to make the code more maintainable and to learn it better.
+- **Vue.js + Nuxt.js + Typescript** - I have lack of experience in using frontend frameworks so this will be a great opportunity for me to finally build some working concept with Vue.js. I want to use Typescript to make the code more maintainable and to learn it better.
 
 ## Project Plan
 
@@ -39,6 +39,13 @@ Behind building the working MVP of the project, I want to to focus on delivering
     - [ ] Bidding for Charity
 - [ ] Phase 4. Basic UI with Vue.js (up to 30 days)
 - [ ] Phase 5. Testing and Bug-fixing (10-30 days)
+
+## Analysis & exploration
+
+You need to know that I want also to learn exploring the domain using Event Storming as I do not have to do it in practice on daily basis.
+
+Here is link to Miro, where I'm exploring the domain: [freethings miro](https://miro.com/app/board/uXjVNl71hrg=/?share_link_id=521419360509)
+
 
 ### Notes (not included in project scope but I this is a good place to keep them)
 
