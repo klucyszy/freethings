@@ -46,6 +46,8 @@ You need to know that I want also to learn exploring the domain using Event Stor
 
 Here is link to Miro, where I'm exploring the domain: [freethings miro](https://miro.com/app/board/uXjVNl71hrg=/?share_link_id=521419360509)
 
+![alt text](miro-storming.png)
+
 
 ### Notes (not included in project scope but I this is a good place to keep them)
 
