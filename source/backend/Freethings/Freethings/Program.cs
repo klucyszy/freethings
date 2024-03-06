@@ -1,9 +1,14 @@
+using System.Reflection;
 using Freethings.Offers;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMediatR(opts =>
+{
+    opts.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+});
 
 builder.Services.AddOffers();
 

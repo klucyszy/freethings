@@ -1,9 +1,8 @@
 using Freethings.Offers.Application;
 using Freethings.Offers.Domain;
-using Freethings.Offers.Domain.Entities;
-using Freethings.Offers.Domain.Repositories;
 using Freethings.Offers.Infrastructure;
 using Freethings.Offers.Presentation;
+using Freethings.Offers.Presentation.AddOffer;
 
 namespace Freethings.Offers;
 
@@ -22,12 +21,9 @@ public static class DependencyInjection
     
     public static WebApplication MapOffersEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("api/offers");
+        RouteGroupBuilder group = app.MapGroup("api/offers");
         
-        group.MapGet("{id:guid}", (Guid id, IOfferRepository repository) => repository.GetAsync(id));
-        group.MapPost("", (Offer offer, IOfferRepository repository) => repository.AddAsync(offer));
-        group.MapPut("", (Offer offer, IOfferRepository repository) => repository.UpdateAsync(offer));
-        group.MapDelete("{id:guid}", (Guid id, IOfferRepository repository) => repository.DeleteAsync(id));
+        group.MapAddOfferEndpoint();
         
         return app;
     }
