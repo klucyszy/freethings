@@ -1,0 +1,13 @@
+@Freethings_HostAddress = http://localhost:5289
+
+// Add offer
+
+POST {{Freethings_HostAddress}}/api/offers
+Accept: application/json
+
+// Fetch Offer
+
+GET {{Freethings_HostAddress}}/api/offers
+Accept: application/json
+
+###

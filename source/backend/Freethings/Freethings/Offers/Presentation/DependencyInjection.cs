@@ -1,4 +1,4 @@
-namespace Freethings.Presentation;
+namespace Freethings.Offers.Presentation;
 
 public static class DependencyInjection
 {

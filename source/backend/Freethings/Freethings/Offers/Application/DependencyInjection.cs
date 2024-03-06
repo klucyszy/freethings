@@ -1,4 +1,4 @@
-namespace Freethings.Application;
+namespace Freethings.Offers.Application;
 
 public static class DependencyInjection
 {
