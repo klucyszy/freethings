@@ -18,6 +18,7 @@ public sealed class OfferConfiguration : IEntityTypeConfiguration<Offer>
                 .HasConversion(
                     t => OfferTitle.Create(t),
                     t => t.Value)
+                .HasMaxLength(100)
                 .IsRequired();
         });
         
@@ -27,6 +28,7 @@ public sealed class OfferConfiguration : IEntityTypeConfiguration<Offer>
                 .HasConversion(
                     t => OfferDescription.Create(t),
                     t => t.Value)
+                .HasMaxLength(500)
                 .IsRequired();
         });
     }

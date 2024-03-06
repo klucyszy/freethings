@@ -7,6 +7,6 @@ Content-Type: application/json
 Accept: application/json
 
 {
-"title": "",
+"title": "Offer 1",
 "description": "Offer 1 Description"
 }
