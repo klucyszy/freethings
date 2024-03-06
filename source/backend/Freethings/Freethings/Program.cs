@@ -1,19 +1,18 @@
-using Freethings.Application;
-using Freethings.Domain;
-using Freethings.Infrastructure;
-using Freethings.Presentation;
+using System.Reflection;
+using Freethings.Offers;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMediatR(opts =>
+{
+    opts.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+});
 
-builder.Services.AddDomain()
-                .AddApplication()
-                .AddInfrastructure()
-                .AddPresentation();
+builder.Services.AddOffers();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -21,4 +20,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapOffersEndpoints();
+
 app.UseHttpsRedirection();
+
+app.Run();

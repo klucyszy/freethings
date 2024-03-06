@@ -1,0 +1,12 @@
+@Freethings_HostAddress = http://localhost:5289
+
+### Add offer
+
+POST {{Freethings_HostAddress}}/api/offers
+Content-Type: application/json
+Accept: application/json
+
+{
+"title": "Offer 1",
+"description": "Offer 1 Description"
+}
