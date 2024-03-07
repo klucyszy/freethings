@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  sql:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: freethings-sql
+    environment:
+      MSSQL_SA_PASSWORD: FreethingsSql1!
+      ACCEPT_EULA: 1
+      MSSQL_ENABLE_CLR: true
+    ports:
+      - "1435:1433"
+    volumes:
+      - freethings-db-data:/var/opt/mssql
+    networks:
+      - freethings
+
+volumes:
+  freethings-db-data:
+
+networks:
+  freethings:
+    name: freethings

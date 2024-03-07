@@ -10,7 +10,7 @@ builder.Services.AddMediatR(opts =>
     opts.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 });
 
-builder.Services.AddOffers();
+builder.Services.AddOffers(builder.Configuration);
 
 WebApplication app = builder.Build();
 

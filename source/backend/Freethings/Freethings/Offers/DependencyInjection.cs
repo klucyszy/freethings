@@ -8,12 +8,12 @@ namespace Freethings.Offers;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddOffers(this IServiceCollection services)
+    public static IServiceCollection AddOffers(this IServiceCollection services, IConfiguration configuration)
     {
         services
             .AddDomain()
             .AddApplication()
-            .AddInfrastructure()
+            .AddInfrastructure(configuration)
             .AddPresentation();
         
         return services;

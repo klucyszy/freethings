@@ -55,3 +55,14 @@ Here is link to Miro, where I'm exploring the domain: [freethings miro](https://
 - Integration with charity organizations. This is a really important feature, but I think it's out of scope for MVP. I will focus on building the platform and then I will try to find some charity organizations to cooperate with.
 - Integration with payment systems. This is also a really important feature, but I think it's out of scope for MVP. I will focus on building the platform and then I will try to find some payment systems to cooperate with.
 - Logging using social provider accounts like Google. It will be nice if I will be able to integrate with some AAD provider like Firebase or Google.
+
+## How to run
+
+1. Run `docker-compose.yml` located in the `source/backend/Freethings/Freethings`.
+2. Using connection string `Server=localhost,1435;Database=master;User=sa;Password=FreethingsSql1!;` login to database and create database called `freethings`.
+
+### Running migrations
+
+`dotnet ef migrations add "Init" -o Infrastructure/Offers/Persistence/Migrations -p Freethings/Freethings.csproj -c OffersContext`
+`dotnet ef database update -p Freethings/Freethings.csproj -c OffersContext`
+
