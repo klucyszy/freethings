@@ -22,7 +22,6 @@
 
     <ItemGroup>
       <Folder Include="Offers\Infrastructure\Persistence\Migrations\" />
-      <Folder Include="Offers\Infrastructure\Persistence\Queries\" />
     </ItemGroup>
     
 </Project>

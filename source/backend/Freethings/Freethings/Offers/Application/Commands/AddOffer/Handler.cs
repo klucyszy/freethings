@@ -5,7 +5,10 @@ using MediatR;
 
 namespace Freethings.Offers.Application.Commands.AddOffer;
 
-public sealed record AddOfferCommand(string Title, string Description) : IRequest<Guid>;
+public sealed record AddOfferCommand(
+    Guid UserId,
+    string Title,
+    string Description) : IRequest<Guid>;
 
 public sealed class Handler : IRequestHandler<AddOfferCommand, Guid>
 {
@@ -18,7 +21,7 @@ public sealed class Handler : IRequestHandler<AddOfferCommand, Guid>
     public async Task<Guid> Handle(AddOfferCommand request, CancellationToken cancellationToken)
     {
         Offer offer = new Offer(
-            Guid.NewGuid(),
+            request.UserId,
             OfferTitle.Create(request.Title),
             OfferDescription.Create(request.Description));
 
