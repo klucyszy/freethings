@@ -1,4 +1,3 @@
-using Freethings.Offers.Domain.Entities;
 using Freethings.Offers.Infrastructure.Persistence;
 using Freethings.Offers.Infrastructure.Queries.Shared;
 using MediatR;

@@ -1,5 +1,4 @@
 using Freethings.Offers.Infrastructure.Queries.GetOffer;
-using Freethings.Offers.Infrastructure.Queries.GetOffers;
 using Freethings.Offers.Infrastructure.Queries.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;

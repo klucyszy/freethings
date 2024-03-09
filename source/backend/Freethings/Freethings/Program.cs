@@ -1,5 +1,6 @@
 using System.Reflection;
 using Freethings.Offers;
+using Freethings.Offers.Presentation;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
