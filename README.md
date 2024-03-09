@@ -80,7 +80,7 @@ Behind building the working MVP of the project, I want to to focus on delivering
 - Charity
   - TBD
 
-## Analysis & exploration
+### Analysis & exploration
 
 You need to know that I want also to learn exploring the domain using Event Storming as I do not have to do it in practice on daily basis.
 
@@ -88,8 +88,23 @@ Here is link to Miro, where I'm exploring the domain: [freethings miro](https://
 
 ![alt text](images/miro-storming.png)
 
+### Technical infrastructure
 
-### Notes (not included in project scope but I this is a good place to keep them)
+- The application will be hosted on Azure.
+  - Azure Container Apps for hosting the application.
+  - Database (to be decided). (Primarily I use SQL Server, so thinking about using other provider to learn something new).
+  - Azure Blob Storage for storing images.
+  - Authentication & Authorization (TBD).
+  - SignalR for real-time communication (TBD).
+  - Message broker (TBD).
+    - Only in memory? (TBD) 
+    - Azure Service Bus - Pub/Sub not available in free tier.
+    - RabbitMQ (TBD)
+- CI/CD
+  - Github Actions.
+  
+
+#### Notes (not included in project scope but I this is a good place to keep them)
 
 - Social integration with Facebook. The project idea originates with FB group so this will be really nice to have feature linking the platform with the group.
 - Integration with charity organizations. This is a really important feature, but I think it's out of scope for MVP. I will focus on building the platform and then I will try to find some charity organizations to cooperate with.
