@@ -40,6 +40,46 @@ Behind building the working MVP of the project, I want to to focus on delivering
 - [ ] Phase 4. Basic UI with Vue.js (up to 30 days)
 - [ ] Phase 5. Testing and Bug-fixing (10-30 days)
 
+### Features - detailed plan
+- Offers
+  - User can create an item offer.
+    - Item offer should include a title, description, category, quantity and form how the item can be claimed by interested.
+    - Offer will be posted for 1 month.
+  - Users can list items they want to give away.
+  - User can modify the item offer.
+    - User can extend once the offer time.
+    - [Extra] User can extend the offer more than once if additional fee is paid.
+    - User can edit offer details (title, description, category, quantity).
+      - form how the item can be claimed by interested can be changed only if there are no interested parties. (does it make sense??)
+    - User can delete the offer.
+- Interests
+  - User can express interest (claim) in the item offer.
+    - To the interest user can add a comment.
+  - User can retract interest in the item offer.
+  - User/Owner can see the list of all interested parties.
+    - Interested parties will be visible under the offer details (as comments, or sth like that).
+  - Owner can select the new owner of the item. (if manual selection is chosen).
+- Hand over
+  - Owner and claimant can agree on the date and place of the item handover.
+    - After that, the item should be visible as 'Reserved' for claimants.
+  - User can mark the item as handed over.
+    - After the item is marked as handed over, the offer will be closed (or quantity should be decreased by 1?).
+  - User can mark the item as not handed over.
+- User
+  - User can create an account.
+  - User can log in.
+  - User can log out.
+  - User can delete the account.
+  - User can see the list of all offers he/she created.
+  - User can see the list of all offers he/she claimed.
+- Categories
+  - User can see the list of all categories.
+  - User can see the list of all offers in the category.
+- Search
+  - User can search for items they are interested in.
+- Charity
+  - TBD
+
 ## Analysis & exploration
 
 You need to know that I want also to learn exploring the domain using Event Storming as I do not have to do it in practice on daily basis.
