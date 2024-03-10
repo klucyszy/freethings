@@ -11,10 +11,10 @@ public sealed record AddOfferCommand(
     string Description,
     int Quantity) : IRequest<Guid>;
 
-public sealed class AddOffer : IRequestHandler<AddOfferCommand, Guid>
+public sealed class AddOfferHandler : IRequestHandler<AddOfferCommand, Guid>
 {
     private readonly IOfferRepository _repository;
-    public AddOffer(IOfferRepository repository)
+    public AddOfferHandler(IOfferRepository repository)
     {
         _repository = repository;
     }

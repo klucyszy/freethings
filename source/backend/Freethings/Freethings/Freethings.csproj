@@ -21,6 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Offers\Application\Abstractions\" />
       <Folder Include="Offers\Infrastructure\Persistence\Migrations\" />
     </ItemGroup>
     

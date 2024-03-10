@@ -1,6 +1,8 @@
 using Freethings.Offers.Domain.Repositories;
+using Freethings.Offers.Infrastructure.Messaging;
 using Freethings.Offers.Infrastructure.Persistence;
 using Freethings.Offers.Infrastructure.Persistence.Repositories;
+using Freethings.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 
 namespace Freethings.Offers.Infrastructure;
@@ -24,6 +26,8 @@ public static class DependencyInjection
         //                 "offers");
         //         });
         // });
+
+        services.AddScoped<IEventBus, EventBusPublisher>();
         
         services.AddScoped<IOfferRepository, OfferRepository>();
         

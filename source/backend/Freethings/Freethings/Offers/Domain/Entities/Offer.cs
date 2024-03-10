@@ -12,7 +12,7 @@ public sealed class Offer
     
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
-    public OfferState State { get; set; }
+    public OfferState State { get; set; } = OfferState.Draft;
     public OfferTitle Title { get; set; }
     public OfferDescription Description { get; set; }
     public int Quantity { get; set; }
@@ -33,6 +33,11 @@ public sealed class Offer
     
     public void Publish()
     {
+        if (State == OfferState.Published)
+        {
+            return;
+        }
+        
         State = OfferState.Published;
         PublishedAt = DateTimeOffset.Now;
     }

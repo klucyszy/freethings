@@ -1,6 +1,6 @@
 @Freethings_HostAddress = http://localhost:5289
 @userId = d695f6d4-4561-46b2-b0eb-7b0be13d9580
-@offerId = 8d40894c-55d5-432d-94b8-744d373e490d
+@offerId = 26fac8bd-09b2-4e28-9f61-4bb696d13600
 
 ### Add offer
 
@@ -11,6 +11,11 @@ Content-Type: application/json
   "title": "Offer 1",
   "description": "Offer 1 Description"
 }
+
+### Publish offer
+
+POST {{Freethings_HostAddress}}/api/users/{{userId}}/offers/{{offerId}}/publish
+Content-Type: application/json
 
 ### Get offers
 

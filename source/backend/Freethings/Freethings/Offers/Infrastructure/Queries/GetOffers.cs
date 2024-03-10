@@ -25,7 +25,8 @@ internal sealed class GetOffersHandler : IRequestHandler<GetOffersQuery, List<Of
             .Select(o => new OfferDto(
                 o.Id,
                 o.Title.Value,
-                o.Description.Value))
+                o.Description.Value,
+                o.State.ToString()))
             .ToListAsync(cancellationToken);
     }
 }
