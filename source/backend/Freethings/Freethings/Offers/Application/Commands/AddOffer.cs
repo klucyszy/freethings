@@ -3,17 +3,18 @@ using Freethings.Offers.Domain.Repositories;
 using Freethings.Offers.Domain.ValueObjects;
 using MediatR;
 
-namespace Freethings.Offers.Application.Commands.AddOffer;
+namespace Freethings.Offers.Application.Commands;
 
 public sealed record AddOfferCommand(
     Guid UserId,
     string Title,
-    string Description) : IRequest<Guid>;
+    string Description,
+    int Quantity) : IRequest<Guid>;
 
-public sealed class Handler : IRequestHandler<AddOfferCommand, Guid>
+public sealed class AddOffer : IRequestHandler<AddOfferCommand, Guid>
 {
     private readonly IOfferRepository _repository;
-    public Handler(IOfferRepository repository)
+    public AddOffer(IOfferRepository repository)
     {
         _repository = repository;
     }
@@ -23,7 +24,8 @@ public sealed class Handler : IRequestHandler<AddOfferCommand, Guid>
         Offer offer = new Offer(
             request.UserId,
             OfferTitle.Create(request.Title),
-            OfferDescription.Create(request.Description));
+            OfferDescription.Create(request.Description),
+            request.Quantity);
 
         Offer created = await _repository.AddAsync(offer, cancellationToken);
 

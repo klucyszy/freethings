@@ -1,15 +1,16 @@
-using Freethings.Offers.Application.Commands.AddOffer;
+using Freethings.Offers.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Freethings.Offers.Presentation.AddOffer;
+namespace Freethings.Offers.Presentation;
 
-public static class Endpoint
+public static class AddOfferEndpoint
 {
     private sealed record AddOfferRequest
     {
         public string Title { get; init; }
         public string Description { get; init; }
+        public int Quantity { get; init; }
     }
     
     public static void MapAddOfferEndpoint(this RouteGroupBuilder group)
@@ -23,7 +24,8 @@ public static class Endpoint
             Guid result = await sender.Send(new AddOfferCommand(
                 userId,
                 request.Title,
-                request.Description
+                request.Description,
+                request.Quantity
                 ), ct);
 
             return TypedResults.Ok(result);

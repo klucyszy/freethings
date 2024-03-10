@@ -2,16 +2,16 @@ using Freethings.Offers.Domain.Repositories;
 using Freethings.Shared;
 using MediatR;
 
-namespace Freethings.Offers.Application.Commands.RemoveOffer;
+namespace Freethings.Offers.Application.Commands;
 
 public sealed record RemoveOfferCommand(
     Guid UserId,
     Guid OfferId) : IRequest<Result>;
 
-public sealed class Handler : IRequestHandler<RemoveOfferCommand, Result>
+public sealed class RemoveOfferHandler : IRequestHandler<RemoveOfferCommand, Result>
 {
     private readonly IOfferRepository _repository;
-    public Handler(IOfferRepository repository)
+    public RemoveOfferHandler(IOfferRepository repository)
     {
         _repository = repository;
     }

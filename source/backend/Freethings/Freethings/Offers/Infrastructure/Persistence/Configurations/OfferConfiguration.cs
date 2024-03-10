@@ -16,7 +16,7 @@ public sealed class OfferConfiguration : IEntityTypeConfiguration<Offer>
             .HasConversion(
                 t => t.Value,
                 t => OfferDescription.Create(t))
-            .HasMaxLength(100)
+            .HasMaxLength(500)
             .HasColumnName(nameof(OfferDescription))
             .IsRequired();
         

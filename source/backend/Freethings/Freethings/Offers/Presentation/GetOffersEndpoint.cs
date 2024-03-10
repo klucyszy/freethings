@@ -1,11 +1,11 @@
-using Freethings.Offers.Infrastructure.Queries.GetOffers;
+using Freethings.Offers.Infrastructure.Queries;
 using Freethings.Offers.Infrastructure.Queries.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Freethings.Offers.Presentation.GetOffers;
+namespace Freethings.Offers.Presentation;
 
-public static class Endpoint
+public static class GetOffersEndpoint
 {
     public static void MapGetOffersEndpoint(this RouteGroupBuilder group)
     {

@@ -1,12 +1,12 @@
-using Freethings.Offers.Application.Commands.EditOffer;
+using Freethings.Offers.Application.Commands;
 using Freethings.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Freethings.Offers.Presentation.EditOffer;
+namespace Freethings.Offers.Presentation;
 
-public static class Endpoint
+public static class EditOfferEndpoint
 {
     private sealed record EditOfferRequest
     {

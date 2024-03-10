@@ -26,13 +26,13 @@ public sealed record Result<T>
 {
     public bool IsSuccess { get; }
     public string ErrorMessage { get; }
-    public T Value { get; }
+    public T Data { get; }
 
-    private Result(bool isSuccess, string errorMessage, T value)
+    private Result(bool isSuccess, string errorMessage, T data)
     {
         IsSuccess = isSuccess;
         ErrorMessage = errorMessage;
-        Value = value;
+        Data = data;
     }
 
     public static Result<T> Success(T value)

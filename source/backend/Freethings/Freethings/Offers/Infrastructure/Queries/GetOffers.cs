@@ -3,17 +3,17 @@ using Freethings.Offers.Infrastructure.Queries.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Freethings.Offers.Infrastructure.Queries.GetOffers;
+namespace Freethings.Offers.Infrastructure.Queries;
 
 public sealed record GetOffersQuery(
     Guid UserId)
     : IRequest<List<OfferDto>>;
 
-internal sealed class Handler : IRequestHandler<GetOffersQuery, List<OfferDto>>
+internal sealed class GetOffersHandler : IRequestHandler<GetOffersQuery, List<OfferDto>>
 {
     private readonly OffersContext _context;
 
-    public Handler(OffersContext context)
+    public GetOffersHandler(OffersContext context)
     {
         _context = context;
     }

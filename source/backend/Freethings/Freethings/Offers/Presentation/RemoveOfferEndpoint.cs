@@ -1,12 +1,12 @@
-using Freethings.Offers.Application.Commands.RemoveOffer;
+using Freethings.Offers.Application.Commands;
 using Freethings.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Freethings.Offers.Presentation.RemoveOffer;
+namespace Freethings.Offers.Presentation;
 
-public static class Endpoint
+public static class RemoveOfferEndpoint
 {
     public static void MapRemoveOfferEndpoint(this RouteGroupBuilder group)
     {

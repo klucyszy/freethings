@@ -4,7 +4,7 @@ using Freethings.Offers.Domain.ValueObjects;
 using Freethings.Shared;
 using MediatR;
 
-namespace Freethings.Offers.Application.Commands.EditOffer;
+namespace Freethings.Offers.Application.Commands;
 
 public sealed record EditOfferCommand(
     Guid UserId,
@@ -12,10 +12,10 @@ public sealed record EditOfferCommand(
     string Title,
     string Description) : IRequest<Result>;
 
-public sealed class Handler : IRequestHandler<EditOfferCommand, Result>
+public sealed class EditOfferHandler : IRequestHandler<EditOfferCommand, Result>
 {
     private readonly IOfferRepository _repository;
-    public Handler(IOfferRepository repository)
+    public EditOfferHandler(IOfferRepository repository)
     {
         _repository = repository;
     }

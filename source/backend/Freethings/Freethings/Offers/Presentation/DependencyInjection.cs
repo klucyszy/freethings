@@ -1,9 +1,3 @@
-using Freethings.Offers.Presentation.AddOffer;
-using Freethings.Offers.Presentation.EditOffer;
-using Freethings.Offers.Presentation.GetOffer;
-using Freethings.Offers.Presentation.GetOffers;
-using Freethings.Offers.Presentation.RemoveOffer;
-
 namespace Freethings.Offers.Presentation;
 
 public static class DependencyInjection
