@@ -24,6 +24,8 @@ public sealed class Offer
     public OfferDescription Description { get; set; }
     public int Quantity { get; set; }
     public DateTimeOffset? PublishedAt { get; set; }
+    public SelectionType Type { get; set; } = SelectionType.Manual;
+    public DateTimeOffset? GatheringEndsAt { get; set; }
     
     private Offer()
     {
