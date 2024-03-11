@@ -2,7 +2,7 @@ using Freethings.Offers.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Freethings.Offers.Presentation;
+namespace Freethings.Offers.Presentation.Endpoints;
 
 public static class AddOfferEndpoint
 {

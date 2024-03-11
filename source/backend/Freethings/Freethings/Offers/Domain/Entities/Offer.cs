@@ -9,6 +9,13 @@ public sealed class Offer
         Draft,
         Published
     }
+
+    public enum SelectionType
+    {
+        Manual,
+        Random,
+        FirstComeFirstServed
+    }
     
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
