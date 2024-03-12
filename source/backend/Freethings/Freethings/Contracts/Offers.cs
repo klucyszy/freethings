@@ -1,6 +1,8 @@
-using Freethings.Shared;
 using Freethings.Shared.Messaging;
 
 namespace Freethings.Contracts;
 
-public sealed record OfferPublished() : IEvent;
+public abstract record OfferEvent : IEvent
+{
+    public sealed record Published : OfferEvent;
+}

@@ -1,4 +1,6 @@
 using System.Reflection;
+using Freethings.Auctions;
+using Freethings.Auctions.Presentation;
 using Freethings.Offers;
 using Freethings.Offers.Presentation;
 
@@ -12,6 +14,7 @@ builder.Services.AddMediatR(opts =>
 });
 
 builder.Services.AddOffers(builder.Configuration);
+builder.Services.AddAuctions(builder.Configuration);
 
 WebApplication app = builder.Build();
 
@@ -22,6 +25,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapOffersEndpoints();
+app.MapAuctionsEndpoints();
 
 app.UseHttpsRedirection();
 

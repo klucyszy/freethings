@@ -1,7 +1,6 @@
 using Freethings.Contracts;
 using Freethings.Offers.Domain.Entities;
 using Freethings.Offers.Domain.Repositories;
-using Freethings.Offers.Domain.ValueObjects;
 using Freethings.Shared;
 using Freethings.Shared.Messaging;
 using MediatR;
@@ -35,7 +34,7 @@ public sealed class PublishOfferHandler : IRequestHandler<PublishOfferCommand, R
         
         await _repository.UpdateAsync(offer, cancellationToken);
 
-        await _bus.PublishAsync(new OfferPublished(), cancellationToken);
+        await _bus.PublishAsync(new OfferEvent.Published(), cancellationToken);
         
         return Result.Success();
     }
