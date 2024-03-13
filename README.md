@@ -88,6 +88,14 @@ Here is link to Miro, where I'm exploring the domain: [freethings miro](https://
 
 ![alt text](images/miro-storming.png)
 
+#### Technical considerations
+
+13.03.2024
+
+Today's work was focused on exploring and analyzing the domain, as the initial analysis did not do it with needed deepnest. Result of today's work is a image of the board with was created. Next days I will try to materialize it on Miro and base domain model.
+
+![img.png](img.png)
+
 ### Technical infrastructure
 
 - The application will be hosted on Azure.
