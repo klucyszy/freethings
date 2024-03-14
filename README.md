@@ -82,19 +82,42 @@ Behind building the working MVP of the project, I want to to focus on delivering
 
 ### Analysis & exploration
 
-You need to know that I want also to learn exploring the domain using Event Storming as I do not have to do it in practice on daily basis.
-
 Here is link to Miro, where I'm exploring the domain: [freethings miro](https://miro.com/app/board/uXjVNl71hrg=/?share_link_id=521419360509)
+
+#### First try...
 
 ![alt text](images/miro-storming.png)
 
 #### Technical considerations
 
-13.03.2024
+##### 13.03.2024
 
 Today's work was focused on exploring and analyzing the domain, as the initial analysis did not do it with needed deepnest. Result of today's work is a image of the board with was created. Next days I will try to materialize it on Miro and base domain model.
 
 ![img.png](img.png)
+
+##### 14.03.2024
+
+After the 13.03.2024 analysis, the miro storming was recreated. Based on that, more precise requirements were created:
+
+- User can create create offers of items which she/he wants to give for free to other platform members.
+- User can specify item details (photo, description, title, category) of the item.
+- User can specify quantity, if offer is about more than one same item.
+- User can specify type of the offer - which will trigger the way, the claims will be considered.
+- User can mark offer as published - after this action, the item advertisement/auction will be created.
+- Interesants can claims item(s) from advertisement/auction.
+- Even if all items are already reserved, interesants can still claim item(s).
+- Item is reserved until the interesant will receive them. After receiving the item, reservation is ended, available quantity on the advertisement is updated. Quantity is also updated in the offer.
+- User can modify the offer quantity.
+  - If any reservations are made, they will be cancelled accordingly.
+- User can cancel the offer.
+  - If any reservations are made, they will be cancelled accordingly.
+
+![img_1.png](img_1.png)
+
+Example lifecycle othe the offer was created:
+
+![img_2.png](img_2.png)
 
 ### Technical infrastructure
 
