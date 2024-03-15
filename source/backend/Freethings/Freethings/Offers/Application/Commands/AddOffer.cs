@@ -25,6 +25,7 @@ public sealed class AddOfferHandler : IRequestHandler<AddOfferCommand, Guid>
             request.UserId,
             OfferTitle.Create(request.Title),
             OfferDescription.Create(request.Description),
+            Offer.SelectionType.Manual,
             request.Quantity);
 
         Offer created = await _repository.AddAsync(offer, cancellationToken);

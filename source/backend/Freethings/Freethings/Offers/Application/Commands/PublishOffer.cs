@@ -1,4 +1,5 @@
 using Freethings.Contracts;
+using Freethings.Contracts.Events;
 using Freethings.Offers.Domain.Entities;
 using Freethings.Offers.Domain.Repositories;
 using Freethings.Shared;

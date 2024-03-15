@@ -1,4 +1,5 @@
 using Freethings.Contracts;
+using Freethings.Contracts.Events;
 using Freethings.Shared.Messaging;
 
 namespace Freethings.Auctions.Presentation.Events.OfferPublished;

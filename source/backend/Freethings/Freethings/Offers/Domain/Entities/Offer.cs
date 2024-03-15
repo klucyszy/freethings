@@ -19,24 +19,25 @@ public sealed class Offer
     
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
+    public SelectionType Type { get; set; }
     public OfferState State { get; set; } = OfferState.Draft;
     public OfferTitle Title { get; set; }
     public OfferDescription Description { get; set; }
     public int Quantity { get; set; }
     public DateTimeOffset? PublishedAt { get; set; }
-    public SelectionType Type { get; set; } = SelectionType.Manual;
-    public DateTimeOffset? GatheringEndsAt { get; set; }
     
     private Offer()
     {
     }
     
-    public Offer(Guid userId, OfferTitle title, OfferDescription description, int quantity)
+    public Offer(Guid userId, OfferTitle title, OfferDescription description,
+        SelectionType selectionType = SelectionType.Manual, int quantity = 1)
     {
         UserId = userId;
         State = OfferState.Draft;
         Title = title;
         Description = description;
+        Type = selectionType;
         Quantity = quantity;
     }
     
