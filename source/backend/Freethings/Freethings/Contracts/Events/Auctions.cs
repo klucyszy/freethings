@@ -12,5 +12,8 @@ public abstract record AuctionEvent : IEvent
     public sealed record ItemsReserved(
         Guid ClaimedById) : AuctionEvent;
 
-    public sealed record ItemsHandedOver : AuctionEvent;
+    public sealed record ItemsHandedOver(
+        Guid HandedOverById,
+        int HandedOverQuantity,
+        int AvailableQuantity) : AuctionEvent;
 }
