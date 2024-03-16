@@ -55,6 +55,11 @@ public sealed class Auction
             throw AuctionExceptions.CannotReserveIfThereIsNoClaimReferenced.Exception;
         }
         
+        if (_availableQuantity < claim.Quantity)
+        {
+            throw AuctionExceptions.AvailableQuantitySmallerThanAvailable.Exception;
+        }
+        
         claim.SelectAsReserved();
         
         return new AuctionEvent.ItemsReserved(

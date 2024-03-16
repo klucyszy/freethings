@@ -16,6 +16,12 @@ public static class AuctionExceptions
         public static DomainException Exception => new (Message);
     }
     
+    public static class AvailableQuantitySmallerThanAvailable
+    { 
+        public static string Message => "The claimed quantity is greater than the available quantity that can be reserved";
+        public static DomainException Exception => new (Message);
+    }
+    
     public static class CannotHandOverIfThereIsNoClaimReferenced
     { 
         public static string Message => "Cannot hand over items if there is no reserved claim referenced";
