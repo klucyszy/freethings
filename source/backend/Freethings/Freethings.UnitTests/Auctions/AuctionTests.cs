@@ -1,9 +1,9 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Freethings.Auctions.Domain;
+using Freethings.Auctions.Domain.Exceptions;
 using Freethings.Contracts.Events;
 using Freethings.Offers.Domain.Entities;
-using Freethings.Offers.Domain.Exceptions;
 using Freethings.Shared.Exceptions;
 
 namespace Freethings.UnitTests.Auctions;
@@ -14,7 +14,7 @@ public sealed class AuctionTests
     public void UserCanClaimAuctionItem()
     {
         // arrange
-        Auction auction = new Auction(10, Offer.SelectionType.Manual);
+        Auction auction = new Auction(10, Auction.SelectionType.Manual);
         Guid userId = Guid.NewGuid();
         int claimedQuantity = 3;
 
@@ -35,7 +35,7 @@ public sealed class AuctionTests
     public void UserCannotClaimOnSameAuctionTwice()
     {
         // arrange
-        Auction auction = new Auction(10, Offer.SelectionType.Manual);
+        Auction auction = new Auction(10, Auction.SelectionType.Manual);
         Guid userId = Guid.NewGuid();
         int claimedQuantity = 3;
 
@@ -45,14 +45,14 @@ public sealed class AuctionTests
         
         // assert
         act.Should().Throw<DomainException>()
-            .WithMessage(OfferException.SameUserCannotCreateTwoClaimsOnOneAuction.Message);
+            .WithMessage(AuctionExceptions.SameUserCannotCreateTwoClaimsOnOneAuction.Message);
     }
 
     [Fact]
     public void AuctionItemClaimCanBeSelectedManually()
     {
         // arrange
-        Auction auction = new Auction(10, Offer.SelectionType.Manual);
+        Auction auction = new Auction(10, Auction.SelectionType.Manual);
         Guid userId = Guid.NewGuid();
         int claimedQuantity = 3;
 
@@ -72,7 +72,7 @@ public sealed class AuctionTests
     public void CannotReserveItemsIfNoCorrespondingClaimExists()
     {
         // arrange
-        Auction auction = new Auction(10, Offer.SelectionType.Manual);
+        Auction auction = new Auction(10, Auction.SelectionType.Manual);
         Guid userId = Guid.NewGuid();
 
         // act
@@ -80,6 +80,6 @@ public sealed class AuctionTests
         
         // assert
         act.Should().Throw<DomainException>()
-            .WithMessage(OfferException.CannotReserveItemsIfThereIsNoClaimReferenced.Message);
+            .WithMessage(AuctionExceptions.CannotReserveItemsIfThereIsNoClaimReferenced.Message);
     }
 }

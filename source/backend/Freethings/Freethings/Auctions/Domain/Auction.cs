@@ -1,6 +1,5 @@
+using Freethings.Auctions.Domain.Exceptions;
 using Freethings.Contracts.Events;
-using Freethings.Offers.Domain.Entities;
-using Freethings.Offers.Domain.Exceptions;
 
 namespace Freethings.Auctions.Domain;
 
@@ -16,9 +15,9 @@ public sealed class Auction
     private readonly List<AuctionClaim> _auctionClaims = new();
     
     private int _availableQuantity;
-    private Offer.SelectionType _type;
+    private SelectionType _type;
 
-    public Auction(int availableQuantity, Offer.SelectionType type)
+    public Auction(int availableQuantity, SelectionType type)
     {
         _availableQuantity = availableQuantity;
         _type = type;
@@ -28,7 +27,7 @@ public sealed class Auction
     {
         if (_auctionClaims.Exists(x => x.ClaimedById == command.ClaimedById))
         {
-            throw OfferException.SameUserCannotCreateTwoClaimsOnOneAuction.Exception;
+            throw AuctionExceptions.SameUserCannotCreateTwoClaimsOnOneAuction.Exception;
         }
         
         AuctionClaim claim = new AuctionClaim(
@@ -53,7 +52,7 @@ public sealed class Auction
         
         if (claim is null)
         {
-            throw OfferException.CannotReserveItemsIfThereIsNoClaimReferenced.Exception;
+            throw AuctionExceptions.CannotReserveItemsIfThereIsNoClaimReferenced.Exception;
         }
         
         claim.SelectAsReserved();

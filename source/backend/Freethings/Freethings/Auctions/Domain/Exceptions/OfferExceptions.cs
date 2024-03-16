@@ -1,8 +1,8 @@
 using Freethings.Shared.Exceptions;
 
-namespace Freethings.Offers.Domain.Exceptions;
+namespace Freethings.Auctions.Domain.Exceptions;
 
-public static class OfferException
+public static class AuctionExceptions
 {
     public static class SameUserCannotCreateTwoClaimsOnOneAuction
     { 
