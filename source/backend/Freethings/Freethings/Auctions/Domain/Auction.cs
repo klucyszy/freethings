@@ -1,7 +1,6 @@
-using Freethings.Contracts;
 using Freethings.Contracts.Events;
 using Freethings.Offers.Domain.Entities;
-using Freethings.Shared.Exceptions;
+using Freethings.Offers.Domain.Exceptions;
 
 namespace Freethings.Auctions.Domain;
 
@@ -29,7 +28,7 @@ public sealed class Auction
     {
         if (_auctionClaims.Exists(x => x.ClaimedById == command.ClaimedById))
         {
-            throw new DomainException("Same user cannot create two claims on one auction");
+            throw OfferException.SameUserCannotCreateTwoClaimsOnOneAuction.Exception;
         }
         
         AuctionClaim claim = new AuctionClaim(
@@ -54,7 +53,7 @@ public sealed class Auction
         
         if (claim is null)
         {
-            throw new DomainException("Cannot reserve items if there is no claim referenced");
+            throw OfferException.CannotReserveItemsIfThereIsNoClaimReferenced.Exception;
         }
         
         claim.SelectAsReserved();

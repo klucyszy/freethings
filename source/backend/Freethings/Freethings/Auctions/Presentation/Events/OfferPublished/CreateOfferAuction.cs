@@ -1,4 +1,3 @@
-using Freethings.Contracts;
 using Freethings.Contracts.Events;
 using Freethings.Shared.Messaging;
 

@@ -3,6 +3,7 @@ using FluentAssertions.Execution;
 using Freethings.Auctions.Domain;
 using Freethings.Contracts.Events;
 using Freethings.Offers.Domain.Entities;
+using Freethings.Offers.Domain.Exceptions;
 using Freethings.Shared.Exceptions;
 
 namespace Freethings.UnitTests.Auctions;
@@ -28,6 +29,23 @@ public sealed class AuctionTests
             commandResult.ClaimedById.Should().Be(userId);
             commandResult.ClaimedQuantity.Should().Be(claimedQuantity);
         }
+    }
+    
+    [Fact]
+    public void UserCannotClaimOnSameAuctionTwice()
+    {
+        // arrange
+        Auction auction = new Auction(10, Offer.SelectionType.Manual);
+        Guid userId = Guid.NewGuid();
+        int claimedQuantity = 3;
+
+        // act
+        auction.Claim(new Auction.ClaimItemsCommand(userId, claimedQuantity));
+        Action act = () => auction.Claim(new Auction.ClaimItemsCommand(userId, claimedQuantity));
+        
+        // assert
+        act.Should().Throw<DomainException>()
+            .WithMessage(OfferException.SameUserCannotCreateTwoClaimsOnOneAuction.Message);
     }
 
     [Fact]
@@ -60,9 +78,8 @@ public sealed class AuctionTests
         // act
         Action act = () => auction.ReserveItems(new Auction.ReserveItemsCommand(userId));
         
-        
         // assert
         act.Should().Throw<DomainException>()
-            .WithMessage("Cannot reserve items if there is no claim referenced");
+            .WithMessage(OfferException.CannotReserveItemsIfThereIsNoClaimReferenced.Message);
     }
 }
