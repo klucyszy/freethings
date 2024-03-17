@@ -13,12 +13,20 @@ public sealed class FirstComeFirstServedClaimBehaviorStrategy : IClaimBehaviorSt
 
     public ClaimStrategyResult<AuctionClaim, DomainException> Claim(Auction.ClaimCommand command)
     {
+        int claimQuantity = command.Quantity;
+        if (_availableQuantity > 0 && _availableQuantity < command.Quantity)
+        {
+            claimQuantity = _availableQuantity;
+        }
+
+        bool reserved = _availableQuantity > 0;
+        
         AuctionClaim claim = new AuctionClaim(
             command.ClaimedById,
-            command.Quantity,
+            claimQuantity,
             command.Comment,
             DateTimeOffset.Now,
-            _availableQuantity >= command.Quantity
+            reserved
         );
 
         return ClaimStrategyResult<AuctionClaim, DomainException>.Success(claim);
