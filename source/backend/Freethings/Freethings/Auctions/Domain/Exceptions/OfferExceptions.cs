@@ -1,4 +1,4 @@
-using Freethings.Shared.Exceptions;
+using Freethings.Shared.Domain.Exceptions;
 
 namespace Freethings.Auctions.Domain.Exceptions;
 

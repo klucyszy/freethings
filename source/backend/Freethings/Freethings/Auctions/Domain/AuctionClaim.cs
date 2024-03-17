@@ -19,7 +19,7 @@ public sealed class AuctionClaim
         Reserved = reserved;
     }
 
-    public void SelectAsReserved()
+    public void MarkAsReserved()
     {
         Reserved = true;
     }

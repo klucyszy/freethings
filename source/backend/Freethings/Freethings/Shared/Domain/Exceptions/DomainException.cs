@@ -1,4 +1,4 @@
-namespace Freethings.Shared.Exceptions;
+namespace Freethings.Shared.Domain.Exceptions;
 
 public sealed class DomainException : Exception
 {
