@@ -102,7 +102,6 @@ public sealed class AuctionWithManualSelectionTests
         // assert
         action.Should().Throw<DomainException>()
             .WithMessage(AuctionExceptions.AvailableQuantitySmallerThanAvailable.Message);
-        
     }
     
     [Fact]
