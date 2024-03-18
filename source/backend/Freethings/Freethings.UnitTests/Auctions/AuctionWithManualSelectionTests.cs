@@ -82,7 +82,29 @@ public sealed class AuctionWithManualSelectionTests
         act.Should().Throw<DomainException>()
             .WithMessage(AuctionExceptions.CannotReserveIfThereIsNoClaimReferenced.Message);
     }
+    
+    [Fact]
+    public void CannotReserveIfWantToReserveMoreThanAvailable()
+    {
+        // arrange
+        Auction manualAuction = AuctionFixtures.CreateAuction(Auction.AuctionType.Manual, 10);
+        Guid userId = Guid.NewGuid();
+        Guid otherUserId = Guid.NewGuid();
 
+        // act
+        manualAuction.Claim(new Auction.ClaimCommand(userId, 5));
+        manualAuction.Reserve(new Auction.ReserveCommand(userId));
+        manualAuction.HandOver(new Auction.HandOverCommand(userId));
+        
+        manualAuction.Claim(new Auction.ClaimCommand(otherUserId, 6));
+        Action action = () => manualAuction.Reserve(new Auction.ReserveCommand(otherUserId));
+        
+        // assert
+        action.Should().Throw<DomainException>()
+            .WithMessage(AuctionExceptions.AvailableQuantitySmallerThanAvailable.Message);
+        
+    }
+    
     [Fact]
     public void CanHandOverClaimedItems()
     {
