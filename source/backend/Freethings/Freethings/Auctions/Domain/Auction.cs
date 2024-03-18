@@ -33,6 +33,11 @@ public sealed class Auction : AggregateRoot
             throw AuctionExceptions.SameUserCannotCreateTwoClaimsOnOneAuction.Exception;
         }
         
+        if (_availableQuantity < command.Quantity)
+        {
+            throw AuctionExceptions.AvailableQuantitySmallerThanAvailable.Exception;
+        }
+        
         ClaimStrategyResult<AuctionClaim, DomainException> result =
             _claimBehaviorStrategy.Claim(command);
         
@@ -45,12 +50,9 @@ public sealed class Auction : AggregateRoot
 
         if (result.Claim.Reserved)
         {
-            _availableQuantity -= result.Claim.Quantity;
-            
             AddDomainEvent(new AuctionEvent.ItemsReserved(
                 result.Claim.ClaimedById,
                 result.Claim.Quantity,
-                _availableQuantity,
                 result.Claim.Timestamp));
         }
         else
@@ -58,7 +60,6 @@ public sealed class Auction : AggregateRoot
             AddDomainEvent(new AuctionEvent.ItemsClaimed(
                 result.Claim.ClaimedById,
                 result.Claim.Quantity,
-                _availableQuantity,
                 result.Claim.Timestamp));
         }
     }
@@ -83,7 +84,6 @@ public sealed class Auction : AggregateRoot
         return new AuctionEvent.ItemsReserved(
             claim.ClaimedById,
             claim.Quantity,
-            _availableQuantity,
             DateTimeOffset.Now);
     }
     
@@ -113,6 +113,14 @@ public sealed class Auction : AggregateRoot
             _availableQuantity);
     }
     
+    public void ChangeAvailableQuantity(int newQuantity)
+    {
+        _availableQuantity = newQuantity;
+        
+        // there should be validated if new quantity is not less than already reserved. If so, cancel reservations
+        
+    }
+    
     public sealed record ClaimCommand(
         Guid ClaimedById,
         int Quantity,
@@ -122,5 +130,6 @@ public sealed class Auction : AggregateRoot
         Guid ClaimedById);
     
     public sealed record HandOverCommand(
-        Guid ClaimedById);
+        Guid ClaimedById,
+        int? Quantity = null);
 }

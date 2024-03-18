@@ -126,4 +126,21 @@ public sealed class AuctionWithManualSelectionTests
             commandResult.AvailableQuantity.Should().Be(initialQuantity - claimedQuantity);
         }
     }
+    
+    [Fact]
+    public void CannotClaimMoreItemsThanIsAvailable()
+    {
+        // arrange
+        int initialQuantity = 5;
+        Auction manualAuction = AuctionFixtures.CreateAuction(Auction.AuctionType.Manual, initialQuantity);
+        Guid userId = Guid.NewGuid();
+        int claimedQuantity = 6;
+
+        // act
+        Action action = () => manualAuction.Claim(new Auction.ClaimCommand(userId, claimedQuantity));
+
+        // assert
+        action.Should().Throw<DomainException>()
+            .WithMessage(AuctionExceptions.AvailableQuantitySmallerThanAvailable.Message);
+    }
 }

@@ -26,7 +26,6 @@ public class AuctionWithFirstComeFirstServedSelectionTests
             
             commandResult.ClaimedById.Should().Be(userId);
             commandResult.ClaimedQuantity.Should().Be(claimedQuantity);
-            commandResult.AvailableQuantity.Should().Be(initialQuantity - claimedQuantity);
         }
     }
     
@@ -49,7 +48,6 @@ public class AuctionWithFirstComeFirstServedSelectionTests
             
             commandResult.ClaimedById.Should().Be(userId);
             commandResult.ClaimedQuantity.Should().Be(initialQuantity);
-            commandResult.AvailableQuantity.Should().Be(0);
         }
     }
 
@@ -72,7 +70,6 @@ public class AuctionWithFirstComeFirstServedSelectionTests
             
             commandResult.ClaimedById.Should().Be(userId);
             commandResult.ClaimedQuantity.Should().Be(claimedQuantity);
-            commandResult.AvailableQuantity.Should().Be(0);
         }
     }
 }
