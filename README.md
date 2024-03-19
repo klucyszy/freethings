@@ -22,102 +22,13 @@ Behind building the working MVP of the project, I want to to focus on delivering
 
 ### Tech stack
 - **.NET 8.0, Minimal API** - this is my main technology stack. I want to use the newest version of .NET and the new Minimal API feature, which is a really interesting approach to building Web APIs. I feel comfortable with C# and .NET, so I think it's a good choice for me.
-- **Vue.js + Nuxt.js + Typescript** - I have lack of experience in using frontend frameworks so this will be a great opportunity for me to finally build some working concept with Vue.js. I want to use Typescript to make the code more maintainable and to learn it better.
-
-## Project Plan
-
-- [ ] Phase 1: Planning (5 days)
-- [ ] Phase 2: Initial Setup (5 days)
-  - [ ] Create structure of the Web API project
-  - [ ] Create first endpoint and structure of the code
-- [ ] Phase 3. MVP Development (up to 20 days)
-    - [ ] Item Listings
-    - [ ] Item Search
-    - [ ] Interest Expression Mechanism
-    - [ ] User registration and profiles
-- [ ] Phase 3.1 Charity features (up to 30 days)
-    - [ ] Bidding for Charity
-- [ ] Phase 4. Basic UI with Vue.js (up to 30 days)
-- [ ] Phase 5. Testing and Bug-fixing (10-30 days)
-
-### Features - detailed plan
-- Offers
-  - User can create an item offer.
-    - Item offer should include a title, description, category, quantity and form how the item can be claimed by interested.
-    - Offer will be posted for 1 month.
-  - Users can list items they want to give away.
-  - User can modify the item offer.
-    - User can extend once the offer time.
-    - [Extra] User can extend the offer more than once if additional fee is paid.
-    - User can edit offer details (title, description, category, quantity).
-      - form how the item can be claimed by interested can be changed only if there are no interested parties. (does it make sense??)
-    - User can delete the offer.
-- Interests
-  - User can express interest (claim) in the item offer.
-    - To the interest user can add a comment.
-  - User can retract interest in the item offer.
-  - User/Owner can see the list of all interested parties.
-    - Interested parties will be visible under the offer details (as comments, or sth like that).
-  - Owner can select the new owner of the item. (if manual selection is chosen).
-- Hand over
-  - Owner and claimant can agree on the date and place of the item handover.
-    - After that, the item should be visible as 'Reserved' for claimants.
-  - User can mark the item as handed over.
-    - After the item is marked as handed over, the offer will be closed (or quantity should be decreased by 1?).
-  - User can mark the item as not handed over.
-- User
-  - User can create an account.
-  - User can log in.
-  - User can log out.
-  - User can delete the account.
-  - User can see the list of all offers he/she created.
-  - User can see the list of all offers he/she claimed.
-- Categories
-  - User can see the list of all categories.
-  - User can see the list of all offers in the category.
-- Search
-  - User can search for items they are interested in.
-- Charity
-  - TBD
+- ~~**Vue.js + Nuxt.js + Typescript** - I have lack of experience in using frontend frameworks so this will be a great opportunity for me to finally build some working concept with Vue.js. I want to use Typescript to make the code more maintainable and to learn it better.~~
 
 ### Analysis & exploration
 
 Here is link to Miro, where I'm exploring the domain: [freethings miro](https://miro.com/app/board/uXjVNl71hrg=/?share_link_id=521419360509)
 
-#### First try...
-
-![alt text](images/miro-storming.png)
-
-#### Technical considerations
-
-##### 13.03.2024
-
-Today's work was focused on exploring and analyzing the domain, as the initial analysis did not do it with needed deepnest. Result of today's work is a image of the board with was created. Next days I will try to materialize it on Miro and base domain model.
-
-![img.png](img.png)
-
-##### 14.03.2024
-
-After the 13.03.2024 analysis, the miro storming was recreated. Based on that, more precise requirements were created:
-
-- User can create create offers of items which she/he wants to give for free to other platform members.
-- User can specify item details (photo, description, title, category) of the item.
-- User can specify quantity, if offer is about more than one same item.
-- User can specify type of the offer - which will trigger the way, the claims will be considered.
-- User can mark offer as published - after this action, the item advertisement/auction will be created.
-- Interesants can claims item(s) from advertisement/auction.
-- Even if all items are already reserved, interesants can still claim item(s).
-- Item is reserved until the interesant will receive them. After receiving the item, reservation is ended, available quantity on the advertisement is updated. Quantity is also updated in the offer.
-- User can modify the offer quantity.
-  - If any reservations are made, they will be cancelled accordingly.
-- User can cancel the offer.
-  - If any reservations are made, they will be cancelled accordingly.
-
-![img_1.png](img_1.png)
-
-Example lifecycle othe the offer was created:
-
-![img_2.png](img_2.png)
+![alt text](docs/images/miro-storming.png)
 
 ### Technical infrastructure
 
@@ -133,14 +44,6 @@ Example lifecycle othe the offer was created:
     - RabbitMQ (TBD)
 - CI/CD
   - Github Actions.
-  
-
-#### Notes (not included in project scope but I this is a good place to keep them)
-
-- Social integration with Facebook. The project idea originates with FB group so this will be really nice to have feature linking the platform with the group.
-- Integration with charity organizations. This is a really important feature, but I think it's out of scope for MVP. I will focus on building the platform and then I will try to find some charity organizations to cooperate with.
-- Integration with payment systems. This is also a really important feature, but I think it's out of scope for MVP. I will focus on building the platform and then I will try to find some payment systems to cooperate with.
-- Logging using social provider accounts like Google. It will be nice if I will be able to integrate with some AAD provider like Firebase or Google.
 
 ## How to run
 
