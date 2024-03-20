@@ -11,6 +11,8 @@ public sealed class Auction : AggregateRoot
     private readonly IClaimBehaviorStrategy _claimBehaviorStrategy;
     private readonly List<AuctionClaim> _auctionClaims;
     
+    public IReadOnlyCollection<AuctionClaim> AuctionClaims => _auctionClaims.AsReadOnly();
+    
     private int _availableQuantity;
     
     public enum AuctionType

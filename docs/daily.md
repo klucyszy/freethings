@@ -1,10 +1,16 @@
+### 21.03.2023 - day 21
+
+Plan for the day:
+- [x] Test in code concept of claim selection policy. It should be used from the level above the domain.
+- [ ] Prepare plan for next week.
+- [ ] Start using Github project && issues.
+
+
 ### 20.03.2024 - day 20
 
 Plan for the day:
-- [ ] Decide the namings of the modules. Now there is Auction/Adveritisement and more.
-- [ ] Continuation of restructure the Readme.md and create docs folder.
-- [ ] Prepare plan for next week.
-- [ ] Start using Github project && issues.
+- [x] Decide the namings of the modules. Now there is Auction/Adveritisement and more.
+- [x] Continuation of restructure the Readme.md and create docs folder.
 
 ### 19.03.2024 - day 19
 
