@@ -1,5 +1,5 @@
 
-![freethings-logo](/images/freethings-logo-textonly.png "freethings-logo")
+![freethings-logo](docs/images/freethings-logo-textonly.png "freethings-logo")
 
 ## Idea
 
