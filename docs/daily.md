@@ -1,6 +1,7 @@
 ### 20.03.2024 - day 20
 
 Plan for the day:
+- [ ] Decide the namings of the modules. Now there is Auction/Adveritisement and more.
 - [ ] Continuation of restructure the Readme.md and create docs folder.
 - [ ] Prepare plan for next week.
 - [ ] Start using Github project && issues.
@@ -24,10 +25,10 @@ After the 13.03.2024 analysis, the miro storming was recreated. Based on that, m
 - User can specify item details (photo, description, title, category) of the item.
 - User can specify quantity, if offer is about more than one same item.
 - User can specify type of the offer - which will trigger the way, the claims will be considered.
-- User can mark offer as published - after this action, the item advertisement/auction will be created.
-- Interesants can claims item(s) from advertisement/auction.
+- User can mark offer as published - after this action, the item auction will be created.
+- Interesants can claims item(s) from auction.
 - Even if all items are already reserved, interesants can still claim item(s).
-- Item is reserved until the interesant will receive them. After receiving the item, reservation is ended, available quantity on the advertisement is updated. Quantity is also updated in the offer.
+- Item is reserved until the interesant will receive them. After receiving the item, reservation is ended, available quantity on the auction§ is updated. Quantity is also updated in the offer.
 - User can modify the offer quantity.
     - If any reservations are made, they will be cancelled accordingly.
 - User can cancel the offer.
