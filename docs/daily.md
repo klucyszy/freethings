@@ -2,9 +2,22 @@
 
 Plan for the day:
 - [x] Test in code concept of claim selection policy. It should be used from the level above the domain.
-- [ ] Prepare plan for next week.
+- [x] Prepare plan for next week.
 - [ ] Start using Github project && issues.
 
+Plan for next week:
+- [ ] Finish the concept of claim selection policy.
+- [ ] Build application, presentation layer of auction.
+- [ ] Add concept of user and authentication.
+- [ ] Update presentation endpoints, not to start from `/users/{userId}` - user should come from the token.
+
+Today's work:
+
+I'm still not able to finish the concept of claim selection policy. I'm not sure if I'm going in the right direction. My questions are:
+- Should I use the concept of the policy in the Auction aggregate?
+- What I'm missing in the domain to make it properly working for automatic selection of the claims?
+
+![img.png](images/2024_03_21_auction_aggregate.png)
 
 ### 20.03.2024 - day 20
 
