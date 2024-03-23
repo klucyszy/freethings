@@ -1,5 +1,5 @@
-using Freethings.Offers.Domain.Entities;
-using Freethings.Offers.Domain.Repositories;
+using Freethings.Offers.Application.Entities;
+using Freethings.Offers.Application.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Freethings.Offers.Infrastructure.Persistence.Repositories;

@@ -1,6 +1,6 @@
-using Freethings.Offers.Domain.Entities;
-using Freethings.Offers.Domain.Repositories;
-using Freethings.Offers.Domain.ValueObjects;
+using Freethings.Offers.Application.Entities;
+using Freethings.Offers.Application.Entities.ValueObjects;
+using Freethings.Offers.Application.Repositories;
 using MediatR;
 
 namespace Freethings.Offers.Application.Commands;

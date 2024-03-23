@@ -1,4 +1,4 @@
-namespace Freethings.Shared.Messaging;
+namespace Freethings.Shared.Abstractions.Messaging;
 
 public interface IEventBus
 {

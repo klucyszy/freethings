@@ -1,4 +1,4 @@
-namespace Freethings.Shared;
+namespace Freethings.Shared.Infrastructure;
 
 public sealed record Result
 {

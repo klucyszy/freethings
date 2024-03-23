@@ -1,4 +1,4 @@
-namespace Freethings.Offers.Domain.ValueObjects;
+namespace Freethings.Offers.Application.Entities.ValueObjects;
 
 public sealed record OfferDescription
 {

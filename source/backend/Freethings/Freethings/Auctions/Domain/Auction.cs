@@ -1,8 +1,8 @@
 using Freethings.Auctions.Domain.Exceptions;
 using Freethings.Auctions.Domain.Strategies;
 using Freethings.Contracts.Events;
-using Freethings.Shared.Domain;
-using Freethings.Shared.Domain.Exceptions;
+using Freethings.Shared.Abstractions.Domain;
+using Freethings.Shared.Abstractions.Domain.Exceptions;
 
 namespace Freethings.Auctions.Domain;
 

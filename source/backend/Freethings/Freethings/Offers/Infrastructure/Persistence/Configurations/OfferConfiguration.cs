@@ -1,5 +1,5 @@
-using Freethings.Offers.Domain.Entities;
-using Freethings.Offers.Domain.ValueObjects;
+using Freethings.Offers.Application.Entities;
+using Freethings.Offers.Application.Entities.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

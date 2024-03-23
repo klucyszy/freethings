@@ -1,6 +1,6 @@
-using Freethings.Offers.Domain.Entities;
+using Freethings.Offers.Application.Entities;
 
-namespace Freethings.Offers.Domain.Repositories;
+namespace Freethings.Offers.Application.Repositories;
 
 public interface IOfferRepository
 {

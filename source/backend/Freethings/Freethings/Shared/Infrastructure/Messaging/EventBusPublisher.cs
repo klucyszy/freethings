@@ -1,7 +1,7 @@
-using Freethings.Shared.Messaging;
+using Freethings.Shared.Abstractions.Messaging;
 using MediatR;
 
-namespace Freethings.Offers.Infrastructure.Messaging;
+namespace Freethings.Shared.Infrastructure.Messaging;
 
 internal sealed class EventBusPublisher : IEventBus
 {

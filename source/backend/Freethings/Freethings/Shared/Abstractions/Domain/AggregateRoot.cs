@@ -1,6 +1,6 @@
-using Freethings.Shared.Messaging;
+using Freethings.Shared.Abstractions.Messaging;
 
-namespace Freethings.Shared.Domain;
+namespace Freethings.Shared.Abstractions.Domain;
 
 public abstract class AggregateRoot
 {

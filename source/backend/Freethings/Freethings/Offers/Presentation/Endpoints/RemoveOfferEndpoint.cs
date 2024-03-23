@@ -1,5 +1,6 @@
 using Freethings.Offers.Application.Commands;
 using Freethings.Shared;
+using Freethings.Shared.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;

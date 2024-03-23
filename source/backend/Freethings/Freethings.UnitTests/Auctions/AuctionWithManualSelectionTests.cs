@@ -3,7 +3,7 @@ using FluentAssertions.Execution;
 using Freethings.Auctions.Domain;
 using Freethings.Auctions.Domain.Exceptions;
 using Freethings.Contracts.Events;
-using Freethings.Shared.Domain.Exceptions;
+using Freethings.Shared.Abstractions.Domain.Exceptions;
 
 namespace Freethings.UnitTests.Auctions;
 

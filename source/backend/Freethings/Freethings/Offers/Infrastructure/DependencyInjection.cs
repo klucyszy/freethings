@@ -1,8 +1,8 @@
-using Freethings.Offers.Domain.Repositories;
-using Freethings.Offers.Infrastructure.Messaging;
+using Freethings.Offers.Application.Repositories;
 using Freethings.Offers.Infrastructure.Persistence;
 using Freethings.Offers.Infrastructure.Persistence.Repositories;
-using Freethings.Shared.Messaging;
+using Freethings.Shared.Abstractions.Messaging;
+using Freethings.Shared.Infrastructure.Messaging;
 using Microsoft.EntityFrameworkCore;
 
 namespace Freethings.Offers.Infrastructure;

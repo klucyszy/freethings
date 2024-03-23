@@ -1,8 +1,9 @@
 using Freethings.Contracts.Events;
-using Freethings.Offers.Domain.Entities;
-using Freethings.Offers.Domain.Repositories;
+using Freethings.Offers.Application.Entities;
+using Freethings.Offers.Application.Repositories;
 using Freethings.Shared;
-using Freethings.Shared.Messaging;
+using Freethings.Shared.Abstractions.Messaging;
+using Freethings.Shared.Infrastructure;
 using MediatR;
 
 namespace Freethings.Offers.Application.Commands;

@@ -22,6 +22,8 @@
 
     <ItemGroup>
       <Folder Include="Offers\Infrastructure\Persistence\Migrations\" />
+      <Folder Include="Shared\Abstractions\" />
+      <Folder Include="Shared\Infrastructure\Persistence\" />
     </ItemGroup>
     
 </Project>

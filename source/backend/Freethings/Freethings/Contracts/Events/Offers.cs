@@ -1,4 +1,4 @@
-using Freethings.Shared.Messaging;
+using Freethings.Shared.Abstractions.Messaging;
 
 namespace Freethings.Contracts.Events;
 

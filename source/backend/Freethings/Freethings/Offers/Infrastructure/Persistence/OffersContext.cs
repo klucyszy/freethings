@@ -1,5 +1,5 @@
 using System.Reflection;
-using Freethings.Offers.Domain.Entities;
+using Freethings.Offers.Application.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Freethings.Offers.Infrastructure.Persistence;

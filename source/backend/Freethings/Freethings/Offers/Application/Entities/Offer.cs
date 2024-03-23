@@ -1,6 +1,6 @@
-using Freethings.Offers.Domain.ValueObjects;
+using Freethings.Offers.Application.Entities.ValueObjects;
 
-namespace Freethings.Offers.Domain.Entities;
+namespace Freethings.Offers.Application.Entities;
 
 public sealed class Offer
 {

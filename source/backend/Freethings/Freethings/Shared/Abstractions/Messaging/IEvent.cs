@@ -1,5 +1,5 @@
 using MediatR;
 
-namespace Freethings.Shared.Messaging;
+namespace Freethings.Shared.Abstractions.Messaging;
 
 public interface IEvent : INotification;
