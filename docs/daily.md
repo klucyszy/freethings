@@ -1,3 +1,12 @@
+### 23.03.2023 - day 23
+
+Plan for the day:
+- [x] Do the user story mapping of the 'Item owner'
+
+Today's work:
+
+![img.png](images/user_story_mapping.jpg)
+
 ### 21.03.2023 - day 21
 
 Plan for the day:
