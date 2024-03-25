@@ -13,14 +13,14 @@ public static class DependencyInjection
     {
         RouteGroupBuilder group = app.MapGroup("api/users/{userId:guid}/offers");
         
-        group.MapAddOfferEndpoint();
-        //group.MapPublishOfferEndpoint();
-        group.MapGetOffersEndpoint();
-        group.MapGetOfferEndpoint();
-        group.MapEditOfferEndpoint();
-        group.MapRemoveOfferEndpoint();
+        // group.MapAddOfferEndpoint();
+        // group.MapPublishOfferEndpoint();
+        // group.MapGetOffersEndpoint();
+        // group.MapGetOfferEndpoint();
+        // group.MapEditOfferEndpoint();
+        // group.MapRemoveOfferEndpoint();
         
-        group.WithName("Offers");
+        group.WithGroupName("Offers");
         
         return app;
     }

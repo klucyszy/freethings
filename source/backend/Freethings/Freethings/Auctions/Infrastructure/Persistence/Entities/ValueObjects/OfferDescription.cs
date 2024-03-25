@@ -1,5 +1,3 @@
-using Freethings.Offers.Application.Entities.ValueObjects;
-
 public sealed record AuctionDescription
 {
     public string Value { get; }

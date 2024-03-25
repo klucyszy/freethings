@@ -1,5 +1,4 @@
 using Freethings.Offers.Application.Repositories;
-using Freethings.Shared;
 using Freethings.Shared.Infrastructure;
 using MediatR;
 

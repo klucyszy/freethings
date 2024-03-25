@@ -3,6 +3,7 @@ using Freethings.Auctions;
 using Freethings.Auctions.Presentation;
 using Freethings.Offers;
 using Freethings.Offers.Presentation;
+using Freethings.Shared.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +14,10 @@ builder.Services.AddMediatR(opts =>
     opts.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 });
 
-builder.Services.AddOffers(builder.Configuration);
-builder.Services.AddAuctions(builder.Configuration);
+builder.Services
+    .AddOffers(builder.Configuration)
+    .AddAuctions(builder.Configuration)
+    .AddModularSharedInfrastructure(builder.Configuration);
 
 WebApplication app = builder.Build();
 
