@@ -1,5 +1,3 @@
-using Freethings.Offers.Presentation.Endpoints;
-
 namespace Freethings.Offers.Presentation;
 
 public static class DependencyInjection
