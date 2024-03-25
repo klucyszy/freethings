@@ -1,6 +1,6 @@
 using Freethings.Shared.Abstractions.Domain.Exceptions;
 
-namespace Freethings.Auctions.Domain.Strategies;
+namespace Freethings.Auctions.Domain.Strategies.Abstractions;
 
 public interface IClaimBehaviorStrategy
 {

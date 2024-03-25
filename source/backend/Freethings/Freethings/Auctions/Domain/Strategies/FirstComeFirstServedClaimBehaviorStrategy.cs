@@ -1,14 +1,18 @@
+using Freethings.Auctions.Domain.Strategies.Abstractions;
 using Freethings.Shared.Abstractions.Domain.Exceptions;
+using Freethings.Shared.Infrastructure.Time;
 
 namespace Freethings.Auctions.Domain.Strategies;
 
 public sealed class FirstComeFirstServedClaimBehaviorStrategy : IClaimBehaviorStrategy
 {
     private readonly int _availableQuantity;
-
-    public FirstComeFirstServedClaimBehaviorStrategy(int availableQuantity)
+    private readonly ICurrentTime _currentTime;
+    
+    public FirstComeFirstServedClaimBehaviorStrategy(int availableQuantity, ICurrentTime currentTime)
     {
         _availableQuantity = availableQuantity;
+        _currentTime = currentTime;
     }
 
     public ClaimStrategyResult<AuctionClaim, DomainException> Claim(Auction.ClaimCommand command)
@@ -25,7 +29,7 @@ public sealed class FirstComeFirstServedClaimBehaviorStrategy : IClaimBehaviorSt
             command.ClaimedById,
             claimQuantity,
             command.Comment,
-            DateTimeOffset.Now,
+            _currentTime.Now(),
             reserved
         );
 

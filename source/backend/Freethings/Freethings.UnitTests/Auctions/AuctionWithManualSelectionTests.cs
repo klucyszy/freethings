@@ -84,10 +84,11 @@ public sealed class AuctionWithManualSelectionTests
     }
     
     [Fact]
-    public void CannotReserveIfWantToReserveMoreThanAvailable()
+    public void ReserveShouldFailIfWantToReserveMoreThanAvailable()
     {
         // arrange
-        Auction manualAuction = AuctionFixtures.CreateAuction(Auction.AuctionType.Manual, 10);
+        Auction manualAuction = AuctionFixtures
+            .CreateAuction(Auction.AuctionType.Manual, 10);
         Guid userId = Guid.NewGuid();
         Guid otherUserId = Guid.NewGuid();
 

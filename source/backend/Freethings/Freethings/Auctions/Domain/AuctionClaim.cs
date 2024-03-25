@@ -6,21 +6,21 @@ public sealed class AuctionClaim
     public Guid ClaimedById { get; }
     public int Quantity { get; }
     public string Comment { get; }
-    public DateTimeOffset Timestamp { get; }
-    public bool Reserved { get; private set; }
+    public DateTimeOffset? Timestamp { get; }
+    public bool IsReserved { get; private set; }
 
-    public AuctionClaim(Guid claimedById, int quantity, string comment, DateTimeOffset timestamp, bool reserved)
+    public AuctionClaim(Guid claimedById, int quantity, string comment, DateTimeOffset? timestamp, bool isReserved)
     {
         Id = Guid.NewGuid();
         ClaimedById = claimedById;
         Quantity = quantity;
         Comment = comment;
         Timestamp = timestamp;
-        Reserved = reserved;
+        IsReserved = isReserved;
     }
 
     public void MarkAsReserved()
     {
-        Reserved = true;
+        IsReserved = true;
     }
 }

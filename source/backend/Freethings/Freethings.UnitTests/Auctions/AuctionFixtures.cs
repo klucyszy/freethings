@@ -1,4 +1,5 @@
 using Freethings.Auctions.Domain;
+using Freethings.Shared.Infrastructure.Time;
 
 namespace Freethings.UnitTests.Auctions;
 
@@ -9,7 +10,8 @@ public static class AuctionFixtures
         Auction auction = new Auction(
             new List<AuctionClaim>(),
             availableQuantity,
-            auctionType);
+            auctionType,
+            new CurrentTime());
 
         return auction;
     }

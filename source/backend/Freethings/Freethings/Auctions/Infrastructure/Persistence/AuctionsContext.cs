@@ -1,16 +1,17 @@
 using System.Reflection;
 using Freethings.Auctions.Domain;
+using Freethings.Auctions.Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Freethings.Auctions.Infrastructure.Persistence;
 
-public sealed class AuctionsContext : DbContext
+internal sealed class AuctionsContext : DbContext
 {
     public AuctionsContext(DbContextOptions<AuctionsContext> options) : base(options)
     {
     }
 
-    public DbSet<Auction> Auctions { get; set; }
+    public DbSet<AuctionEntity> Auctions { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -18,8 +18,8 @@ public sealed class RandomClaimSelectionPolicy : IClaimSelectionPolicy
 
     public Guid SelectClaimAsync(CancellationToken cancellationToken)
     {
-        List<AuctionClaim> claims = _auction.AuctionClaims
-            .Where(c => c.Reserved == false)
+        List<AuctionClaim> claims = _auction.Claims
+            .Where(c => c.IsReserved == false)
             .ToList();
 
         if (claims.Count == 0)
@@ -44,9 +44,9 @@ public sealed class FirstComeFirstServedClaimSelectionPolicy : IClaimSelectionPo
 
     public Guid SelectClaimAsync(CancellationToken cancellationToken)
     {
-        AuctionClaim claim = _auction.AuctionClaims
+        AuctionClaim claim = _auction.Claims
             .OrderBy(c => c.Timestamp)
-            .FirstOrDefault(c => c.Reserved == false);
+            .FirstOrDefault(c => c.IsReserved == false);
 
         return claim?.Id ?? Guid.Empty;
     }

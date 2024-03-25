@@ -1,18 +1,22 @@
 using Freethings.Auctions.Domain.Exceptions;
 using Freethings.Auctions.Domain.Strategies;
+using Freethings.Auctions.Domain.Strategies.Abstractions;
 using Freethings.Contracts.Events;
 using Freethings.Shared.Abstractions.Domain;
 using Freethings.Shared.Abstractions.Domain.Exceptions;
+using Freethings.Shared.Infrastructure.Time;
 
 namespace Freethings.Auctions.Domain;
 
 public sealed class Auction : AggregateRoot
 {
+    public IReadOnlyCollection<AuctionClaim> Claims => _auctionClaims.AsReadOnly();
+    public int AvailableQuantity => _availableQuantity;
+    
     private readonly IClaimBehaviorStrategy _claimBehaviorStrategy;
+    private readonly ICurrentTime _currentTime;
+    
     private readonly List<AuctionClaim> _auctionClaims;
-    
-    public IReadOnlyCollection<AuctionClaim> AuctionClaims => _auctionClaims.AsReadOnly();
-    
     private int _availableQuantity;
     
     public enum AuctionType
@@ -21,11 +25,12 @@ public sealed class Auction : AggregateRoot
         FirstComeFirstServed
     }
     
-    public  Auction(List<AuctionClaim> auctionClaims, int availableQuantity, AuctionType auctionType)
+    public  Auction(List<AuctionClaim> auctionClaims, int availableQuantity, AuctionType auctionType, ICurrentTime currentTime)
     {
         _auctionClaims = auctionClaims;
         _availableQuantity = availableQuantity;
-        _claimBehaviorStrategy = ClaimBehaviorStrategyFactory.Create(auctionType, auctionClaims, availableQuantity);
+        _currentTime = currentTime;
+        _claimBehaviorStrategy = ClaimBehaviorStrategyFactory.Create(auctionType, availableQuantity, currentTime);
     }
     
     public void Claim(ClaimCommand command)
@@ -50,19 +55,19 @@ public sealed class Auction : AggregateRoot
         
         _auctionClaims.Add(result.Claim);
 
-        if (result.Claim.Reserved)
+        if (result.Claim.IsReserved)
         {
             AddDomainEvent(new AuctionEvent.ItemsReserved(
                 result.Claim.ClaimedById,
                 result.Claim.Quantity,
-                result.Claim.Timestamp));
+                result.Claim.Timestamp.Value));
         }
         else
         {
             AddDomainEvent(new AuctionEvent.ItemsClaimed(
                 result.Claim.ClaimedById,
                 result.Claim.Quantity,
-                result.Claim.Timestamp));
+                result.Claim.Timestamp.Value));
         }
     }
 
@@ -86,14 +91,14 @@ public sealed class Auction : AggregateRoot
         return new AuctionEvent.ItemsReserved(
             claim.ClaimedById,
             claim.Quantity,
-            DateTimeOffset.Now);
+            _currentTime.Now());
     }
     
     // TODO: Think, does quantity can be decreased by handover?. Does quantity can be higher than in handover?
     public AuctionEvent.ItemsHandedOver HandOver(HandOverCommand command)
     {
         AuctionClaim claim = _auctionClaims
-            .FirstOrDefault(x => x.Reserved && x.ClaimedById == command.ClaimedById);
+            .FirstOrDefault(x => x.IsReserved && x.ClaimedById == command.ClaimedById);
         
         if (claim is null)
         {
