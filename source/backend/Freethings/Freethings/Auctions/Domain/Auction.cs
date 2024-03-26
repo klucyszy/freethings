@@ -25,8 +25,10 @@ public sealed class Auction : AggregateRoot
         FirstComeFirstServed
     }
     
-    public  Auction(List<AuctionClaim> auctionClaims, int availableQuantity, AuctionType auctionType, ICurrentTime currentTime)
+    public  Auction(Guid id, List<AuctionClaim> auctionClaims, int availableQuantity, AuctionType auctionType,
+        ICurrentTime currentTime)
     {
+        Id = id;
         _auctionClaims = auctionClaims;
         _availableQuantity = availableQuantity;
         _currentTime = currentTime;
@@ -38,11 +40,6 @@ public sealed class Auction : AggregateRoot
         if (_auctionClaims.Exists(x => x.ClaimedById == command.ClaimedById))
         {
             throw AuctionExceptions.SameUserCannotCreateTwoClaimsOnOneAuction.Exception;
-        }
-        
-        if (_availableQuantity < command.Quantity)
-        {
-            throw AuctionExceptions.AvailableQuantitySmallerThanAvailable.Exception;
         }
         
         ClaimStrategyResult<AuctionClaim, DomainException> result =

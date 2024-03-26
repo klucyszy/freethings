@@ -11,7 +11,7 @@ internal sealed class AuctionsContext : DbContext
     {
     }
 
-    public DbSet<AuctionEntity> Auctions { get; }
+    public DbSet<AuctionEntity> Auctions { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,14 +1,12 @@
-using Freethings.Shared.Abstractions.Messaging;
-
 namespace Freethings.Shared.Abstractions.Domain;
 
 public abstract class AggregateRoot
 {
-    public Guid Id { get; }
+    public Guid Id { get; protected set; }
     
-    private readonly List<IEvent> _domainEvents = [];
+    private readonly List<IDomainEvent> _domainEvents = [];
 
-    public IReadOnlyCollection<IEvent> DomainEvents
+    public IReadOnlyCollection<IDomainEvent> DomainEvents
         => _domainEvents.AsReadOnly();
 
     protected AggregateRoot(Guid id)
@@ -18,10 +16,10 @@ public abstract class AggregateRoot
     
     protected AggregateRoot() { }
 
-    protected void AddDomainEvent(IEvent domainEvent)
+    protected void AddDomainEvent(IDomainEvent domainEvent)
         => _domainEvents.Add(domainEvent);
 
-    public void ClearEvents()
+    public void ClearDomainEvents()
         => _domainEvents.Clear();
     
 }

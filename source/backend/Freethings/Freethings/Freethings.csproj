@@ -21,9 +21,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Auctions\Presentation\Events\" />
+      <Folder Include="Auctions\Presentation\Events\ItemClaimed\" />
       <Folder Include="Offers\Infrastructure\Persistence\Migrations\" />
-      <Folder Include="Shared\Abstractions\" />
     </ItemGroup>
     
 </Project>

@@ -1,8 +1,8 @@
-using Freethings.Shared.Abstractions.Messaging;
+using Freethings.Shared.Abstractions.Domain;
 
 namespace Freethings.Contracts.Events;
 
-public abstract record AuctionEvent : IEvent
+public abstract record AuctionEvent : IDomainEvent
 {
     public sealed record ItemsClaimed(
         Guid ClaimedById,

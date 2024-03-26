@@ -13,21 +13,21 @@ internal static class AuctionMapper
         currentEntityState.Claims.Update(
             auction.Claims.ToList(),
             (entity, aggregate) => entity.UserId == aggregate.ClaimedById,
-            auctionClaim => new AuctionClaimEntity
-            {
-                UserId = auctionClaim.ClaimedById,
-                Quantity = auctionClaim.Quantity,
-                Comment = auctionClaim.Comment,
-                Timestamp = auctionClaim.Timestamp,
-                IsReserved = auctionClaim.IsReserved
-            });
-        
+            auctionClaim => new AuctionClaimEntity(
+                auctionClaim.ClaimedById,
+                auctionClaim.Quantity,
+                auctionClaim.Comment,
+                auctionClaim.Timestamp,
+                auctionClaim.IsReserved)
+        );
+
         return currentEntityState;
     }
-    
+
     public static Auction ToAggregate(this AuctionEntity auctionEntity, ICurrentTime currentTime)
     {
         return new Auction(
+            auctionEntity.Id,
             auctionEntity.Claims.Select(e => new AuctionClaim(
                     e.UserId,
                     e.Quantity,

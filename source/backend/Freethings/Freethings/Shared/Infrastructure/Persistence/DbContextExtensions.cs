@@ -1,5 +1,6 @@
 using Freethings.Shared.Infrastructure.Options;
 using Microsoft.EntityFrameworkCore;
+using DbContextOptions = Freethings.Shared.Abstractions.Persistence.DbContextOptions;
 
 namespace Freethings.Shared.Infrastructure.Persistence;
 

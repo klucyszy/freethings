@@ -1,4 +1,3 @@
-using Freethings.Contracts.Events;
 using Freethings.Offers.Application.Entities;
 using Freethings.Offers.Application.Repositories;
 using Freethings.Shared.Abstractions.Messaging;
@@ -34,8 +33,8 @@ public sealed class PublishOfferHandler : IRequestHandler<PublishOfferCommand, R
         
         await _repository.UpdateAsync(offer, cancellationToken);
 
-        await _bus.PublishAsync(new OfferEvent.Published(), cancellationToken);
-        
+        // await _bus.PublishAsync(new OfferEvent.Published(), cancellationToken);
+        //
         return Result.Success();
     }
 }

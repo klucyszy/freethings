@@ -1,4 +1,4 @@
-namespace Freethings.Shared.Infrastructure.Persistence;
+namespace Freethings.Shared.Abstractions.Persistence;
 
 public record DbContextOptions
 {

@@ -27,13 +27,18 @@ internal sealed class AuctionsRepository : IAggregateRootRepository<Auction>
             .FirstOrDefaultAsync(cancellationToken);
     }
     
-    public async Task SaveAsync(Auction aggregateRoot, CancellationToken cancellationToken = default)
+    public async Task<List<IDomainEvent>> SaveAsync(Auction aggregateRoot, CancellationToken cancellationToken = default)
     {
         AuctionEntity entity = await _context.Auctions
-            .FindAsync(new [] { aggregateRoot.Id }, cancellationToken);
+            .FindAsync(aggregateRoot.Id, cancellationToken);
 
         aggregateRoot.ToEntity(entity);
         
+        List<IDomainEvent> domainEvents = aggregateRoot.DomainEvents.ToList();
+        
         await _context.SaveChangesAsync(cancellationToken);
+        aggregateRoot.ClearDomainEvents();
+
+        return domainEvents;
     }
 }

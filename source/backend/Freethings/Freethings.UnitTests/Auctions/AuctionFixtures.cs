@@ -8,6 +8,7 @@ public static class AuctionFixtures
     public static Auction CreateAuction(Auction.AuctionType auctionType, int availableQuantity)
     {
         Auction auction = new Auction(
+            Guid.NewGuid(),
             new List<AuctionClaim>(),
             availableQuantity,
             auctionType,

@@ -10,6 +10,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IEventBus, EventBusPublisher>();
         services.AddCurrentTime();
+        
         return services;
     }
 }

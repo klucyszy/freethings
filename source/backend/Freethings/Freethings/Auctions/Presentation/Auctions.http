@@ -1,7 +1,6 @@
 @Freethings_HostAddress = http://localhost:5289
-@userId = d695f6d4-4561-46b2-b0eb-7b0be13d9580
-@offerId = 26fac8bd-09b2-4e28-9f61-4bb696d13600
-@auctionId = 26fac8bd-09b2-4e28-9f61-4bb696d13600
+@userId = 00000000-0000-0000-0000-000000000001
+@auctionId = 00000000-0000-0000-0000-000000000001
 
 ### Claim auction item
 

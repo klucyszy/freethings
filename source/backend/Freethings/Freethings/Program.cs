@@ -4,6 +4,7 @@ using Freethings.Auctions.Presentation;
 using Freethings.Offers;
 using Freethings.Offers.Presentation;
 using Freethings.Shared.Infrastructure;
+using Freethings.Shared.Infrastructure.Persistence;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    //app.ApplyMigrations();
+    app.SeedWithSampleData();
 }
 
 app.MapOffersEndpoints();

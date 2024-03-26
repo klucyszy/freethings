@@ -1,3 +1,4 @@
+using Freethings.Shared.Abstractions.Domain;
 using Freethings.Shared.Abstractions.Messaging;
 using MediatR;
 
@@ -12,7 +13,8 @@ internal sealed class EventBusPublisher : IEventBus
         _publisher = publisher;
     }
 
-    public async Task PublishAsync<TEvent>(TEvent @event, CancellationToken cancellationToken) where TEvent : IEvent
+    public async Task PublishAsync<TEvent>(TEvent @event, CancellationToken cancellationToken)
+        where TEvent : IDomainEvent
     {
         await _publisher.Publish(@event, cancellationToken);
     }

@@ -1,8 +1,8 @@
-using Freethings.Shared.Abstractions.Messaging;
+using Freethings.Shared.Abstractions.Domain;
 
 namespace Freethings.Contracts.Events;
 
-public abstract record OfferEvent : IEvent
+public abstract record OfferEvent : IDomainEvent
 {
     public sealed record Published : OfferEvent;
 }
