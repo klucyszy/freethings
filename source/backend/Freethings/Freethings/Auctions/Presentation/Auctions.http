@@ -1,9 +1,15 @@
 @Freethings_HostAddress = http://localhost:5289
 @userId = 00000000-0000-0000-0000-000000000001
-@auctionId = 00000000-0000-0000-0000-000000000001
+@auctionId = 00000000-0000-0000-0000-000000000002
 
 ### Claim auction item
 
 POST {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}/claim
+Content-Type: application/json
+
+
+### Reserve claim
+
+POST {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}/claim/{claimId}/reserve
 Content-Type: application/json
 

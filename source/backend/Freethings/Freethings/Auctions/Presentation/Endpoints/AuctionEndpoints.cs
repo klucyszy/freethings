@@ -31,11 +31,11 @@ public static class ClaimAuctionItemEndpoint
             return TypedResults.NoContent();
         });
         
-        group.MapPost("reserve", async (
+        group.MapPost("claim/{claimId}/reserve", async (
                 [FromRoute] Guid userId,
                 [FromRoute] Guid auctionId,
                 [FromRoute] Guid claimId,
-                [AsParameters] ClaimItemsQueryParameters parameters,
+                [AsParameters] ReserveClaimedItemsQueryParameters parameters,
                 ISender sender,
                 CancellationToken ct)
             =>

@@ -25,9 +25,9 @@ internal sealed class ClaimItemsHandler : IRequestHandler<ClaimItemsCommand, Res
 
     public async Task<Result> Handle(ClaimItemsCommand request, CancellationToken cancellationToken)
     {
-        Auction auction = await _repository.GetAsync(request.AuctionId, cancellationToken);
+        Auction aggregate = await _repository.GetAsync(request.AuctionId, cancellationToken);
 
-        if (auction is null)
+        if (aggregate is null)
         {
             return Result.Failure(AuctionErrorDefinition.AuctionNotFound);
         }
@@ -36,10 +36,10 @@ internal sealed class ClaimItemsHandler : IRequestHandler<ClaimItemsCommand, Res
             request.UserId,
             request.Quantity);
         
-        auction.Claim(command);
+        aggregate.Claim(command);
         
         List<IDomainEvent> domainEvents = await _repository
-            .SaveAsync(auction, cancellationToken);
+            .SaveAsync(aggregate, cancellationToken);
 
         foreach (IDomainEvent domainEvent in domainEvents)
         {

@@ -7,7 +7,8 @@ namespace Freethings.Auctions.Infrastructure.Persistence;
 
 internal sealed class AuctionsSeeder : IDataSeeder
 {
-    private static Guid AuctionId => Guid.Parse("00000000-0000-0000-0000-000000000001");
+    private static Guid ManualAuctionId => Guid.Parse("00000000-0000-0000-0000-000000000001");
+    private static Guid AutoAuctionId => Guid.Parse("00000000-0000-0000-0000-000000000002");
 
     private readonly AuctionsContext _context;
 
@@ -18,23 +19,36 @@ internal sealed class AuctionsSeeder : IDataSeeder
 
     public void Seed()
     {
-        if (_context.Auctions.Any(p => p.Id == AuctionId))
+        if (!_context.Auctions.Any(p => p.Id == ManualAuctionId))
         {
-            return;
+            _context.Auctions.Add(new AuctionEntity(
+                    10,
+                    Auction.AuctionType.Manual,
+                    new AuctionMetadataEntity(
+                        AuctionTitle.Create("Sample item"),
+                        AuctionDescription.Create("Sample description")
+                    ))
+                {
+                    Id = ManualAuctionId
+                }
+            );
         }
-
-        _context.Auctions.Add(new AuctionEntity(
-            10,
-            Auction.AuctionType.Manual,
-            new AuctionMetadataEntity(
-                AuctionTitle.Create("Sample item"),
-                AuctionDescription.Create("Sample description")
-            ))
-            {
-                Id = AuctionId
-            }
-        );
-
+        
+        if (!_context.Auctions.Any(p => p.Id == AutoAuctionId))
+        {
+            _context.Auctions.Add(new AuctionEntity(
+                    10,
+                    Auction.AuctionType.FirstComeFirstServed,
+                    new AuctionMetadataEntity(
+                        AuctionTitle.Create("Sample item 2"),
+                        AuctionDescription.Create("Sample description 2")
+                    ))
+                {
+                    Id = AutoAuctionId
+                }
+            );
+        }
+        
         _context.SaveChanges();
     }
 }

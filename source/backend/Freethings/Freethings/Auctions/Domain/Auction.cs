@@ -67,10 +67,10 @@ public sealed class Auction : AggregateRoot
         {
             throw AuctionExceptions.CannotReserveIfThereIsNoClaimReferenced.Exception;
         }
-
-        if (_availableQuantity < claim.Quantity)
+        
+        if (claim.IsReserved)
         {
-            throw AuctionExceptions.AvailableQuantitySmallerThanAvailable.Exception;
+            return;
         }
         
         IClaimedItemsReservationStrategy reservationStrategy = command.TriggeredByUser
@@ -80,6 +80,11 @@ public sealed class Auction : AggregateRoot
         if (!reservationStrategy.CanReserve())
         {
             return;
+        }
+        
+        if (_availableQuantity < claim.Quantity)
+        {
+            throw AuctionExceptions.AvailableQuantitySmallerThanAvailable.Exception;
         }
 
         claim.MarkAsReserved();
