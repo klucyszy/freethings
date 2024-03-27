@@ -9,6 +9,9 @@ public static class ClaimAuctionItemEndpoint
 {
     private sealed record ClaimItemsQueryParameters(
         [Range(1, Int32.MaxValue)] int Quantity = 1);
+    
+    private sealed record ReserveClaimedItemsQueryParameters(
+        [Range(1, Int32.MaxValue)] int Quantity = 1);
 
     public static RouteGroupBuilder MapAuctionEndpoints(this RouteGroupBuilder group)
     {
@@ -20,7 +23,28 @@ public static class ClaimAuctionItemEndpoint
                 CancellationToken ct)
             =>
         {
-            await sender.Send(new ClaimItemCommand(auctionId, userId, parameters.Quantity), ct);
+            await sender.Send(new ClaimItemsCommand(
+                auctionId,
+                userId,
+                parameters.Quantity), ct);
+
+            return TypedResults.NoContent();
+        });
+        
+        group.MapPost("reserve", async (
+                [FromRoute] Guid userId,
+                [FromRoute] Guid auctionId,
+                [FromRoute] Guid claimId,
+                [AsParameters] ClaimItemsQueryParameters parameters,
+                ISender sender,
+                CancellationToken ct)
+            =>
+        {
+            await sender.Send(new ReserveClaimedItemsCommand(
+                auctionId,
+                claimId,
+                parameters.Quantity,
+                true), ct);
 
             return TypedResults.NoContent();
         });

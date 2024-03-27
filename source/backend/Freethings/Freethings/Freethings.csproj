@@ -21,7 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Auctions\Presentation\Events\ItemClaimed\" />
       <Folder Include="Offers\Infrastructure\Persistence\Migrations\" />
     </ItemGroup>
     

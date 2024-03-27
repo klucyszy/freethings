@@ -1,3 +1,5 @@
+namespace Freethings.Auctions.Infrastructure.Persistence.Entities.ValueObjects;
+
 public sealed record AuctionDescription
 {
     public string Value { get; }

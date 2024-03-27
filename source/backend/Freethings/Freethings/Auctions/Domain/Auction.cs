@@ -1,9 +1,8 @@
 using Freethings.Auctions.Domain.Exceptions;
 using Freethings.Auctions.Domain.Strategies;
-using Freethings.Auctions.Domain.Strategies.Abstractions;
+using Freethings.Auctions.Domain.Strategies.ClaimedItemsReservationStrategy;
 using Freethings.Contracts.Events;
 using Freethings.Shared.Abstractions.Domain;
-using Freethings.Shared.Abstractions.Domain.Exceptions;
 using Freethings.Shared.Infrastructure.Time;
 
 namespace Freethings.Auctions.Domain;
@@ -13,28 +12,28 @@ public sealed class Auction : AggregateRoot
     public IReadOnlyCollection<AuctionClaim> Claims => _auctionClaims.AsReadOnly();
     public int AvailableQuantity => _availableQuantity;
     
-    private readonly IClaimBehaviorStrategy _claimBehaviorStrategy;
     private readonly ICurrentTime _currentTime;
-    
+
     private readonly List<AuctionClaim> _auctionClaims;
+    private readonly AuctionType _auctionType;
     private int _availableQuantity;
-    
+
     public enum AuctionType
     {
         Manual,
         FirstComeFirstServed
     }
-    
-    public  Auction(Guid id, List<AuctionClaim> auctionClaims, int availableQuantity, AuctionType auctionType,
+
+    public Auction(Guid id, List<AuctionClaim> auctionClaims, int availableQuantity, AuctionType auctionType,
         ICurrentTime currentTime)
     {
         Id = id;
         _auctionClaims = auctionClaims;
         _availableQuantity = availableQuantity;
+        _auctionType = auctionType;
         _currentTime = currentTime;
-        _claimBehaviorStrategy = ClaimBehaviorStrategyFactory.Create(auctionType, availableQuantity, currentTime);
     }
-    
+
     public void Claim(ClaimCommand command)
     {
         if (_auctionClaims.Exists(x => x.ClaimedById == command.ClaimedById))
@@ -42,97 +41,99 @@ public sealed class Auction : AggregateRoot
             throw AuctionExceptions.SameUserCannotCreateTwoClaimsOnOneAuction.Exception;
         }
         
-        ClaimStrategyResult<AuctionClaim, DomainException> result =
-            _claimBehaviorStrategy.Claim(command);
-        
-        if (!result.CanBeClaimed)
-        {
-            throw result.FailureReason;
-        }
-        
-        _auctionClaims.Add(result.Claim);
+        AuctionClaim claim = new AuctionClaim(
+            command.ClaimedById,
+            command.Quantity,
+            command.Comment,
+            _currentTime.UtcNow(),
+            false
+        );
 
-        if (result.Claim.IsReserved)
-        {
-            AddDomainEvent(new AuctionEvent.ItemsReserved(
-                result.Claim.ClaimedById,
-                result.Claim.Quantity,
-                result.Claim.Timestamp.Value));
-        }
-        else
-        {
-            AddDomainEvent(new AuctionEvent.ItemsClaimed(
-                result.Claim.ClaimedById,
-                result.Claim.Quantity,
-                result.Claim.Timestamp.Value));
-        }
+        _auctionClaims.Add(claim);
+
+        AddDomainEvent(new AuctionEvent.ItemsClaimed(
+            Id,
+            claim.ClaimedById,
+            claim.Quantity,
+            claim.Timestamp.Value));
     }
 
-    public AuctionEvent.ItemsReserved Reserve(ReserveCommand command)
+    public void Reserve(ReserveCommand command)
     {
         AuctionClaim claim = _auctionClaims
             .FirstOrDefault(x => x.ClaimedById == command.ClaimedById);
-        
+
         if (claim is null)
         {
             throw AuctionExceptions.CannotReserveIfThereIsNoClaimReferenced.Exception;
         }
-        
+
         if (_availableQuantity < claim.Quantity)
         {
             throw AuctionExceptions.AvailableQuantitySmallerThanAvailable.Exception;
         }
         
+        IClaimedItemsReservationStrategy reservationStrategy = command.TriggeredByUser
+            ? new AlwaysAllowReservationStrategy()
+            : ClaimedItemsReservationStrategyFactory.Create(_auctionType);
+        
+        if (!reservationStrategy.CanReserve())
+        {
+            return;
+        }
+
         claim.MarkAsReserved();
         
-        return new AuctionEvent.ItemsReserved(
+        AddDomainEvent(new AuctionEvent.ItemsReserved(
+            Id,
             claim.ClaimedById,
             claim.Quantity,
-            _currentTime.Now());
+            claim.Timestamp.Value));
     }
-    
+
     // TODO: Think, does quantity can be decreased by handover?. Does quantity can be higher than in handover?
     public AuctionEvent.ItemsHandedOver HandOver(HandOverCommand command)
     {
         AuctionClaim claim = _auctionClaims
             .FirstOrDefault(x => x.IsReserved && x.ClaimedById == command.ClaimedById);
-        
+
         if (claim is null)
         {
             throw AuctionExceptions.CannotHandOverIfThereIsNoClaimReferenced.Exception;
         }
-        
+
         if (_availableQuantity < claim.Quantity)
         {
             throw AuctionExceptions.AvailableQuantitySmallerThanClaimed.Exception;
         }
-        
+
         _availableQuantity -= claim.Quantity;
-        
+
         // TODO: What to do, if quantity is 0?
-        
+
         return new AuctionEvent.ItemsHandedOver(
+            Id,
             command.ClaimedById,
             claim.Quantity,
             _availableQuantity);
     }
-    
+
     public void ChangeAvailableQuantity(int newQuantity)
     {
         _availableQuantity = newQuantity;
-        
+
         // there should be validated if new quantity is not less than already reserved. If so, cancel reservations
-        
     }
-    
+
     public sealed record ClaimCommand(
         Guid ClaimedById,
         int Quantity,
         string Comment = default);
 
     public sealed record ReserveCommand(
-        Guid ClaimedById);
-    
+        Guid ClaimedById,
+        bool TriggeredByUser = true);
+
     public sealed record HandOverCommand(
         Guid ClaimedById,
         int? Quantity = null);

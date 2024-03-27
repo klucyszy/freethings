@@ -18,8 +18,7 @@ public sealed class AuctionWithManualSelectionTests
         int claimedQuantity = 3;
 
         // act
-        manualAuction.Claim(
-            new Auction.ClaimCommand(userId, claimedQuantity));
+        manualAuction.Claim(new Auction.ClaimCommand(userId, claimedQuantity));
 
         // assert
         using (new AssertionScope())
@@ -58,13 +57,15 @@ public sealed class AuctionWithManualSelectionTests
 
         // act
         manualAuction.Claim(new Auction.ClaimCommand(userId, claimedQuantity));
-        AuctionEvent.ItemsReserved? commandResult = manualAuction.Reserve(new Auction.ReserveCommand(userId));
+        manualAuction.Reserve(new Auction.ReserveCommand(userId));
 
         // assert
         using (new AssertionScope())
         {
+            AuctionEvent.ItemsReserved commandResult = (AuctionEvent.ItemsReserved) manualAuction.DomainEvents.Last();
+            
             commandResult.Should().NotBeNull();
-            commandResult.ClaimedById.Should().Be(userId);
+            commandResult.ReservedById.Should().Be(userId);
         }
     }
     

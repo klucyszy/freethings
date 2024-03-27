@@ -7,23 +7,23 @@ using MediatR;
 
 namespace Freethings.Auctions.Application.Commands;
 
-public sealed record ClaimItemCommand(
+public sealed record ClaimItemsCommand(
     Guid AuctionId,
     Guid UserId,
     int Quantity) : IRequest<Result>;
 
-internal sealed class ClaimItemHandler : IRequestHandler<ClaimItemCommand, Result>
+internal sealed class ClaimItemsHandler : IRequestHandler<ClaimItemsCommand, Result>
 {
     private readonly IAggregateRootRepository<Auction> _repository;
     private readonly IEventBus _eventBus;
 
-    public ClaimItemHandler(IAggregateRootRepository<Auction> repository, IEventBus eventBus)
+    public ClaimItemsHandler(IAggregateRootRepository<Auction> repository, IEventBus eventBus)
     {
         _repository = repository;
         _eventBus = eventBus;
     }
 
-    public async Task<Result> Handle(ClaimItemCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(ClaimItemsCommand request, CancellationToken cancellationToken)
     {
         Auction auction = await _repository.GetAsync(request.AuctionId, cancellationToken);
 
