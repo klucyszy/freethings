@@ -1,6 +1,5 @@
 using Freethings.Shared.Abstractions.Messaging;
 using Freethings.Shared.Infrastructure.Messaging;
-using Freethings.Shared.Infrastructure.Time;
 
 namespace Freethings.Shared.Infrastructure;
 

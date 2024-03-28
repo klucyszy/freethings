@@ -1,7 +1,6 @@
 using Freethings.Auctions.Domain;
 using Freethings.Auctions.Infrastructure.Persistence.Entities;
 using Freethings.Shared.Infrastructure.Persistence;
-using Freethings.Shared.Infrastructure.Time;
 
 namespace Freethings.Auctions.Infrastructure.Persistence.Mappers;
 

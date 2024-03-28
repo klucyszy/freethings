@@ -2,7 +2,6 @@ using Freethings.Auctions.Domain;
 using Freethings.Auctions.Infrastructure.Persistence.Entities;
 using Freethings.Auctions.Infrastructure.Persistence.Mappers;
 using Freethings.Shared.Abstractions.Domain;
-using Freethings.Shared.Infrastructure.Time;
 using Microsoft.EntityFrameworkCore;
 
 namespace Freethings.Auctions.Infrastructure.Persistence.Repositories;

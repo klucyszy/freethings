@@ -2,7 +2,6 @@ using Freethings.Auctions.Domain.Exceptions;
 using Freethings.Auctions.Domain.Strategies.ClaimedItemsReservationStrategy;
 using Freethings.Contracts.Events;
 using Freethings.Shared.Abstractions.Domain;
-using Freethings.Shared.Infrastructure.Time;
 
 namespace Freethings.Auctions.Domain;
 
