@@ -30,7 +30,6 @@ if (app.Environment.IsDevelopment())
     app.SeedWithSampleData();
 }
 
-app.MapOffersEndpoints();
 app.MapAuctionsEndpoints();
 
 app.UseHttpsRedirection();
