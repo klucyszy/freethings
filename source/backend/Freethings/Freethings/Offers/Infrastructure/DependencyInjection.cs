@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Freethings.Offers.Infrastructure;
 
-public static class DependencyInjection
+internal static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {

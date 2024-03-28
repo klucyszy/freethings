@@ -1,6 +1,6 @@
 namespace Freethings.Offers.Application;
 
-public static class DependencyInjection
+internal static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {

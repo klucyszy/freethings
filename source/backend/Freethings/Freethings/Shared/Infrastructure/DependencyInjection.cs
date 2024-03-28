@@ -3,7 +3,7 @@ using Freethings.Shared.Infrastructure.Messaging;
 
 namespace Freethings.Shared.Infrastructure;
 
-public static class DependencyInjection
+internal static class DependencyInjection
 {
     public static IServiceCollection AddModularSharedInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {

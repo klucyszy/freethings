@@ -3,7 +3,7 @@ using Freethings.Auctions.Presentation;
 
 namespace Freethings.Auctions;
 
-public static class DependencyInjection
+internal static class DependencyInjection
 {
     public static IServiceCollection AddAuctions(this IServiceCollection services, IConfiguration configuration)
     {

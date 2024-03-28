@@ -4,7 +4,7 @@ using Freethings.Offers.Presentation;
 
 namespace Freethings.Offers;
 
-public static class DependencyInjection
+internal static class DependencyInjection
 {
     public static IServiceCollection AddOffers(this IServiceCollection services, IConfiguration configuration)
     {
