@@ -12,7 +12,7 @@ public sealed record EditOfferCommand(
     string Title,
     string Description) : IRequest<Result>;
 
-public sealed class EditOfferHandler : IRequestHandler<EditOfferCommand, Result>
+internal sealed class EditOfferHandler : IRequestHandler<EditOfferCommand, Result>
 {
     private readonly IOfferRepository _repository;
     public EditOfferHandler(IOfferRepository repository)

@@ -1,5 +1,4 @@
 using Freethings.Auctions.Domain.Exceptions;
-using Freethings.Auctions.Domain.Strategies;
 using Freethings.Auctions.Domain.Strategies.ClaimedItemsReservationStrategy;
 using Freethings.Contracts.Events;
 using Freethings.Shared.Abstractions.Domain;

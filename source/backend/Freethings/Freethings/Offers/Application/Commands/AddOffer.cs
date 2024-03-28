@@ -11,7 +11,7 @@ public sealed record AddOfferCommand(
     string Description,
     int Quantity) : IRequest<Guid>;
 
-public sealed class AddOfferHandler : IRequestHandler<AddOfferCommand, Guid>
+internal sealed class AddOfferHandler : IRequestHandler<AddOfferCommand, Guid>
 {
     private readonly IOfferRepository _repository;
     public AddOfferHandler(IOfferRepository repository)

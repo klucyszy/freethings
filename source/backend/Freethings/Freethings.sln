@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Freethings", "Freethings\Fr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Freethings.UnitTests", "Freethings.UnitTests\Freethings.UnitTests.csproj", "{934E6D7F-763B-40CA-B5A3-7AAC948460EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Freethings.ArchTests", "Freethings.ArchTests\Freethings.ArchTests.csproj", "{9012B413-9023-46CC-8DC0-BB6DBDA3B07B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{934E6D7F-763B-40CA-B5A3-7AAC948460EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{934E6D7F-763B-40CA-B5A3-7AAC948460EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{934E6D7F-763B-40CA-B5A3-7AAC948460EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9012B413-9023-46CC-8DC0-BB6DBDA3B07B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9012B413-9023-46CC-8DC0-BB6DBDA3B07B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9012B413-9023-46CC-8DC0-BB6DBDA3B07B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9012B413-9023-46CC-8DC0-BB6DBDA3B07B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

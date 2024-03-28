@@ -1,6 +1,5 @@
 using Freethings.Auctions.Application.Errors;
 using Freethings.Auctions.Domain;
-using Freethings.Auctions.Domain.Strategies;
 using Freethings.Shared.Abstractions.Domain;
 using Freethings.Shared.Abstractions.Messaging;
 using Freethings.Shared.Infrastructure;

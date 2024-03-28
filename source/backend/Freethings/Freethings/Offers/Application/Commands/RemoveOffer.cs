@@ -8,7 +8,7 @@ public sealed record RemoveOfferCommand(
     Guid UserId,
     Guid OfferId) : IRequest<Result>;
 
-public sealed class RemoveOfferHandler : IRequestHandler<RemoveOfferCommand, Result>
+internal sealed class RemoveOfferHandler : IRequestHandler<RemoveOfferCommand, Result>
 {
     private readonly IOfferRepository _repository;
     public RemoveOfferHandler(IOfferRepository repository)

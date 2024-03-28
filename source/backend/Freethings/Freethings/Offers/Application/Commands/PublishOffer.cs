@@ -10,7 +10,7 @@ public sealed record PublishOfferCommand(
     Guid UserId,
     Guid OfferId) : IRequest<Result>;
 
-public sealed class PublishOfferHandler : IRequestHandler<PublishOfferCommand, Result>
+internal sealed class PublishOfferHandler : IRequestHandler<PublishOfferCommand, Result>
 {
     private readonly IOfferRepository _repository;
     private readonly IEventBus _bus;
