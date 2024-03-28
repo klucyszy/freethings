@@ -5,7 +5,7 @@ using Freethings.Auctions.Domain.Exceptions;
 using Freethings.Contracts.Events;
 using Freethings.Shared.Abstractions.Domain.Exceptions;
 
-namespace Freethings.UnitTests.Auctions;
+namespace Freethings.UnitTests.Auctions.Domain;
 
 public sealed class AuctionWithManualSelectionTests
 {

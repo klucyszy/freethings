@@ -19,9 +19,9 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
         <PackageReference Include="Scrutor" Version="4.2.2" />
     </ItemGroup>
-
+    
     <ItemGroup>
-      <Folder Include="Offers\Infrastructure\Persistence\Migrations\" />
+        <InternalsVisibleTo Include="Freethings.UnitTests" />
     </ItemGroup>
     
 </Project>
