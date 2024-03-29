@@ -1,6 +1,4 @@
 using Freethings.Auctions.Domain;
-using Freethings.Auctions.Infrastructure.Persistence.Entities;
-using Freethings.Auctions.Infrastructure.Persistence.Entities.ValueObjects;
 using Freethings.Shared.Abstractions.Persistence;
 
 namespace Freethings.Auctions.Infrastructure.Persistence;
@@ -21,13 +19,11 @@ internal sealed class AuctionsSeeder : IDataSeeder
     {
         if (!_context.Auctions.Any(p => p.Id == ManualAuctionId))
         {
-            _context.Auctions.Add(new AuctionEntity(
-                    10,
+            _context.Auctions.Add(new AuctionAdvert(
+                    Quantity.Create(10),
                     AuctionType.Manual,
-                    new AuctionMetadataEntity(
-                        AuctionTitle.Create("Sample item"),
-                        AuctionDescription.Create("Sample description")
-                    ))
+                    Title.Create("Sample item"),
+                    Description.Create("Description"))
                 {
                     Id = ManualAuctionId
                 }
@@ -36,13 +32,11 @@ internal sealed class AuctionsSeeder : IDataSeeder
         
         if (!_context.Auctions.Any(p => p.Id == AutoAuctionId))
         {
-            _context.Auctions.Add(new AuctionEntity(
-                    10,
+            _context.Auctions.Add(new AuctionAdvert(
+                    Quantity.Create(10),
                     AuctionType.FirstComeFirstServed,
-                    new AuctionMetadataEntity(
-                        AuctionTitle.Create("Sample item 2"),
-                        AuctionDescription.Create("Sample description 2")
-                    ))
+                    Title.Create("Sample item"),
+                    Description.Create("Description"))
                 {
                     Id = AutoAuctionId
                 }

@@ -15,10 +15,10 @@ public sealed record ReserveClaimedItemsCommand(
 
 internal sealed class ReserveClaimedItemsHandler : IRequestHandler<ReserveClaimedItemsCommand, Result>
 {
-    private readonly IAggregateRootRepository<Auction> _repository;
+    private readonly IAggregateRootRepository<AuctionAggregate> _repository;
     private readonly IEventBus _eventBus;
 
-    public ReserveClaimedItemsHandler(IAggregateRootRepository<Auction> repository, IEventBus eventBus)
+    public ReserveClaimedItemsHandler(IAggregateRootRepository<AuctionAggregate> repository, IEventBus eventBus)
     {
         _repository = repository;
         _eventBus = eventBus;
@@ -26,20 +26,20 @@ internal sealed class ReserveClaimedItemsHandler : IRequestHandler<ReserveClaime
 
     public async Task<Result> Handle(ReserveClaimedItemsCommand request, CancellationToken cancellationToken)
     {
-        Auction auction = await _repository
+        AuctionAggregate auctionAggregate = await _repository
             .GetAsync(request.AuctionId, cancellationToken);
 
-        if (auction is null)
+        if (auctionAggregate is null)
         {
             return Result.Failure(AuctionErrorDefinition.AuctionNotFound);
         }
         
-        Auction.ReserveCommand command = new Auction.ReserveCommand(request.ClaimId, request.TriggeredByUser);
+        AuctionAggregate.ReserveCommand command = new AuctionAggregate.ReserveCommand(request.ClaimId, request.TriggeredByUser);
         
-        auction.Reserve(command);
+        auctionAggregate.Reserve(command);
         
         List<IDomainEvent> domainEvents = await _repository
-            .SaveAsync(auction, cancellationToken);
+            .SaveAsync(auctionAggregate, cancellationToken);
 
         foreach (IDomainEvent domainEvent in domainEvents)
         {

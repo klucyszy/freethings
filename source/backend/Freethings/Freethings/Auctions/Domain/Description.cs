@@ -1,15 +1,15 @@
-namespace Freethings.Auctions.Infrastructure.Persistence.Entities.ValueObjects;
+namespace Freethings.Auctions.Domain;
 
-public sealed record AuctionDescription
+public sealed record Description
 {
     public string Value { get; }
 
-    private AuctionDescription(string value)
+    private Description(string value)
     {
         Value = value;
     }
 
-    public static AuctionDescription Create(string value)
+    public static Description Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
@@ -21,6 +21,6 @@ public sealed record AuctionDescription
             throw new ArgumentException("Offer description cannot be longer than 500 characters", nameof(value));
         }
 
-        return new AuctionDescription(value);
+        return new Description(value);
     }
 }

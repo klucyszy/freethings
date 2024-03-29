@@ -1,21 +1,17 @@
-using Freethings.Auctions.Infrastructure.Persistence.Entities;
+using Freethings.Auctions.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Freethings.Auctions.Infrastructure.Persistence.Configurations;
 
-internal sealed class AuctionEntityConfiguration : IEntityTypeConfiguration<AuctionEntity>
+internal sealed class AuctionEntityConfiguration : IEntityTypeConfiguration<AuctionAdvert>
 {
-    public void Configure(EntityTypeBuilder<AuctionEntity> builder)
+    public void Configure(EntityTypeBuilder<AuctionAdvert> builder)
     {
         builder.ToTable("Auctions");
 
         builder.HasKey(a => a.Id);
-        builder.Property(a => a.Id).ValueGeneratedOnAdd();
-
-        builder.HasOne(b => b.Metadata)
-            .WithOne(b => b.Auction)
-            .HasForeignKey<AuctionMetadataEntity>(b => b.AuctionId);
+        builder.Property(a => a.Id).ValueGeneratedOnAdd().UseHiLo();
         
         builder.HasMany(b => b.Claims)
             .WithOne(b => b.Auction)

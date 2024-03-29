@@ -1,15 +1,15 @@
-namespace Freethings.Auctions.Infrastructure.Persistence.Entities.ValueObjects;
+namespace Freethings.Auctions.Domain;
 
-public record AuctionTitle
+public record Title
 {
     public string Value { get; }
 
-    private AuctionTitle(string value)
+    private Title(string value)
     {
         Value = value;
     }
 
-    public static AuctionTitle Create(string value)
+    public static Title Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
@@ -21,6 +21,6 @@ public record AuctionTitle
             throw new ArgumentException("Offer title cannot be longer than 100 characters", nameof(value));
         }
 
-        return new AuctionTitle(value);
+        return new Title(value);
     }
 }

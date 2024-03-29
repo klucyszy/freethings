@@ -5,28 +5,30 @@ using Freethings.Shared.Abstractions.Domain;
 
 namespace Freethings.Auctions.Domain;
 
-public sealed class Auction : AggregateRoot
+public sealed class AuctionAggregate : AggregateRoot
 {
-    public IReadOnlyCollection<AuctionClaim> Claims => _auctionClaims.AsReadOnly();
-    public int AvailableQuantity => _availableQuantity;
-    
-    private readonly ICurrentTime _currentTime;
-
     private readonly List<AuctionClaim> _auctionClaims;
-    private readonly AuctionType _auctionType;
-    private int _availableQuantity;
+    public IReadOnlyCollection<AuctionClaim> Claims => _auctionClaims.AsReadOnly();
     
-    public Auction(Guid id, List<AuctionClaim> auctionClaims, int availableQuantity, AuctionType auctionType,
+    private Quantity _availableQuantity;
+    public Quantity AvailableQuantity => _availableQuantity;
+    
+    private readonly AuctionType _auctionType;
+    
+    public AuctionAggregate(
+        Guid id,
+        List<AuctionClaim> auctionClaims,
+        Quantity availableQuantity,
+        AuctionType auctionType,
         ICurrentTime currentTime)
     {
         Id = id;
         _auctionClaims = auctionClaims;
         _availableQuantity = availableQuantity;
         _auctionType = auctionType;
-        _currentTime = currentTime;
     }
 
-    public void Claim(ClaimCommand command)
+    public void Claim(ClaimCommand command, DateTimeOffset currentTime)
     {
         if (_auctionClaims.Exists(x => x.ClaimedById == command.ClaimedById))
         {
@@ -35,9 +37,10 @@ public sealed class Auction : AggregateRoot
         
         AuctionClaim claim = new AuctionClaim(
             command.ClaimedById,
+            this.Id,
             command.Quantity,
             command.Comment,
-            _currentTime.UtcNow(),
+            currentTime,
             false
         );
 
@@ -46,7 +49,7 @@ public sealed class Auction : AggregateRoot
         AddDomainEvent(new AuctionEvent.ItemsClaimed(
             Id,
             claim.ClaimedById,
-            claim.Quantity,
+            claim.Quantity.Value,
             claim.Timestamp.Value));
     }
 
@@ -84,7 +87,7 @@ public sealed class Auction : AggregateRoot
         AddDomainEvent(new AuctionEvent.ItemsReserved(
             Id,
             claim.ClaimedById,
-            claim.Quantity,
+            claim.Quantity.Value,
             claim.Timestamp.Value));
     }
 
@@ -111,11 +114,11 @@ public sealed class Auction : AggregateRoot
         return new AuctionEvent.ItemsHandedOver(
             Id,
             command.ClaimedById,
-            claim.Quantity,
-            _availableQuantity);
+            claim.Quantity.Value,
+            _availableQuantity.Value);
     }
 
-    public void ChangeAvailableQuantity(int newQuantity)
+    public void ChangeAvailableQuantity(Quantity newQuantity)
     {
         _availableQuantity = newQuantity;
 
@@ -124,7 +127,7 @@ public sealed class Auction : AggregateRoot
 
     public sealed record ClaimCommand(
         Guid ClaimedById,
-        int Quantity,
+        Quantity Quantity,
         string Comment = default);
 
     public sealed record ReserveCommand(
@@ -133,5 +136,5 @@ public sealed class Auction : AggregateRoot
 
     public sealed record HandOverCommand(
         Guid ClaimedById,
-        int? Quantity = null);
+        Quantity? Quantity = null);
 }

@@ -15,7 +15,7 @@ internal static class DependencyInjection
             AuctionContextOptions.ModuleName);
 
         services.AddScoped<IDataSeeder, AuctionsSeeder>();
-        services.AddScoped<IAggregateRootRepository<Auction>, AuctionsRepository>();
+        services.AddScoped<IAggregateRootRepository<AuctionAggregate>, AuctionAggregateRepository>();
         
         return services;
     }

@@ -1,39 +1,32 @@
 using Freethings.Auctions.Domain;
-using Freethings.Auctions.Infrastructure.Persistence.Entities;
-using Freethings.Shared.Infrastructure.Persistence;
 
 namespace Freethings.Auctions.Infrastructure.Persistence.Mappers;
 
 internal static class AuctionMapper
 {
-    public static AuctionEntity ToEntity(this Auction auction, AuctionEntity currentEntityState)
+    public static AuctionAdvert ToEntity(this AuctionAggregate auctionAggregate, AuctionAdvert currentEntityState)
     {
-        currentEntityState.Quantity = auction.AvailableQuantity;
-        currentEntityState.Claims.Update(
-            auction.Claims.ToList(),
-            (entity, aggregate) => entity.UserId == aggregate.ClaimedById,
-            auctionClaim => new AuctionClaimEntity(
-                auctionClaim.ClaimedById,
-                auctionClaim.Quantity,
-                auctionClaim.Comment,
-                auctionClaim.Timestamp,
-                auctionClaim.IsReserved)
-        );
+        // TODO: Do the mapping again
+        // currentEntityState.Quantity = auctionAggregate.AvailableQuantity;
+        // currentEntityState.Claims.Update(
+        //     auctionAggregate.Claims.ToList(),
+        //     (entity, aggregate) => entity.UserId == aggregate.ClaimedById,
+        //     auctionClaim => new AuctionClaimEntity(
+        //         auctionClaim.ClaimedById,
+        //         auctionClaim.Quantity,
+        //         auctionClaim.Comment,
+        //         auctionClaim.Timestamp,
+        //         auctionClaim.IsReserved)
+        // );
 
         return currentEntityState;
     }
 
-    public static Auction ToAggregate(this AuctionEntity auctionEntity, ICurrentTime currentTime)
+    public static AuctionAggregate ToAggregate(this AuctionAdvert auctionEntity, ICurrentTime currentTime)
     {
-        return new Auction(
+        return new AuctionAggregate(
             auctionEntity.Id,
-            auctionEntity.Claims.Select(e => new AuctionClaim(
-                    e.UserId,
-                    e.Quantity,
-                    e.Comment,
-                    e.Timestamp,
-                    e.IsReserved))
-                .ToList(),
+            auctionEntity.Claims.ToList(),
             auctionEntity.Quantity,
             auctionEntity.Type,
             currentTime);

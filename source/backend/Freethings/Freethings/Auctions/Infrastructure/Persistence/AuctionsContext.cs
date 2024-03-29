@@ -1,5 +1,5 @@
+using Freethings.Auctions.Domain;
 using Freethings.Auctions.Infrastructure.Persistence.Configurations;
-using Freethings.Auctions.Infrastructure.Persistence.Entities;
 using Freethings.Shared.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +11,7 @@ internal sealed class AuctionsContext : DbContext
     {
     }
 
-    public DbSet<AuctionEntity> Auctions { get; set; }
+    public DbSet<AuctionAdvert> Auctions { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

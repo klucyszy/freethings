@@ -2,7 +2,6 @@ using System.Reflection;
 using Freethings.Auctions;
 using Freethings.Auctions.Presentation;
 using Freethings.Offers;
-using Freethings.Offers.Presentation;
 using Freethings.Shared.Infrastructure;
 using Freethings.Shared.Infrastructure.Persistence;
 

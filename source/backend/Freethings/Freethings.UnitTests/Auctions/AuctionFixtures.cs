@@ -5,15 +5,15 @@ namespace Freethings.UnitTests.Auctions;
 
 public static class AuctionFixtures
 {
-    public static Auction CreateAuction(AuctionType auctionType, int availableQuantity)
+    public static AuctionAggregate CreateAuction(AuctionType auctionType, int availableQuantity)
     {
-        Auction auction = new Auction(
+        AuctionAggregate auctionAggregate = new AuctionAggregate(
             Guid.NewGuid(),
             new List<AuctionClaim>(),
-            availableQuantity,
+            Quantity.Create(availableQuantity),
             auctionType,
             new CurrentTime());
 
-        return auction;
+        return auctionAggregate;
     }
 }

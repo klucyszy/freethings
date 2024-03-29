@@ -6,6 +6,7 @@ using Freethings.Auctions.Domain;
 using Freethings.Shared.Abstractions.Domain;
 using Freethings.Shared.Abstractions.Messaging;
 using Freethings.Shared.Infrastructure;
+using Freethings.Shared.Infrastructure.Time;
 using NSubstitute;
 
 namespace Freethings.UnitTests.Auctions.Application;
@@ -49,7 +50,7 @@ public sealed class ClaimItemCommandTests
             .Returns(AuctionFixtures.CreateAuction(AuctionType.Manual, 10));
         _repository
             .SaveAsync(
-                Arg.Is<Auction>(p => p.DomainEvents.Count > 0),
+                Arg.Is<AuctionAggregate>(p => p.DomainEvents.Count > 0),
                 Arg.Any<CancellationToken>())
             .Returns(new List<IDomainEvent>());
         
@@ -67,16 +68,17 @@ public sealed class ClaimItemCommandTests
 
     private readonly ClaimItemsHandler _handler;
 
-    private readonly IAggregateRootRepository<Auction>
-        _repository = Substitute.For<IAggregateRootRepository<Auction>>();
+    private readonly IAggregateRootRepository<AuctionAggregate>
+        _repository = Substitute.For<IAggregateRootRepository<AuctionAggregate>>();
     private readonly IEventBus _eventBus = Substitute.For<IEventBus>();
+    private readonly ICurrentTime _currentTime = new CurrentTime();
     
     public ClaimItemCommandTests()
     {
         _handler = new ClaimItemsHandler(
             _repository,
-            _eventBus
-            );
+            _eventBus,
+            _currentTime);
     }
 
     #endregion

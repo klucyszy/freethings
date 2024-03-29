@@ -2,7 +2,7 @@ namespace Freethings.Shared.Abstractions.Domain;
 
 public abstract class AggregateRoot
 {
-    public Guid Id { get; protected set; }
+    public Guid Id { get; set; }
     
     private readonly List<IDomainEvent> _domainEvents = [];
 

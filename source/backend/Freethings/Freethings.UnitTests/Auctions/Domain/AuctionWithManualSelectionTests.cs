@@ -13,20 +13,20 @@ public sealed class AuctionWithManualSelectionTests
     public void CanClaimAuctionItem()
     {
         // arrange
-        Auction manualAuction = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
+        AuctionAggregate manualAuctionAggregate = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
         Guid userId = Guid.NewGuid();
-        int claimedQuantity = 3;
+        Quantity claimedQuantity = Quantity.Create(3);
 
         // act
-        manualAuction.Claim(new Auction.ClaimCommand(userId, claimedQuantity));
+        manualAuctionAggregate.Claim(new AuctionAggregate.ClaimCommand(userId, claimedQuantity), DateTimeOffset.UtcNow);
 
         // assert
         using (new AssertionScope())
         {
-            AuctionEvent.ItemsClaimed commandResult = (AuctionEvent.ItemsClaimed) manualAuction.DomainEvents.First();
+            AuctionEvent.ItemsClaimed commandResult = (AuctionEvent.ItemsClaimed) manualAuctionAggregate.DomainEvents.First();
             
             commandResult.ClaimedById.Should().Be(userId);
-            commandResult.ClaimedQuantity.Should().Be(claimedQuantity);
+            commandResult.ClaimedQuantity.Should().Be(claimedQuantity.Value);
         }
     }
     
@@ -34,13 +34,13 @@ public sealed class AuctionWithManualSelectionTests
     public void CannotClaimOnSameAuctionTwiceByOneClaimer()
     {
         // arrange
-        Auction manualAuction = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
+        AuctionAggregate manualAuctionAggregate = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
         Guid userId = Guid.NewGuid();
-        int claimedQuantity = 3;
+        Quantity claimedQuantity = Quantity.Create(3);
 
         // act
-        manualAuction.Claim(new Auction.ClaimCommand(userId, claimedQuantity));
-        Action act = () => manualAuction.Claim(new Auction.ClaimCommand(userId, claimedQuantity));
+        manualAuctionAggregate.Claim(new AuctionAggregate.ClaimCommand(userId, claimedQuantity), DateTimeOffset.UtcNow);
+        Action act = () => manualAuctionAggregate.Claim(new AuctionAggregate.ClaimCommand(userId, claimedQuantity), DateTimeOffset.UtcNow);
         
         // assert
         act.Should().Throw<DomainException>()
@@ -51,18 +51,18 @@ public sealed class AuctionWithManualSelectionTests
     public void AuctionItemClaimCanBeReservedManually()
     {
         // arrange
-        Auction manualAuction = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
+        AuctionAggregate manualAuctionAggregate = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
         Guid userId = Guid.NewGuid();
-        int claimedQuantity = 3;
+        Quantity claimedQuantity = Quantity.Create(3);
 
         // act
-        manualAuction.Claim(new Auction.ClaimCommand(userId, claimedQuantity));
-        manualAuction.Reserve(new Auction.ReserveCommand(userId));
+        manualAuctionAggregate.Claim(new AuctionAggregate.ClaimCommand(userId, claimedQuantity), DateTimeOffset.UtcNow);
+        manualAuctionAggregate.Reserve(new AuctionAggregate.ReserveCommand(userId));
 
         // assert
         using (new AssertionScope())
         {
-            AuctionEvent.ItemsReserved commandResult = (AuctionEvent.ItemsReserved) manualAuction.DomainEvents.Last();
+            AuctionEvent.ItemsReserved commandResult = (AuctionEvent.ItemsReserved) manualAuctionAggregate.DomainEvents.Last();
             
             commandResult.Should().NotBeNull();
             commandResult.ReservedById.Should().Be(userId);
@@ -73,11 +73,11 @@ public sealed class AuctionWithManualSelectionTests
     public void CannotReserveIfThereIsNoCorrespondingClaimExists()
     {
         // arrange
-        Auction manualAuction = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
+        AuctionAggregate manualAuctionAggregate = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
         Guid userId = Guid.NewGuid();
 
         // act
-        Action act = () => manualAuction.Reserve(new Auction.ReserveCommand(userId));
+        Action act = () => manualAuctionAggregate.Reserve(new AuctionAggregate.ReserveCommand(userId));
         
         // assert
         act.Should().Throw<DomainException>()
@@ -88,18 +88,18 @@ public sealed class AuctionWithManualSelectionTests
     public void ReserveShouldFailIfWantToReserveMoreThanAvailable()
     {
         // arrange
-        Auction manualAuction = AuctionFixtures
+        AuctionAggregate manualAuctionAggregate = AuctionFixtures
             .CreateAuction(AuctionType.Manual, 10);
         Guid userId = Guid.NewGuid();
         Guid otherUserId = Guid.NewGuid();
 
         // act
-        manualAuction.Claim(new Auction.ClaimCommand(userId, 5));
-        manualAuction.Reserve(new Auction.ReserveCommand(userId));
-        manualAuction.HandOver(new Auction.HandOverCommand(userId));
+        manualAuctionAggregate.Claim(new AuctionAggregate.ClaimCommand(userId, Quantity.Create(5)), DateTimeOffset.UtcNow);
+        manualAuctionAggregate.Reserve(new AuctionAggregate.ReserveCommand(userId));
+        manualAuctionAggregate.HandOver(new AuctionAggregate.HandOverCommand(userId));
         
-        manualAuction.Claim(new Auction.ClaimCommand(otherUserId, 6));
-        Action action = () => manualAuction.Reserve(new Auction.ReserveCommand(otherUserId));
+        manualAuctionAggregate.Claim(new AuctionAggregate.ClaimCommand(otherUserId, Quantity.Create(6)), DateTimeOffset.UtcNow);
+        Action action = () => manualAuctionAggregate.Reserve(new AuctionAggregate.ReserveCommand(otherUserId));
         
         // assert
         action.Should().Throw<DomainException>()
@@ -111,21 +111,21 @@ public sealed class AuctionWithManualSelectionTests
     {
         // arrange
         int initialQuantity = 10;
-        Auction manualAuction = AuctionFixtures.CreateAuction(AuctionType.Manual, initialQuantity);
+        AuctionAggregate manualAuctionAggregate = AuctionFixtures.CreateAuction(AuctionType.Manual, initialQuantity);
         Guid userId = Guid.NewGuid();
-        int claimedQuantity = 3;
+        Quantity claimedQuantity = Quantity.Create(3);
 
         // act
-        manualAuction.Claim(new Auction.ClaimCommand(userId, claimedQuantity));
-        manualAuction.Reserve(new Auction.ReserveCommand(userId));
-        AuctionEvent.ItemsHandedOver? commandResult = manualAuction.HandOver(new Auction.HandOverCommand(userId));
+        manualAuctionAggregate.Claim(new AuctionAggregate.ClaimCommand(userId, claimedQuantity), DateTimeOffset.UtcNow);
+        manualAuctionAggregate.Reserve(new AuctionAggregate.ReserveCommand(userId));
+        AuctionEvent.ItemsHandedOver? commandResult = manualAuctionAggregate.HandOver(new AuctionAggregate.HandOverCommand(userId));
 
         // assert
         using (new AssertionScope())
         {
             commandResult.Should().NotBeNull();
-            commandResult.HandedOverQuantity.Should().Be(claimedQuantity);
-            commandResult.AvailableQuantity.Should().Be(initialQuantity - claimedQuantity);
+            commandResult.HandedOverQuantity.Should().Be(claimedQuantity.Value);
+            commandResult.AvailableQuantity.Should().Be(initialQuantity - claimedQuantity.Value);
         }
     }
 }

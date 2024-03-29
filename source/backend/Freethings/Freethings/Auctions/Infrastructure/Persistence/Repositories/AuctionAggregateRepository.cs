@@ -1,23 +1,22 @@
 using Freethings.Auctions.Domain;
-using Freethings.Auctions.Infrastructure.Persistence.Entities;
 using Freethings.Auctions.Infrastructure.Persistence.Mappers;
 using Freethings.Shared.Abstractions.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Freethings.Auctions.Infrastructure.Persistence.Repositories;
 
-internal sealed class AuctionsRepository : IAggregateRootRepository<Auction>
+internal sealed class AuctionAggregateRepository : IAggregateRootRepository<AuctionAggregate>
 {
     private readonly AuctionsContext _context;
     private readonly ICurrentTime _currentTime;
 
-    public AuctionsRepository(AuctionsContext context, ICurrentTime currentTime)
+    public AuctionAggregateRepository(AuctionsContext context, ICurrentTime currentTime)
     {
         _context = context;
         _currentTime = currentTime;
     }
 
-    public async Task<Auction> GetAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<AuctionAggregate> GetAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.Auctions
             .Include(p => p.Claims)
@@ -26,9 +25,9 @@ internal sealed class AuctionsRepository : IAggregateRootRepository<Auction>
             .FirstOrDefaultAsync(cancellationToken);
     }
     
-    public async Task<List<IDomainEvent>> SaveAsync(Auction aggregateRoot, CancellationToken cancellationToken = default)
+    public async Task<List<IDomainEvent>> SaveAsync(AuctionAggregate aggregateRoot, CancellationToken cancellationToken = default)
     {
-        AuctionEntity entity = await _context.Auctions
+        AuctionAdvert entity = await _context.Auctions
             .FindAsync(aggregateRoot.Id, cancellationToken);
 
         aggregateRoot.ToEntity(entity);
