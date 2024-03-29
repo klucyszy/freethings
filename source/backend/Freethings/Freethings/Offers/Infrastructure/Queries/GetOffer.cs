@@ -1,6 +1,5 @@
 using Freethings.Offers.Infrastructure.Persistence;
 using Freethings.Offers.Infrastructure.Queries.Shared;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Freethings.Offers.Infrastructure.Queries;

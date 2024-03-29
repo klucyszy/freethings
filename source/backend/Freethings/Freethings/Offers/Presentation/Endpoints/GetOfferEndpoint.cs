@@ -1,6 +1,5 @@
 using Freethings.Offers.Infrastructure.Queries;
 using Freethings.Offers.Infrastructure.Queries.Shared;
-using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 

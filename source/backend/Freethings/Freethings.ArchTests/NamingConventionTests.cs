@@ -12,7 +12,7 @@ public sealed class NamingConventionTests
     public void Handlers_ShouldBeInternalSealedWithHandlerSuffixName()
     {
         // Act
-        var result = Types.InAssembly(Assembly.Load("Freethings"))
+        TestResult? result = Types.InAssembly(Assembly.Load("Freethings"))
             .That()
             .ImplementInterface(typeof(IRequestHandler<,>))
             .Should()
@@ -31,7 +31,7 @@ public sealed class NamingConventionTests
     public void DependencyInjectionExtensions_ShouldBeInternalStatic()
     {
         // Act
-        var result = Types.InAssembly(Assembly.Load("Freethings"))
+        TestResult? result = Types.InAssembly(Assembly.Load("Freethings"))
             .That()
             .HaveName("DependencyInjection")
             .Should()

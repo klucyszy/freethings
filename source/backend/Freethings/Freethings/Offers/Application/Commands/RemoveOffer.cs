@@ -1,6 +1,5 @@
 using Freethings.Offers.Application.Repositories;
 using Freethings.Shared.Infrastructure;
-using MediatR;
 
 namespace Freethings.Offers.Application.Commands;
 

@@ -11,6 +11,8 @@ public sealed class AuctionClaim
     public bool IsReserved { get; private set; }
     public AuctionAdvert Auction { get; private set; } // EF relation
 
+    private AuctionClaim() {} // for EF Core
+    
     public AuctionClaim(Guid claimedById, Guid auctionId, Quantity quantity, string comment,
         DateTimeOffset? timestamp, bool isReserved)
     {

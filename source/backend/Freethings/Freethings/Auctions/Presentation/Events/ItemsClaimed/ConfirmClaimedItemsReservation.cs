@@ -1,7 +1,6 @@
 using Freethings.Auctions.Application.Commands;
 using Freethings.Contracts.Events;
 using Freethings.Shared.Abstractions.Messaging;
-using MediatR;
 
 namespace Freethings.Auctions.Presentation.Events.ItemsClaimed;
 

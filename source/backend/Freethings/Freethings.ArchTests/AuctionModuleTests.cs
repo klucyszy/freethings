@@ -11,9 +11,29 @@ public sealed class AuctionModuleTests
     public void DomainLayer_ShouldNotHaveDependencyOnAboveLayers()
     {
         // Act
-        var result = GetResultOnDomainModuleLayerDoesNotHaveDependencyOnAboveLayers(
-            Assembly.Load("Freethings"),
-            "Freethings.Auctions");
+        Assembly assembly = Assembly.Load("Freethings");
+        string moduleNamespace = "Freethings.Auctions";
+        TestResult result = GetResultOnDomainModuleLayerDoesNotHaveDependencyOnAboveLayers(
+            assembly,
+            moduleNamespace);
+        
+        // Assert
+        using (new AssertionScope())
+        {
+            result.IsSuccessful.Should().BeTrue();
+            result.FailingTypes.Should().BeNullOrEmpty();
+        }
+    }
+    
+    [Fact]
+    public void ApplicationLayer_ShouldNotHaveDependencyOnAboveLayersOrOtherModules()
+    {
+        // Act
+        Assembly assembly = Assembly.Load("Freethings");
+        string moduleNamespace = "Freethings.Auctions";
+        TestResult result = GetResultOnApplicationModuleLayerDoesNotHaveDependencyOnAboveLayers(
+            assembly,
+            moduleNamespace);
         
         // Assert
         using (new AssertionScope())
@@ -31,6 +51,17 @@ public sealed class AuctionModuleTests
             .Should()
             .NotHaveDependencyOn($"{moduleNamespace}.Application")
             .And().NotHaveDependencyOn($"{moduleNamespace}.Infrastructure")
+            .And().NotHaveDependencyOn($"{moduleNamespace}.Presentation")
+            .GetResult();
+    }
+    
+    private TestResult GetResultOnApplicationModuleLayerDoesNotHaveDependencyOnAboveLayers(Assembly assembly, string moduleNamespace)
+    {
+        return Types.InAssembly(assembly)
+            .That()
+            .ResideInNamespace($"{moduleNamespace}.Application")
+            .Should()
+            .NotHaveDependencyOn($"{moduleNamespace}.Infrastructure")
             .And().NotHaveDependencyOn($"{moduleNamespace}.Presentation")
             .GetResult();
     }

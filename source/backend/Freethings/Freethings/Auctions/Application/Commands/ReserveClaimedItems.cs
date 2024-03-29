@@ -3,7 +3,6 @@ using Freethings.Auctions.Domain;
 using Freethings.Shared.Abstractions.Domain;
 using Freethings.Shared.Abstractions.Messaging;
 using Freethings.Shared.Infrastructure;
-using MediatR;
 
 namespace Freethings.Auctions.Application.Commands;
 

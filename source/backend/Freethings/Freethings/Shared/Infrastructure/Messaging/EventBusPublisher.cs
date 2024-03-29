@@ -1,6 +1,5 @@
 using Freethings.Shared.Abstractions.Domain;
 using Freethings.Shared.Abstractions.Messaging;
-using MediatR;
 
 namespace Freethings.Shared.Infrastructure.Messaging;
 

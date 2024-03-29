@@ -17,6 +17,6 @@ internal sealed class AuctionsContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfigurationsFromNamespace(typeof(AuctionEntityConfiguration).Namespace);
+        modelBuilder.ApplyConfigurationsFromNamespace(typeof(AuctionAdvertConfiguration).Namespace);
     }
 }

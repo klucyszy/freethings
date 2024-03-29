@@ -30,7 +30,7 @@ internal sealed class AuctionAggregateRepository : IAggregateRootRepository<Auct
         AuctionAdvert entity = await _context.Auctions
             .FindAsync(aggregateRoot.Id, cancellationToken);
 
-        aggregateRoot.ToEntity(entity);
+        entity!.UpdateState(aggregateRoot);
         
         List<IDomainEvent> domainEvents = aggregateRoot.DomainEvents.ToList();
         
