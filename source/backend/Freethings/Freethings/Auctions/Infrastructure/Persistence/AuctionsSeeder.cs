@@ -23,7 +23,7 @@ internal sealed class AuctionsSeeder : IDataSeeder
         {
             _context.Auctions.Add(new AuctionEntity(
                     10,
-                    Auction.AuctionType.Manual,
+                    AuctionType.Manual,
                     new AuctionMetadataEntity(
                         AuctionTitle.Create("Sample item"),
                         AuctionDescription.Create("Sample description")
@@ -38,7 +38,7 @@ internal sealed class AuctionsSeeder : IDataSeeder
         {
             _context.Auctions.Add(new AuctionEntity(
                     10,
-                    Auction.AuctionType.FirstComeFirstServed,
+                    AuctionType.FirstComeFirstServed,
                     new AuctionMetadataEntity(
                         AuctionTitle.Create("Sample item 2"),
                         AuctionDescription.Create("Sample description 2")

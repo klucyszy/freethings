@@ -13,7 +13,7 @@ public sealed class AuctionWithManualSelectionTests
     public void CanClaimAuctionItem()
     {
         // arrange
-        Auction manualAuction = AuctionFixtures.CreateAuction(Auction.AuctionType.Manual, 10);
+        Auction manualAuction = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
         Guid userId = Guid.NewGuid();
         int claimedQuantity = 3;
 
@@ -34,7 +34,7 @@ public sealed class AuctionWithManualSelectionTests
     public void CannotClaimOnSameAuctionTwiceByOneClaimer()
     {
         // arrange
-        Auction manualAuction = AuctionFixtures.CreateAuction(Auction.AuctionType.Manual, 10);
+        Auction manualAuction = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
         Guid userId = Guid.NewGuid();
         int claimedQuantity = 3;
 
@@ -51,7 +51,7 @@ public sealed class AuctionWithManualSelectionTests
     public void AuctionItemClaimCanBeReservedManually()
     {
         // arrange
-        Auction manualAuction = AuctionFixtures.CreateAuction(Auction.AuctionType.Manual, 10);
+        Auction manualAuction = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
         Guid userId = Guid.NewGuid();
         int claimedQuantity = 3;
 
@@ -73,7 +73,7 @@ public sealed class AuctionWithManualSelectionTests
     public void CannotReserveIfThereIsNoCorrespondingClaimExists()
     {
         // arrange
-        Auction manualAuction = AuctionFixtures.CreateAuction(Auction.AuctionType.Manual, 10);
+        Auction manualAuction = AuctionFixtures.CreateAuction(AuctionType.Manual, 10);
         Guid userId = Guid.NewGuid();
 
         // act
@@ -89,7 +89,7 @@ public sealed class AuctionWithManualSelectionTests
     {
         // arrange
         Auction manualAuction = AuctionFixtures
-            .CreateAuction(Auction.AuctionType.Manual, 10);
+            .CreateAuction(AuctionType.Manual, 10);
         Guid userId = Guid.NewGuid();
         Guid otherUserId = Guid.NewGuid();
 
@@ -111,7 +111,7 @@ public sealed class AuctionWithManualSelectionTests
     {
         // arrange
         int initialQuantity = 10;
-        Auction manualAuction = AuctionFixtures.CreateAuction(Auction.AuctionType.Manual, initialQuantity);
+        Auction manualAuction = AuctionFixtures.CreateAuction(AuctionType.Manual, initialQuantity);
         Guid userId = Guid.NewGuid();
         int claimedQuantity = 3;
 

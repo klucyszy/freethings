@@ -15,13 +15,7 @@ public sealed class Auction : AggregateRoot
     private readonly List<AuctionClaim> _auctionClaims;
     private readonly AuctionType _auctionType;
     private int _availableQuantity;
-
-    public enum AuctionType
-    {
-        Manual,
-        FirstComeFirstServed
-    }
-
+    
     public Auction(Guid id, List<AuctionClaim> auctionClaims, int availableQuantity, AuctionType auctionType,
         ICurrentTime currentTime)
     {

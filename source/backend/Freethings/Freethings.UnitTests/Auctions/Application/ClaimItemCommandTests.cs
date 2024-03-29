@@ -46,7 +46,7 @@ public sealed class ClaimItemCommandTests
         
         _repository
             .GetAsync(command.AuctionId, Arg.Any<CancellationToken>())
-            .Returns(AuctionFixtures.CreateAuction(Auction.AuctionType.Manual, 10));
+            .Returns(AuctionFixtures.CreateAuction(AuctionType.Manual, 10));
         _repository
             .SaveAsync(
                 Arg.Is<Auction>(p => p.DomainEvents.Count > 0),

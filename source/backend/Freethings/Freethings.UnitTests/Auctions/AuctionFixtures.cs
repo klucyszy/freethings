@@ -5,7 +5,7 @@ namespace Freethings.UnitTests.Auctions;
 
 public static class AuctionFixtures
 {
-    public static Auction CreateAuction(Auction.AuctionType auctionType, int availableQuantity)
+    public static Auction CreateAuction(AuctionType auctionType, int availableQuantity)
     {
         Auction auction = new Auction(
             Guid.NewGuid(),
