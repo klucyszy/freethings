@@ -33,7 +33,7 @@ internal sealed class ReserveClaimedItemsHandler : IRequestHandler<ReserveClaime
             return Result.Failure(AuctionErrorDefinition.AuctionNotFound);
         }
         
-        AuctionAggregate.ReserveCommand command = new AuctionAggregate.ReserveCommand(request.ClaimId, request.TriggeredByUser);
+        AuctionAggregate.ReserveCommand command = new(request.ClaimId, request.TriggeredByUser);
         
         auctionAggregate.Reserve(command);
         

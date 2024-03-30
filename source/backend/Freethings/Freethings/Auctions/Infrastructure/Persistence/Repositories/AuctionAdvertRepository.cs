@@ -1,6 +1,7 @@
 using Freethings.Auctions.Domain;
 using Freethings.Auctions.Domain.Repositories;
 using Freethings.Shared.Abstractions.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Freethings.Auctions.Infrastructure.Persistence.Repositories;
 
@@ -24,11 +25,19 @@ internal sealed class AuctionAdvertRepository : IAuctionAdvertRepository
 
     public Task<AuctionAdvert> GetAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return _context.Auctions
+            .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
     }
 
-    public Task<List<IDomainEvent>> UpdateAsync(AuctionAdvert auctionAdvert, CancellationToken cancellationToken = default)
+    public async Task<List<IDomainEvent>> UpdateAsync(AuctionAdvert auctionAdvert, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        _context.Auctions.Update(auctionAdvert);
+        
+        List<IDomainEvent> domainEvents = auctionAdvert.DomainEvents.ToList();
+        
+        await _context.SaveChangesAsync(cancellationToken);
+        auctionAdvert.ClearDomainEvents();
+
+        return domainEvents;
     }
 }
