@@ -1,3 +1,4 @@
+using Freethings.Contracts.Events;
 using Freethings.Shared.Abstractions.Domain;
 using Freethings.Shared.Infrastructure.Persistence;
 
@@ -5,27 +6,36 @@ namespace Freethings.Auctions.Domain;
 
 public sealed class AuctionAdvert : AggregateRoot
 {
+    public Guid UserId { get; private set; }
     public AuctionState State { get; private set; } = AuctionState.Draft;
     public AuctionType Type { get; private set; }
     public Quantity Quantity { get; private set; }
     public Title Title { get; private set; }
     public Description Description { get; private set; }
+    public DateTimeOffset LastModifiedAt { get; private set; }
+
     public List<AuctionClaim> Claims { get; private set; } = [];
-    
-    private AuctionAdvert() {} // for EF Core
-    
+
+    private AuctionAdvert()
+    {
+    } // for EF Core
+
     public AuctionAdvert(
+        Guid userId,
         Quantity quantity,
         AuctionType type,
         Title title,
-        Description description)
+        Description description,
+        DateTimeOffset timestamp)
     {
+        UserId = userId;
         Quantity = quantity;
         Type = type;
         Title = title;
         Description = description;
+        LastModifiedAt = timestamp;
     }
-    
+
     public void UpdateState(AuctionAggregate aggregate)
     {
         Quantity = aggregate.AvailableQuantity;
@@ -38,7 +48,19 @@ public sealed class AuctionAdvert : AggregateRoot
                 auctionClaim.Quantity,
                 auctionClaim.Comment,
                 auctionClaim.Timestamp,
-                auctionClaim.IsReserved));
+                auctionClaim.IsReserved
+            ));
         _domainEvents = aggregate.DomainEvents.ToList();
+    }
+
+    public void Publish(DateTimeOffset timestamp)
+    {
+        State = AuctionState.Published;
+
+        AddDomainEvent(new AuctionEvent.AdvertPublished(
+            Id,
+            UserId,
+            timestamp
+        ));
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Freethings.Auctions.Presentation.Endpoints;
 
-public static class AddAuctionAdvertEndpoint
+public static class CreateAuctionAdvertEndpoint
 {
     private sealed record RequestBody
     {
@@ -14,7 +14,7 @@ public static class AddAuctionAdvertEndpoint
         public int Quantity { get; init; }
     }
     
-    public static RouteGroupBuilder MapAddAuctionAdvertEndpoint(this RouteGroupBuilder group)
+    public static RouteGroupBuilder MapCreateAuctionAdvertEndpoint(this RouteGroupBuilder group)
     {
         group.MapPost("", async (
             [FromRoute] Guid userId,
@@ -22,7 +22,7 @@ public static class AddAuctionAdvertEndpoint
             ISender sender,
             CancellationToken ct) =>
         {
-            Guid result = await sender.Send(new AddAuctionAdvertCommand(
+            Guid result = await sender.Send(new CreateAuctionAdvertCommand(
                 userId,
                 request.Type,
                 request.Title,

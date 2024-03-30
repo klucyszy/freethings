@@ -4,6 +4,18 @@ namespace Freethings.Contracts.Events;
 
 public abstract record AuctionEvent : IDomainEvent
 {
+    public sealed record AdvertCreated(
+        Guid AuctionId,
+        Guid CreatedById,
+        string Title,
+        string Description,
+        DateTimeOffset Timestamp) : AuctionEvent;
+    
+    public sealed record AdvertPublished(
+        Guid AuctionId,
+        Guid PublishedById,
+        DateTimeOffset Timestamp) : AuctionEvent;
+    
     public sealed record ItemsClaimed(
         Guid AuctionId,
         Guid ClaimedById,

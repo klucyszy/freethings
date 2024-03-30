@@ -11,7 +11,7 @@ public static class ClaimAuctionItemEndpoint
     
     public static RouteGroupBuilder MapClaimAuctionItemEndpoint(this RouteGroupBuilder group)
     {
-        group.MapPost("claim", async (
+        group.MapPost("/{auctionId:guid}/claim", async (
                 [FromRoute] Guid userId,
                 [FromRoute] Guid auctionId,
                 [AsParameters] QueryParameters parameters,

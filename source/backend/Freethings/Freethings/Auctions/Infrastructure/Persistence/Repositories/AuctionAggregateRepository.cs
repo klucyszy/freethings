@@ -20,7 +20,7 @@ internal sealed class AuctionAggregateRepository : IAggregateRootRepository<Auct
     {
         return await _context.Auctions
             .Include(p => p.Claims)
-            .Where(p => p.Id == id)
+            .Where(p => p.Id == id && p.State == AuctionState.Published)
             .Select(p => p.ToAggregate(_currentTime))
             .FirstOrDefaultAsync(cancellationToken);
     }

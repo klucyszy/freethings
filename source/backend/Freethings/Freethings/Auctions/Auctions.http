@@ -2,6 +2,18 @@
 @userId = 00000000-0000-0000-0000-000000000001
 @auctionId = 00000000-0000-0000-0000-000000000002
 
+## Create Auction advert
+
+POST {{Freethings_HostAddress}}/api/users/{{userId}}/auctions
+Content-Type: application/json
+
+{
+  "title": "item",
+  "description": "item description",
+  "type": 0,
+  "quantity": 1
+}
+
 ### Claim auction item
 
 POST {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}/claim

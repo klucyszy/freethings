@@ -5,6 +5,7 @@ namespace Freethings.Auctions.Infrastructure.Persistence;
 
 internal sealed class AuctionsSeeder : IDataSeeder
 {
+    private static Guid UserId => Guid.Parse("00000000-0000-0000-0000-000000000001");
     private static Guid ManualAuctionId => Guid.Parse("00000000-0000-0000-0000-000000000001");
     private static Guid AutoAuctionId => Guid.Parse("00000000-0000-0000-0000-000000000002");
 
@@ -19,30 +20,40 @@ internal sealed class AuctionsSeeder : IDataSeeder
     {
         if (!_context.Auctions.Any(p => p.Id == ManualAuctionId))
         {
-            _context.Auctions.Add(new AuctionAdvert(
-                    Quantity.Create(10),
-                    AuctionType.Manual,
-                    Title.Create("Sample item"),
-                    Description.Create("Description"))
-                {
-                    Id = ManualAuctionId
-                }
-            );
+            AuctionAdvert manualAdvert = new AuctionAdvert(
+                UserId,
+                Quantity.Create(10),
+                AuctionType.Manual,
+                Title.Create("Sample item"),
+                Description.Create("Description"),
+                DateTimeOffset.UtcNow)
+            {
+                Id = ManualAuctionId
+            };
+            
+            // manualAdvert.Publish(DateTimeOffset.UtcNow);
+
+            _context.Auctions.Add(manualAdvert);
         }
-        
+
         if (!_context.Auctions.Any(p => p.Id == AutoAuctionId))
         {
-            _context.Auctions.Add(new AuctionAdvert(
-                    Quantity.Create(10),
-                    AuctionType.FirstComeFirstServed,
-                    Title.Create("Sample item"),
-                    Description.Create("Description"))
-                {
-                    Id = AutoAuctionId
-                }
-            );
+            AuctionAdvert autoAdvert = new AuctionAdvert(
+                UserId,
+                Quantity.Create(10),
+                AuctionType.FirstComeFirstServed,
+                Title.Create("Sample item"),
+                Description.Create("Description"),
+                DateTimeOffset.UtcNow)
+            {
+                Id = AutoAuctionId
+            };
+            
+            autoAdvert.Publish(DateTimeOffset.UtcNow);
+            
+            _context.Auctions.Add(autoAdvert);
         }
-        
+
         _context.SaveChanges();
     }
 }

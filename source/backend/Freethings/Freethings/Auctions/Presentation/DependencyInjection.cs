@@ -12,8 +12,8 @@ internal static class DependencyInjection
     public static WebApplication MapAuctionsEndpoints(this WebApplication app)
     {
         app
-            .MapGroup("api/users/{userId:guid}/auctions/{auctionId:guid}")
-            .MapAddAuctionAdvertEndpoint()
+            .MapGroup("api/users/{userId:guid}/auctions")
+            .MapCreateAuctionAdvertEndpoint()
             .MapClaimAuctionItemEndpoint()
             .MapReserveAuctionItemEndpoint()
             .WithTags("Auctions");
