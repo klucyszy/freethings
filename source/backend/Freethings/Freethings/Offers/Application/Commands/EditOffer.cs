@@ -1,7 +1,7 @@
 using Freethings.Offers.Application.Entities;
 using Freethings.Offers.Application.Entities.ValueObjects;
 using Freethings.Offers.Application.Repositories;
-using Freethings.Shared.Infrastructure;
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 
 namespace Freethings.Offers.Application.Commands;
 
@@ -9,9 +9,9 @@ public sealed record EditOfferCommand(
     Guid UserId,
     Guid OfferId,
     string Title,
-    string Description) : IRequest<Result>;
+    string Description) : IRequest<BusinessResult>;
 
-internal sealed class EditOfferHandler : IRequestHandler<EditOfferCommand, Result>
+internal sealed class EditOfferHandler : IRequestHandler<EditOfferCommand, BusinessResult>
 {
     private readonly IOfferRepository _repository;
     public EditOfferHandler(IOfferRepository repository)
@@ -19,13 +19,13 @@ internal sealed class EditOfferHandler : IRequestHandler<EditOfferCommand, Resul
         _repository = repository;
     }
 
-    public async Task<Result> Handle(EditOfferCommand request, CancellationToken cancellationToken)
+    public async Task<BusinessResult> Handle(EditOfferCommand request, CancellationToken cancellationToken)
     {
         Offer offer = await _repository.GetAsync(request.OfferId, cancellationToken);
 
         if (offer is null)
         {
-            return Result.Failure("Offer not found");
+            return BusinessResult.Failure("Offer not found");
         }
         
         offer.Title = OfferTitle.Create(request.Title);
@@ -33,6 +33,6 @@ internal sealed class EditOfferHandler : IRequestHandler<EditOfferCommand, Resul
         
         await _repository.UpdateAsync(offer, cancellationToken);
         
-        return Result.Success();
+        return BusinessResult.Success();
     }
 }

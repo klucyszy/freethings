@@ -1,5 +1,4 @@
 using Freethings.Auctions.Domain;
-using Freethings.Shared.Infrastructure.Time;
 
 namespace Freethings.UnitTests.Auctions;
 
@@ -11,8 +10,7 @@ public static class AuctionFixtures
             Guid.NewGuid(),
             new List<AuctionClaim>(),
             Quantity.Create(availableQuantity),
-            auctionType,
-            new CurrentTime());
+            auctionType);
 
         return auctionAggregate;
     }

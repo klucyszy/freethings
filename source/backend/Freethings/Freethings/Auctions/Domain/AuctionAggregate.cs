@@ -2,6 +2,7 @@ using Freethings.Auctions.Domain.Exceptions;
 using Freethings.Auctions.Domain.Strategies.ClaimedItemsReservationStrategy;
 using Freethings.Contracts.Events;
 using Freethings.Shared.Abstractions.Domain;
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 
 namespace Freethings.Auctions.Domain;
 
@@ -19,8 +20,7 @@ public sealed class AuctionAggregate : AggregateRoot
         Guid id,
         List<AuctionClaim> auctionClaims,
         Quantity availableQuantity,
-        AuctionType auctionType,
-        ICurrentTime currentTime)
+        AuctionType auctionType)
     {
         Id = id;
         _auctionClaims = auctionClaims;
@@ -28,11 +28,14 @@ public sealed class AuctionAggregate : AggregateRoot
         _auctionType = auctionType;
     }
 
-    public void Claim(ClaimCommand command, DateTimeOffset currentTime)
+    public BusinessResult Claim(ClaimCommand command, DateTimeOffset currentTime)
     {
         if (_auctionClaims.Exists(x => x.ClaimedById == command.ClaimedById))
         {
-            throw AuctionExceptions.SameUserCannotCreateTwoClaimsOnOneAuction.Exception;
+            return AuctionErrors
+                .SameUserCannotCreateTwoClaimsOnOneAuction
+                .Format(command.ClaimedById)
+                .AsBusinessResult();
         }
         
         AuctionClaim claim = new AuctionClaim(
@@ -51,35 +54,45 @@ public sealed class AuctionAggregate : AggregateRoot
             claim.ClaimedById,
             claim.Quantity.Value,
             claim.Timestamp.Value));
+        
+        return BusinessResult.Success();
     }
 
-    public void Reserve(ReserveCommand command)
+    public BusinessResult Reserve(ReserveCommand command)
     {
         AuctionClaim claim = _auctionClaims
             .FirstOrDefault(x => x.ClaimedById == command.ClaimedById);
 
         if (claim is null)
         {
-            throw AuctionExceptions.CannotReserveIfThereIsNoClaimReferenced.Exception;
+            return AuctionErrors
+                .CannotReserveIfThereIsNoClaimReferenced
+                .AsBusinessResult();
         }
         
         if (claim.IsReserved)
         {
-            return;
+            return AuctionErrors
+                .ClaimAlreadyReserved
+                .AsBusinessResult();
         }
         
         IClaimedItemsReservationStrategy reservationStrategy = command.TriggeredByUser
             ? new AlwaysAllowReservationStrategy()
             : ClaimedItemsReservationStrategyFactory.Create(_auctionType);
         
-        if (!reservationStrategy.CanReserve())
+        BusinessResult canReserveBusinessResult = reservationStrategy.CanReserve();
+        if (!canReserveBusinessResult.IsSuccess)
         {
-            return;
+            return canReserveBusinessResult;
         }
         
         if (_availableQuantity < claim.Quantity)
         {
-            throw AuctionExceptions.AvailableQuantitySmallerThanAvailable.Exception;
+            return AuctionErrors
+                .AvailableQuantitySmallerThanAvailable
+                .Format(claim.Quantity, _availableQuantity)
+                .AsBusinessResult();
         }
 
         claim.MarkAsReserved();
@@ -89,6 +102,8 @@ public sealed class AuctionAggregate : AggregateRoot
             claim.ClaimedById,
             claim.Quantity.Value,
             claim.Timestamp.Value));
+        
+        return BusinessResult.Success();
     }
 
     // TODO: Think, does quantity can be decreased by handover?. Does quantity can be higher than in handover?
@@ -99,12 +114,14 @@ public sealed class AuctionAggregate : AggregateRoot
 
         if (claim is null)
         {
-            throw AuctionExceptions.CannotHandOverIfThereIsNoClaimReferenced.Exception;
+            throw AuctionErrors.CannotHandOverIfThereIsNoClaimReferenced.AsBusinessException();
         }
 
         if (_availableQuantity < claim.Quantity)
         {
-            throw AuctionExceptions.AvailableQuantitySmallerThanClaimed.Exception;
+            throw AuctionErrors
+                .AvailableQuantitySmallerThanClaimed
+                .AsBusinessException();
         }
 
         _availableQuantity -= claim.Quantity;

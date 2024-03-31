@@ -10,7 +10,6 @@ internal static class AuctionMapper
             auctionEntity.Id,
             auctionEntity.Claims.ToList(),
             auctionEntity.Quantity,
-            auctionEntity.Type,
-            currentTime);
+            auctionEntity.Type);
     }
 }

@@ -3,7 +3,7 @@ using FluentAssertions.Execution;
 using Freethings.Auctions.Domain;
 using Freethings.Auctions.Domain.Exceptions;
 using Freethings.Contracts.Events;
-using Freethings.Shared.Abstractions.Domain.Exceptions;
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 
 namespace Freethings.UnitTests.Auctions.Domain;
 
@@ -40,11 +40,15 @@ public sealed class AuctionWithManualSelectionTests
 
         // act
         manualAuctionAggregate.Claim(new AuctionAggregate.ClaimCommand(userId, claimedQuantity), DateTimeOffset.UtcNow);
-        Action act = () => manualAuctionAggregate.Claim(new AuctionAggregate.ClaimCommand(userId, claimedQuantity), DateTimeOffset.UtcNow);
+        BusinessResult result = manualAuctionAggregate.Claim(new AuctionAggregate.ClaimCommand(userId, claimedQuantity), DateTimeOffset.UtcNow);
         
         // assert
-        act.Should().Throw<DomainException>()
-            .WithMessage(AuctionExceptions.SameUserCannotCreateTwoClaimsOnOneAuction.Message);
+        using (new AssertionScope())
+        {
+            string expectedMessage = string.Format(AuctionErrors.SameUserCannotCreateTwoClaimsOnOneAuction.Message, userId);
+            result.IsSuccess.Should().BeFalse();
+            result.ErrorMessage.Should().Contain(expectedMessage);
+        }
     }
 
     [Fact]
@@ -77,11 +81,14 @@ public sealed class AuctionWithManualSelectionTests
         Guid userId = Guid.NewGuid();
 
         // act
-        Action act = () => manualAuctionAggregate.Reserve(new AuctionAggregate.ReserveCommand(userId));
+        BusinessResult result = manualAuctionAggregate.Reserve(new AuctionAggregate.ReserveCommand(userId));
         
         // assert
-        act.Should().Throw<DomainException>()
-            .WithMessage(AuctionExceptions.CannotReserveIfThereIsNoClaimReferenced.Message);
+        using (new AssertionScope())
+        {
+            result.IsSuccess.Should().BeFalse();
+            result.ErrorMessage.Should().Contain(AuctionErrors.CannotReserveIfThereIsNoClaimReferenced.Message);
+        }
     }
     
     [Fact]
@@ -99,11 +106,15 @@ public sealed class AuctionWithManualSelectionTests
         manualAuctionAggregate.HandOver(new AuctionAggregate.HandOverCommand(userId));
         
         manualAuctionAggregate.Claim(new AuctionAggregate.ClaimCommand(otherUserId, Quantity.Create(6)), DateTimeOffset.UtcNow);
-        Action action = () => manualAuctionAggregate.Reserve(new AuctionAggregate.ReserveCommand(otherUserId));
+        BusinessResult result = manualAuctionAggregate.Reserve(new AuctionAggregate.ReserveCommand(otherUserId));
         
         // assert
-        action.Should().Throw<DomainException>()
-            .WithMessage(AuctionExceptions.AvailableQuantitySmallerThanAvailable.Message);
+        using (new AssertionScope())
+        {
+            string expectedMessage = string.Format(AuctionErrors.AvailableQuantitySmallerThanAvailable.Message, 6, 5);
+            result.IsSuccess.Should().BeFalse();
+            result.ErrorMessage.Should().Contain(expectedMessage);
+        }
     }
 
     [Fact]

@@ -2,15 +2,15 @@ using Freethings.Auctions.Application.Errors;
 using Freethings.Auctions.Domain;
 using Freethings.Auctions.Domain.Repositories;
 using Freethings.Shared.Abstractions.Domain;
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Freethings.Shared.Abstractions.Messaging;
-using Freethings.Shared.Infrastructure;
 
 namespace Freethings.Auctions.Application.Commands;
 
 public sealed record PublishAuctionAdvertCommand(
-    Guid AuctionAdvertId) : IRequest<Result>;
+    Guid AuctionAdvertId) : IRequest<BusinessResult>;
 
-internal sealed class PublishAuctionAdvertHandler : IRequestHandler<PublishAuctionAdvertCommand, Result>
+internal sealed class PublishAuctionAdvertHandler : IRequestHandler<PublishAuctionAdvertCommand, BusinessResult>
 {
     private readonly IAuctionAdvertRepository _repository;
     private readonly IEventBus _eventBus;
@@ -23,13 +23,13 @@ internal sealed class PublishAuctionAdvertHandler : IRequestHandler<PublishAucti
         _currentTime = currentTime;
     }
 
-    public async Task<Result> Handle(PublishAuctionAdvertCommand request, CancellationToken cancellationToken)
+    public async Task<BusinessResult> Handle(PublishAuctionAdvertCommand request, CancellationToken cancellationToken)
     {
         AuctionAdvert auctionAdvert = await _repository.GetAsync(request.AuctionAdvertId, cancellationToken);
 
         if (auctionAdvert is null)
         {
-            return Result.Failure(AuctionErrorDefinition.AuctionNotFound);
+            return BusinessResult.Failure(AuctionErrorDefinition.AuctionNotFound);
         }
         
         auctionAdvert.Publish(_currentTime.UtcNow());
@@ -41,6 +41,6 @@ internal sealed class PublishAuctionAdvertHandler : IRequestHandler<PublishAucti
             await _eventBus.PublishAsync(domainEvent, cancellationToken);
         }
         
-        return Result.Success();
+        return BusinessResult.Success();
     }
 }

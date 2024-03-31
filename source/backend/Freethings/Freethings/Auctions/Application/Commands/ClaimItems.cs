@@ -1,17 +1,17 @@
 using Freethings.Auctions.Application.Errors;
 using Freethings.Auctions.Domain;
 using Freethings.Shared.Abstractions.Domain;
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Freethings.Shared.Abstractions.Messaging;
-using Freethings.Shared.Infrastructure;
 
 namespace Freethings.Auctions.Application.Commands;
 
 public sealed record ClaimItemsCommand(
     Guid AuctionId,
     Guid UserId,
-    int Quantity) : IRequest<Result>;
+    int Quantity) : IRequest<BusinessResult>;
 
-internal sealed class ClaimItemsHandler : IRequestHandler<ClaimItemsCommand, Result>
+internal sealed class ClaimItemsHandler : IRequestHandler<ClaimItemsCommand, BusinessResult>
 {
     private readonly IAggregateRootRepository<AuctionAggregate> _repository;
     private readonly IEventBus _eventBus;
@@ -27,13 +27,13 @@ internal sealed class ClaimItemsHandler : IRequestHandler<ClaimItemsCommand, Res
         _currentTime = currentTime;
     }
 
-    public async Task<Result> Handle(ClaimItemsCommand request, CancellationToken cancellationToken)
+    public async Task<BusinessResult> Handle(ClaimItemsCommand request, CancellationToken cancellationToken)
     {
         AuctionAggregate aggregate = await _repository.GetAsync(request.AuctionId, cancellationToken);
 
         if (aggregate is null)
         {
-            return Result.Failure(AuctionErrorDefinition.AuctionNotFound);
+            return BusinessResult.Failure(AuctionErrorDefinition.AuctionNotFound);
         }
 
         AuctionAggregate.ClaimCommand command = new AuctionAggregate.ClaimCommand(
@@ -50,6 +50,6 @@ internal sealed class ClaimItemsHandler : IRequestHandler<ClaimItemsCommand, Res
             await _eventBus.PublishAsync(domainEvent, cancellationToken);
         }
         
-        return Result.Success();
+        return BusinessResult.Success();
     }
 }

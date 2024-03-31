@@ -1,5 +1,5 @@
 using Freethings.Offers.Application.Commands;
-using Freethings.Shared.Infrastructure;
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,12 +15,12 @@ public static class RemoveOfferEndpoint
             ISender sender,
             CancellationToken ct) =>
         {
-            Result result = await sender.Send(new RemoveOfferCommand(
+            BusinessResult businessResult = await sender.Send(new RemoveOfferCommand(
                 userId,
                 offerId
                 ), ct);
             
-            return result.IsSuccess
+            return businessResult.IsSuccess
                 ? TypedResults.NoContent()
                 : TypedResults.NotFound();
         });

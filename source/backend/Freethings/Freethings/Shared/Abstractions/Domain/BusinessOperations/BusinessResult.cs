@@ -1,24 +1,24 @@
-namespace Freethings.Shared.Infrastructure;
+namespace Freethings.Shared.Abstractions.Domain.BusinessOperations;
 
-public sealed record Result
+public sealed record BusinessResult
 {
     public bool IsSuccess { get; }
     public string ErrorMessage { get; }
 
-    private Result(bool isSuccess, string errorMessage)
+    private BusinessResult(bool isSuccess, string errorMessage)
     {
         IsSuccess = isSuccess;
         ErrorMessage = errorMessage;
     }
 
-    public static Result Success()
+    public static BusinessResult Success()
     {
-        return new Result(true, null);
+        return new BusinessResult(true, null);
     }
 
-    public static Result Failure(string errorMessage)
+    public static BusinessResult Failure(string errorMessage)
     {
-        return new Result(false, errorMessage);
+        return new BusinessResult(false, errorMessage);
     }
 }
 

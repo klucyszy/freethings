@@ -48,4 +48,9 @@ public sealed record Quantity
     {
         return new Quantity(left.Value - right.Value);
     }
+
+    public override string ToString()
+    {
+        return Value.ToString();
+    }
 }

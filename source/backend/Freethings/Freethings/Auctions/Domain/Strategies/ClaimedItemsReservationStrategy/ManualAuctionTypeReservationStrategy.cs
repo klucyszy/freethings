@@ -1,9 +1,13 @@
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
+
 namespace Freethings.Auctions.Domain.Strategies.ClaimedItemsReservationStrategy;
 
 public sealed class ManualAuctionTypeReservationStrategy : IClaimedItemsReservationStrategy
 {
-    public bool CanReserve()
+    public BusinessResult CanReserve()
     {
-        return false;
+        return ClaimItemStrategyErrors
+            .CannotAutomaticallyReserveItemsUsingManualAuctionType
+            .AsBusinessResult();
     }
 }

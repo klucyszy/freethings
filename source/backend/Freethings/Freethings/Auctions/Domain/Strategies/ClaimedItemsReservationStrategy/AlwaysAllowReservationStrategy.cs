@@ -1,10 +1,11 @@
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
+
 namespace Freethings.Auctions.Domain.Strategies.ClaimedItemsReservationStrategy;
 
 public sealed class AlwaysAllowReservationStrategy : IClaimedItemsReservationStrategy
 {
-    
-    public bool CanReserve()
+    public BusinessResult CanReserve()
     {
-        return true;
+        return BusinessResult.Success();
     }
 }

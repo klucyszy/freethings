@@ -4,8 +4,8 @@ using Freethings.Auctions.Application.Commands;
 using Freethings.Auctions.Application.Errors;
 using Freethings.Auctions.Domain;
 using Freethings.Shared.Abstractions.Domain;
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Freethings.Shared.Abstractions.Messaging;
-using Freethings.Shared.Infrastructure;
 using Freethings.Shared.Infrastructure.Time;
 using NSubstitute;
 
@@ -13,7 +13,7 @@ namespace Freethings.UnitTests.Auctions.Application;
 
 public sealed class ClaimItemCommandTests
 {
-    private async Task<Result> Act(ClaimItemsCommand command)
+    private async Task<BusinessResult> Act(ClaimItemsCommand command)
         => await _handler.Handle(command, CancellationToken.None);
 
     [Fact]
@@ -26,13 +26,13 @@ public sealed class ClaimItemCommandTests
             5);
 
         // Act
-        Result result = await Act(command);
+        BusinessResult businessResult = await Act(command);
 
         // Assert
         using (new AssertionScope())
         {
-            result.IsSuccess.Should().BeFalse();
-            result.ErrorMessage.Should().BeEquivalentTo(AuctionErrorDefinition.AuctionNotFound);
+            businessResult.IsSuccess.Should().BeFalse();
+            businessResult.ErrorMessage.Should().BeEquivalentTo(AuctionErrorDefinition.AuctionNotFound);
         }
     }
     
@@ -55,12 +55,12 @@ public sealed class ClaimItemCommandTests
             .Returns(new List<IDomainEvent>());
         
         // Act
-        Result result = await Act(command);
+        BusinessResult businessResult = await Act(command);
 
         // Assert
         using (new AssertionScope())
         {
-            result.IsSuccess.Should().BeTrue();
+            businessResult.IsSuccess.Should().BeTrue();
         }
     }
 
