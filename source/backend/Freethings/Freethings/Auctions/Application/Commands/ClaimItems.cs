@@ -40,7 +40,12 @@ internal sealed class ClaimItemsHandler : IRequestHandler<ClaimItemsCommand, Bus
             request.UserId,
             Quantity.Create(request.Quantity));
 
-        aggregate.Claim(command, _currentTime.UtcNow());
+        BusinessResult result = aggregate.Claim(command, _currentTime.UtcNow());
+
+        if (!result.IsSuccess)
+        {
+            return result;
+        }
         
         List<IDomainEvent> domainEvents = await _repository
             .SaveAsync(aggregate, cancellationToken);

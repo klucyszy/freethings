@@ -32,5 +32,6 @@ if (app.Environment.IsDevelopment())
 app.MapAuctionsEndpoints();
 
 app.UseHttpsRedirection();
+app.UseExceptionHandler();
 
 app.Run();

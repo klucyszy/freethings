@@ -1,6 +1,6 @@
 @Freethings_HostAddress = http://localhost:5289
 @userId = 00000000-0000-0000-0000-000000000001
-@auctionId = d6aebb7f-c239-4344-b75d-d5e45b247c6d
+@auctionId = 09fa506a-2e68-44f2-99bc-06861c598167
 
 ## Create Auction advert
 

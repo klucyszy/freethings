@@ -1,5 +1,7 @@
 using Freethings.Auctions.Application.Commands;
 using Freethings.Auctions.Domain;
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
+using Freethings.Shared.Infrastructure.Api;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Freethings.Auctions.Presentation.Endpoints;
@@ -22,7 +24,7 @@ public static class CreateAuctionAdvertEndpoint
             ISender sender,
             CancellationToken ct) =>
         {
-            Guid result = await sender.Send(new CreateAuctionAdvertCommand(
+            BusinessResult<Guid> result = await sender.Send(new CreateAuctionAdvertCommand(
                 userId,
                 request.Type,
                 request.Title,
@@ -30,7 +32,7 @@ public static class CreateAuctionAdvertEndpoint
                 request.Quantity
                 ), ct);
 
-            return TypedResults.Ok(result);
+            return ApiResultMapper.MapToEndpointResult(result);
         });
         
         return group;

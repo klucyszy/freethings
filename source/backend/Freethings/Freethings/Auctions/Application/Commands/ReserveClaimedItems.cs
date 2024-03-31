@@ -35,11 +35,11 @@ internal sealed class ReserveClaimedItemsHandler : IRequestHandler<ReserveClaime
         
         AuctionAggregate.ReserveCommand command = new(request.ClaimId, request.TriggeredByUser);
         
-        BusinessResult reserveBusinessResult = auctionAggregate.Reserve(command);
+        BusinessResult result = auctionAggregate.Reserve(command);
         
-        if (!reserveBusinessResult.IsSuccess)
+        if (!result.IsSuccess)
         {
-            return reserveBusinessResult;
+            return result;
         }
         
         List<IDomainEvent> domainEvents = await _repository

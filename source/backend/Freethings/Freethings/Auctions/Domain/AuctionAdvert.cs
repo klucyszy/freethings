@@ -1,5 +1,6 @@
 using Freethings.Contracts.Events;
 using Freethings.Shared.Abstractions.Domain;
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Freethings.Shared.Infrastructure.Persistence;
 
 namespace Freethings.Auctions.Domain;
@@ -53,7 +54,7 @@ public sealed class AuctionAdvert : AggregateRoot
         _domainEvents = aggregate.DomainEvents.ToList();
     }
 
-    public void Publish(DateTimeOffset timestamp)
+    public BusinessResult Publish(DateTimeOffset timestamp)
     {
         State = AuctionState.Published;
 
@@ -62,5 +63,7 @@ public sealed class AuctionAdvert : AggregateRoot
             UserId,
             timestamp
         ));
+
+        return BusinessResult.Success();
     }
 }

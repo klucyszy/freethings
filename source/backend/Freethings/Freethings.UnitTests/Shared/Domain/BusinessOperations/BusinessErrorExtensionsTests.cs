@@ -1,5 +1,4 @@
 using FluentAssertions;
-using FluentAssertions.Execution;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 
 namespace Freethings.UnitTests.Shared.Domain.BusinessOperations;

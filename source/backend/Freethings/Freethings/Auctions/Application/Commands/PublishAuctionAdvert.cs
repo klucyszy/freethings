@@ -32,7 +32,12 @@ internal sealed class PublishAuctionAdvertHandler : IRequestHandler<PublishAucti
             return BusinessResult.Failure(AuctionErrorDefinition.AuctionNotFound);
         }
         
-        auctionAdvert.Publish(_currentTime.UtcNow());
+        BusinessResult result = auctionAdvert.Publish(_currentTime.UtcNow());
+
+        if (!result.IsSuccess)
+        {
+            return result;
+        }
         
         List<IDomainEvent> domainEvents = await _repository.UpdateAsync(auctionAdvert, cancellationToken);
 

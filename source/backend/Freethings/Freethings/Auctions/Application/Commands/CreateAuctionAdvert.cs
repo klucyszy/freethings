@@ -1,6 +1,7 @@
 using Freethings.Auctions.Domain;
 using Freethings.Auctions.Domain.Repositories;
 using Freethings.Contracts.Events;
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Freethings.Shared.Abstractions.Messaging;
 
 namespace Freethings.Auctions.Application.Commands;
@@ -10,9 +11,9 @@ public sealed record CreateAuctionAdvertCommand(
     AuctionType Type,
     string Title,
     string Description,
-    int Quantity) : IRequest<Guid>;
+    int Quantity) : IRequest<BusinessResult<Guid>>;
 
-internal sealed class CreateAuctionAdvertHandler : IRequestHandler<CreateAuctionAdvertCommand, Guid>
+internal sealed class CreateAuctionAdvertHandler : IRequestHandler<CreateAuctionAdvertCommand, BusinessResult<Guid>>
 {
     private readonly IAuctionAdvertRepository _repository;
     private readonly ICurrentTime _currentTime;
@@ -25,7 +26,7 @@ internal sealed class CreateAuctionAdvertHandler : IRequestHandler<CreateAuction
         _eventBus = eventBus;
     }
 
-    public async Task<Guid> Handle(CreateAuctionAdvertCommand request, CancellationToken cancellationToken)
+    public async Task<BusinessResult<Guid>> Handle(CreateAuctionAdvertCommand request, CancellationToken cancellationToken)
     {
         Quantity quantity = Quantity.Create(request.Quantity);
         Title title = Title.Create(request.Title);
@@ -48,6 +49,6 @@ internal sealed class CreateAuctionAdvertHandler : IRequestHandler<CreateAuction
             created.Description.Value,
             _currentTime.UtcNow()), cancellationToken);
 
-        return created.Id;
+        return BusinessResult<Guid>.Success(created.Id);
     }
 }

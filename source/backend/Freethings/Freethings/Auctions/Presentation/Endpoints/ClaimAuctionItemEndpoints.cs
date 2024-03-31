@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Freethings.Auctions.Application.Commands;
+using Freethings.Shared.Abstractions.Domain.BusinessOperations;
+using Freethings.Shared.Infrastructure.Api;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Freethings.Auctions.Presentation.Endpoints;
@@ -19,12 +21,12 @@ public static class ClaimAuctionItemEndpoint
                 CancellationToken ct)
             =>
         {
-            await sender.Send(new ClaimItemsCommand(
+            BusinessResult result = await sender.Send(new ClaimItemsCommand(
                 auctionId,
                 userId,
                 parameters.Quantity), ct);
 
-            return TypedResults.NoContent();
+            return ApiResultMapper.MapToEndpointResult(result);
         });
         
         return group;

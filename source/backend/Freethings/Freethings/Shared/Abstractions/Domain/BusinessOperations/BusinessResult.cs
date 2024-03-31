@@ -22,27 +22,27 @@ public sealed record BusinessResult
     }
 }
 
-public sealed record Result<T>
+public sealed record BusinessResult<T>
 {
     public bool IsSuccess { get; }
     public string ErrorMessage { get; }
     public T Data { get; }
 
-    private Result(bool isSuccess, string errorMessage, T data)
+    private BusinessResult(bool isSuccess, string errorMessage, T data)
     {
         IsSuccess = isSuccess;
         ErrorMessage = errorMessage;
         Data = data;
     }
 
-    public static Result<T> Success(T value)
+    public static BusinessResult<T> Success(T value)
     {
-        return new Result<T>(true, null, value);
+        return new BusinessResult<T>(true, null, value);
     }
 
-    public static Result<T> Failure(params string[] errorMessages)
+    public static BusinessResult<T> Failure(params string[] errorMessages)
     {
         string errorMessage = string.Join(", ", errorMessages);
-        return new Result<T>(false, errorMessage, default);
+        return new BusinessResult<T>(false, errorMessage, default);
     }
 }

@@ -1,5 +1,6 @@
 using Freethings.Shared.Abstractions.Messaging;
 using Freethings.Shared.Infrastructure.Messaging;
+using Freethings.Shared.Infrastructure.Middleware;
 
 namespace Freethings.Shared.Infrastructure;
 
@@ -9,6 +10,9 @@ internal static class DependencyInjection
     {
         services.AddScoped<IEventBus, EventBusPublisher>();
         services.AddCurrentTime();
+        
+        services.AddExceptionHandler<BusinessExceptionHandler>();
+        services.AddProblemDetails();
         
         return services;
     }
