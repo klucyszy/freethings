@@ -1,3 +1,7 @@
+### 1.04.2024 - day 31
+
+Today I mainly focused on learning about Identity approach which I want to use. Plan for this week is to add Users module and add authentication to the application.
+
 ### 23.03.2023 - day 23
 
 Plan for the day:
