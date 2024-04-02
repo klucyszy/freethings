@@ -10,25 +10,27 @@ public static class ClaimAuctionItemEndpoint
 {
     private sealed record QueryParameters(
         [Range(1, Int32.MaxValue)] int Quantity = 1);
-    
+
     public static RouteGroupBuilder MapClaimAuctionItemEndpoint(this RouteGroupBuilder group)
     {
-        group.MapPost("/{auctionId:guid}/claim", async (
-                [FromRoute] Guid userId,
-                [FromRoute] Guid auctionId,
-                [AsParameters] QueryParameters parameters,
-                ISender sender,
-                CancellationToken ct)
-            =>
-        {
-            BusinessResult result = await sender.Send(new ClaimItemsCommand(
-                auctionId,
-                userId,
-                parameters.Quantity), ct);
+        group
+            .MapPost("/{auctionId:guid}/claim", async (
+                    [FromRoute] Guid userId,
+                    [FromRoute] Guid auctionId,
+                    [AsParameters] QueryParameters parameters,
+                    ISender sender,
+                    CancellationToken ct)
+                =>
+            {
+                BusinessResult result = await sender.Send(new ClaimItemsCommand(
+                    auctionId,
+                    userId,
+                    parameters.Quantity), ct);
 
-            return ApiResultMapper.MapToEndpointResult(result);
-        });
-        
+                return ApiResultMapper.MapToEndpointResult(result);
+            })
+            .RequireAuthorization();
+
         return group;
     }
 }

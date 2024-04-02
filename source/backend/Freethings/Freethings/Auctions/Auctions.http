@@ -1,6 +1,7 @@
 @Freethings_HostAddress = http://localhost:5289
 @userId = 00000000-0000-0000-0000-000000000001
-@auctionId = 09fa506a-2e68-44f2-99bc-06861c598167
+@auctionId = 0d71fb06-edcb-4736-9fd4-90343688294a
+@token = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii1KQzVUalhSeXFpMFBtdWNzaWpoQSJ9.eyJpc3MiOiJodHRwczovL2Rldi12ZjhlZXFmMTF4M3VkOG51LnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJJdlI2MDhvRXBOYUMxZTNxdVpGN0pJVUpjTjE2SjBubUBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9mcmVldGhpbmdzIiwiaWF0IjoxNzEyMDkzMTcwLCJleHAiOjE3MTIxNzk1NzAsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyIsImF6cCI6Ikl2UjYwOG9FcE5hQzFlM3F1WkY3SklVSmNOMTZKMG5tIn0.FHAf03JKdnwuiO878SbNVpc1puLxf_PtZ_IkuSgpiFMR9G0Z3R6Fj4m22WZVKBoM5IemexlcdNcbiSErmjl7nA8OByoWcNR0cfuTBVZCOgfNbwwVKlhkXsKFsEFzVbIr3xSZe3pbPwlMz0Ej05FGLsQGGC4d_iis4fskVP_0KKYbkb2PucgqPQIEiAPIVOJ12Ldi35jS0taRJfidc9TrthO9DJRMleDKiNSOGrPojzNMzN2ColKFL4Wv44WhZJu76ykBIso4cNPbGIPD3pkKfhjzKTXkmaOQSpiqXrEa8E5Rn9l6XUKpcqdohaklXQUNmgHPwBUETjYuqRZWbJHI-A
 
 ## Create Auction advert
 
@@ -18,7 +19,7 @@ Content-Type: application/json
 
 POST {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}/claim
 Content-Type: application/json
-
+Authorization: Bearer {{token}}
 
 ### Reserve claim
 

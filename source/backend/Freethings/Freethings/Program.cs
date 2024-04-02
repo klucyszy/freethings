@@ -3,6 +3,7 @@ using Freethings.Auctions;
 using Freethings.Auctions.Presentation;
 using Freethings.Offers;
 using Freethings.Shared.Infrastructure;
+using Freethings.Shared.Infrastructure.Authentication;
 using Freethings.Shared.Infrastructure.Persistence;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -31,7 +32,10 @@ if (app.Environment.IsDevelopment())
 
 app.MapAuctionsEndpoints();
 
+app.UseAuth0();
+
 app.UseHttpsRedirection();
 app.UseExceptionHandler();
+
 
 app.Run();
