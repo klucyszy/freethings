@@ -19,8 +19,8 @@ public static class Extensions
             })
             .AddJwtBearer(options =>
             {
-                options.Authority = auth0Options.Audience;
-                options.Audience = auth0Options.Authority;
+                options.Authority = auth0Options.Authority;
+                options.Audience = auth0Options.Audience;   
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     NameClaimType = ClaimTypes.NameIdentifier
