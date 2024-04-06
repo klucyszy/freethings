@@ -17,28 +17,27 @@
     <div class="row">
       <highlightjs language="json" :code="JSON.stringify(user, null, 2)" />
     </div>
+    <div class="row">
+      <button @click="getAccessToken">Load token</button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { useAuth0 } from '@auth0/auth0-vue';
+import { useAuth0} from '@auth0/auth0-vue';
 
 export default {
   name: "profile-view",
   setup() {
     const auth0 = useAuth0();
     
-    console.log(auth0.getAccessTokenSilently({
-      cacheMode: 'on',
-      authorizationParams: {
-        redirect_uri: 'https://localhost:3000/callback',
-        audience: 'https://freethings/api',
-        scope: 'read:auctions'
-      }
-    }))
-    
     return {
       user: auth0.user,
+      getAccessToken: async () => {
+        const token = await auth0.getAccessTokenSilently();
+        console.log(token);
+        await navigator.clipboard.writeText(token)
+      }
     }
   }
 };

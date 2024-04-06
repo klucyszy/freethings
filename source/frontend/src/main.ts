@@ -26,6 +26,8 @@ app
       clientId: authConfig.clientId,
       authorizationParams: {
         redirect_uri: window.location.origin,
+        audience: authConfig.audience,
+        scope: authConfig.scope
       }
     })
   )

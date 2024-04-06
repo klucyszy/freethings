@@ -105,12 +105,7 @@ export default {
       isLoading: auth0.isLoading,
       user: auth0.user,
       login() {
-        auth0.loginWithRedirect({
-          authorizationParams: {
-            scope: 'openid profile email read:auctions read:current_user',
-            audience: 'https://freethings/api'
-          }
-      });
+        auth0.loginWithRedirect();
       },
       logout() {
         auth0.logout({
