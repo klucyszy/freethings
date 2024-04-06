@@ -107,7 +107,8 @@ export default {
       login() {
         auth0.loginWithRedirect({
           authorizationParams: {
-            scope: 'openid profile email read:auctions'
+            scope: 'openid profile email read:auctions read:current_user',
+            audience: 'https://freethings/api'
           }
       });
       },

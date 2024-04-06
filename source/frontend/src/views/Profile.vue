@@ -28,6 +28,15 @@ export default {
   setup() {
     const auth0 = useAuth0();
     
+    console.log(auth0.getAccessTokenSilently({
+      cacheMode: 'on',
+      authorizationParams: {
+        redirect_uri: 'https://localhost:3000/callback',
+        audience: 'https://freethings/api',
+        scope: 'read:auctions'
+      }
+    }))
+    
     return {
       user: auth0.user,
     }
