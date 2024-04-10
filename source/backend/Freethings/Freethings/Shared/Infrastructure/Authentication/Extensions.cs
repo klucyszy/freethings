@@ -7,7 +7,7 @@ namespace Freethings.Shared.Infrastructure.Authentication;
 
 public static class Extensions
 {
-    public static IServiceCollection AddAuth0(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddAuth0Authentication(this IServiceCollection services, IConfiguration configuration)
     {
         Auth0Options auth0Options = configuration.GetOptions<Auth0Options>("Shared:Authentication:Auth0");
         

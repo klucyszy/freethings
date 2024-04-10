@@ -15,16 +15,16 @@ public sealed record CreateApplicationUserCommand : IRequest<BusinessResult>
 
 internal sealed class CreateApplicationUserCommanddHandler : IRequestHandler<CreateApplicationUserCommand, BusinessResult>
 {
-    private readonly IIdentityProviderSerivce _identityProviderSerivce;
+    private readonly IIdentityProviderService _identityProviderService;
 
-    public CreateApplicationUserCommanddHandler(IIdentityProviderSerivce identityProviderSerivce)
+    public CreateApplicationUserCommanddHandler(IIdentityProviderService identityProviderService)
     {
-        _identityProviderSerivce = identityProviderSerivce;
+        _identityProviderService = identityProviderService;
     }
 
     public async Task<BusinessResult> Handle(CreateApplicationUserCommand request, CancellationToken cancellationToken)
     {
-        await _identityProviderSerivce.SaveUserIdAsync(
+        await _identityProviderService.SaveUserIdAsync(
             request.Auth0UserIdentifier,
             Guid.NewGuid().ToString(), cancellationToken);
 

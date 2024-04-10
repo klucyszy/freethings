@@ -5,6 +5,8 @@ using Freethings.Offers;
 using Freethings.Shared.Infrastructure;
 using Freethings.Shared.Infrastructure.Authentication;
 using Freethings.Shared.Infrastructure.Persistence;
+using Freethings.Users;
+using Freethings.Users.Presentation;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ builder.Services.AddMediatR(opts =>
 builder.Services
     .AddOffers(builder.Configuration)
     .AddAuctions(builder.Configuration)
+    .AddUsers(builder.Configuration)
     .AddModularSharedInfrastructure(builder.Configuration);
 
 WebApplication app = builder.Build();
@@ -30,7 +33,8 @@ if (app.Environment.IsDevelopment())
     app.SeedWithSampleData();
 }
 
-app.MapAuctionsEndpoints();
+app.MapAuctionsEndpoints()
+   .MapUsersEndpoints();
 
 app.UseAuth0();
 

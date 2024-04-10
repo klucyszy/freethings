@@ -16,7 +16,7 @@ internal static class DependencyInjection
         services.AddExceptionHandler<BusinessExceptionHandler>();
         services.AddProblemDetails();
 
-        services.AddAuth0(configuration);
+        services.AddAuth0Authentication(configuration);
         
         return services;
     }

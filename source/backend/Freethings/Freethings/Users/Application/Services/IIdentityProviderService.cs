@@ -1,6 +1,6 @@
 namespace Freethings.Users.Application.Services;
 
-public interface IIdentityProviderSerivce
+public interface IIdentityProviderService
 {
     Task SaveUserIdAsync(string identity, string userId, CancellationToken cancellationToken = default);
 }

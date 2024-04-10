@@ -1,4 +1,4 @@
-using Freethings.Auctions.Infrastructure.Persistence;
+using Freethings.Auctions.Infrastructure;
 using Freethings.Auctions.Presentation;
 
 namespace Freethings.Auctions;
