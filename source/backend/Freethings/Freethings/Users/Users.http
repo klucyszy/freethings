@@ -1,0 +1,12 @@
+@Freethings_HostAddress = http://localhost:5289
+@auth0Identity = google-oauth2|106825456884718575110
+
+## Create application user
+
+POST {{Freethings_HostAddress}}/api/users/
+Content-Type: application/json
+
+{
+  "auth0UserIdentifier": "{{auth0Identity}}"
+}
+
