@@ -5,7 +5,7 @@ public sealed record Auth0Options
     public const string SectionName = "Users:Auth0";
     
     public string BaseUrl { get; init; }
-    
-    // TODO: Remove and use proper authentication
-    public string ManagementApiToken { get; init; }
+    public string ClientId { get; init; }
+    public string ClientSecret { get; init; }
+    public string Audience { get; init; }
 }
