@@ -6,19 +6,19 @@ namespace Freethings.Users.Presentation.Endpoints;
 
 public static class CreateApplicationUser
 {
-    private sealed record Body(string Auth0UserIdentifier);
+    private sealed record Body(string Auth0UserIdentifier, string Username);
 
     public static RouteGroupBuilder MapCreateApplicationUserEndpoint(this RouteGroupBuilder group)
     {
         group
             .MapPost("", async (
-                    Body requestBody,
+                    Body body,
                     ISender sender,
                     CancellationToken ct)
                 =>
             {
                 BusinessResult result = await sender.Send(new CreateApplicationUserCommand(
-                    requestBody.Auth0UserIdentifier), ct);
+                    body.Auth0UserIdentifier, body.Username), ct);
 
                 return ApiResultMapper.MapToEndpointResult(result);
             });
