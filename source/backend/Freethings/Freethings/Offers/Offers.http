@@ -17,15 +17,6 @@ Content-Type: application/json
 POST {{Freethings_HostAddress}}/api/users/{{userId}}/offers/{{offerId}}/publish
 Content-Type: application/json
 
-### Get offers
-
-GET {{Freethings_HostAddress}}/api/users/{{userId}}/offers
-Content-Type: application/json
-
-### Get offer
-
-GET {{Freethings_HostAddress}}/api/users/{{userId}}/offers/{{offerId}}
-
 ### Edit offer
 
 PUT {{Freethings_HostAddress}}/api/users/{{userId}}/offers/{{offerId}}

@@ -28,3 +28,13 @@ POST {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}/clai
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
+### Get auctions
+
+GET {{Freethings_HostAddress}}/api/users/{{userId}}/auctions
+Content-Type: application/json
+
+### Get auctions
+
+GET {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{offerId}}
+
+

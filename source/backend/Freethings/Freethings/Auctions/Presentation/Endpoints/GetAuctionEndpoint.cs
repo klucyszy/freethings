@@ -7,7 +7,7 @@ namespace Freethings.Auctions.Presentation.Endpoints;
 
 public static class GetAuctionEndpoint
 {
-    public static void MapGetOfferEndpoint(this RouteGroupBuilder group)
+    public static RouteGroupBuilder MapGetAuctionEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("/{auctionId:guid}", async Task<Results<Ok<AuctionDto>, NotFound>> (
             [FromRoute] Guid userId,
@@ -24,5 +24,7 @@ public static class GetAuctionEndpoint
                 ? TypedResults.NotFound()
                 : TypedResults.Ok(result);
         });
+
+        return group;
     }
 }

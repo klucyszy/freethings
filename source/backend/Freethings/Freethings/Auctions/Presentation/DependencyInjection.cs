@@ -16,6 +16,8 @@ internal static class DependencyInjection
             .MapCreateAuctionAdvertEndpoint()
             .MapClaimAuctionItemEndpoint()
             .MapReserveAuctionItemEndpoint()
+            .MapGetAuctionsEndpoint()
+            .MapGetAuctionEndpoint()
             .WithTags("Auctions");
         
         return app;
