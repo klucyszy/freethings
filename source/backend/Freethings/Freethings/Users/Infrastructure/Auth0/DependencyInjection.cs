@@ -1,5 +1,3 @@
-using Auth0.ManagementApi;
-using Freethings.Shared.Infrastructure.Options;
 using Freethings.Users.Application.Services;
 
 namespace Freethings.Users.Infrastructure.Auth0;

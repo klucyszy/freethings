@@ -1,4 +1,3 @@
-using Freethings.Auctions.Domain;
 using Freethings.Auctions.Infrastructure.Persistence.Configurations;
 using Freethings.Shared.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

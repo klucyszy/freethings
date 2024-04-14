@@ -1,23 +1,23 @@
-using Freethings.Offers.Infrastructure.Queries;
-using Freethings.Offers.Infrastructure.Queries.Shared;
+using Freethings.Auctions.Infrastructure.Queries;
+using Freethings.Auctions.Infrastructure.Queries.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Freethings.Offers.Presentation.Endpoints;
+namespace Freethings.Auctions.Presentation.Endpoints;
 
-public static class GetOfferEndpoint
+public static class GetAuctionEndpoint
 {
     public static void MapGetOfferEndpoint(this RouteGroupBuilder group)
     {
-        group.MapGet("/{offerId:guid}", async Task<Results<Ok<OfferDto>, NotFound>> (
+        group.MapGet("/{auctionId:guid}", async Task<Results<Ok<AuctionDto>, NotFound>> (
             [FromRoute] Guid userId,
-            [FromRoute] Guid offerId,
+            [FromRoute] Guid auctionId,
             ISender sender,
             CancellationToken ct) =>
         {
-            OfferDto result = await sender.Send(new GetOfferQuery(
+            AuctionDto result = await sender.Send(new GetAuctionQuery(
                 userId,
-                offerId
+                auctionId
             ), ct);
 
             return result is null
