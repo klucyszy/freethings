@@ -24,7 +24,7 @@ internal sealed class EditAuctionAdverMetadatatHandler : IRequestHandler<EditAuc
 
         if (auctionAdvert is null)
         {
-            return BusinessResult.Failure("Offer not found");
+            return BusinessResult.Failure("§Auction not found");
         }
         
         // TODO: Implement

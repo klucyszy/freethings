@@ -35,6 +35,6 @@ Content-Type: application/json
 
 ### Get auctions
 
-GET {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{offerId}}
+GET {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}
 
 

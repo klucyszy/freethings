@@ -21,7 +21,7 @@ internal sealed class RemoveAuctionAdvertHandler : IRequestHandler<RemoveAuction
         
         if (deleted is false)
         {
-            return BusinessResult.Failure("Offer not found");
+            return BusinessResult.Failure("Auction not found");
         }
         
         return BusinessResult.Success();

@@ -13,12 +13,12 @@ public record Title
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException("Offer title cannot be empty", nameof(value));
+            throw new ArgumentException("Auction title cannot be empty", nameof(value));
         }
         
         if (value.Length > 50)
         {
-            throw new ArgumentException("Offer title cannot be longer than 100 characters", nameof(value));
+            throw new ArgumentException("Auction title cannot be longer than 100 characters", nameof(value));
         }
 
         return new Title(value);

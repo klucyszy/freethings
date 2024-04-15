@@ -6,14 +6,14 @@ namespace Freethings.Auctions.Infrastructure.Queries;
 
 public sealed record GetAuctionQuery(
     Guid UserId,
-    Guid OfferId)
+    Guid AuctionId)
     : IRequest<AuctionDto>;
 
-internal sealed class GetOfferHandler : IRequestHandler<GetAuctionQuery, AuctionDto>
+internal sealed class GetAuctionHandler : IRequestHandler<GetAuctionQuery, AuctionDto>
 {
     private readonly AuctionsContext _context;
 
-    public GetOfferHandler(AuctionsContext context)
+    public GetAuctionHandler(AuctionsContext context)
     {
         _context = context;
     }
@@ -21,7 +21,7 @@ internal sealed class GetOfferHandler : IRequestHandler<GetAuctionQuery, Auction
     public async Task<AuctionDto> Handle(GetAuctionQuery request, CancellationToken cancellationToken)
     {
         return await _context.Auctions
-            .Where(q => q.UserId == request.UserId && q.Id == request.OfferId)
+            .Where(q => q.UserId == request.UserId && q.Id == request.AuctionId)
             .Select(o => new AuctionDto(
                 o.Id,
                 o.Title.Value,

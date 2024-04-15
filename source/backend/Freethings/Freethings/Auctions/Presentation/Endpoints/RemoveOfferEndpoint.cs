@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Freethings.Auctions.Presentation.Endpoints;
 
-public static class RemoveOfferEndpoint
+public static class RemoveAuctionAdvertEndpoint
 {
-    public static void MapRemoveOfferEndpoint(this RouteGroupBuilder group)
+    public static void MapRemoveAuctionAdvertEndpoint(this RouteGroupBuilder group)
     {
-        group.MapDelete("/{offerId:guid}", async Task<Results<NoContent, NotFound>>(
+        group.MapDelete("/{auctionId:guid}", async Task<Results<NoContent, NotFound>>(
             [FromRoute] Guid userId,
-            [FromRoute] Guid offerId,
+            [FromRoute] Guid auctionId,
             ISender sender,
             CancellationToken ct) =>
         {
             BusinessResult businessResult = await sender.Send(new RemoveAuctionAdvertCommand(
                 userId,
-                offerId
+                auctionId
                 ), ct);
             
             return businessResult.IsSuccess
