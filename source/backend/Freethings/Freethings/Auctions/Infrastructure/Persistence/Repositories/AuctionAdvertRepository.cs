@@ -40,4 +40,9 @@ internal sealed class AuctionAdvertRepository : IAuctionAdvertRepository
 
         return domainEvents;
     }
+
+    public Task<bool> DeleteAsync(Guid auctionAdvertId, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }

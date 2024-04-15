@@ -8,11 +8,11 @@ public sealed record GetAuctionsQuery(
     Guid UserId)
     : IRequest<List<AuctionDto>>;
 
-internal sealed class GetOffersHandler : IRequestHandler<GetAuctionsQuery, List<AuctionDto>>
+internal sealed class GetAuctionsHandler : IRequestHandler<GetAuctionsQuery, List<AuctionDto>>
 {
     private readonly AuctionsContext _context;
 
-    public GetOffersHandler(AuctionsContext context)
+    public GetAuctionsHandler(AuctionsContext context)
     {
         _context = context;
     }

@@ -1,7 +1,6 @@
 using System.Reflection;
 using Freethings.Auctions;
 using Freethings.Auctions.Presentation;
-using Freethings.Offers;
 using Freethings.Shared.Infrastructure;
 using Freethings.Shared.Infrastructure.Authentication;
 using Freethings.Shared.Infrastructure.Persistence;
@@ -18,7 +17,6 @@ builder.Services.AddMediatR(opts =>
 });
 
 builder.Services
-    .AddOffers(builder.Configuration)
     .AddAuctions(builder.Configuration)
     .AddUsers(builder.Configuration)
     .AddModularSharedInfrastructure(builder.Configuration);

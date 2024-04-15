@@ -1,9 +1,9 @@
-using Freethings.Offers.Application.Commands;
+using Freethings.Auctions.Application.Commands;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Freethings.Offers.Presentation.Endpoints;
+namespace Freethings.Auctions.Presentation.Endpoints;
 
 public static class RemoveOfferEndpoint
 {
@@ -15,7 +15,7 @@ public static class RemoveOfferEndpoint
             ISender sender,
             CancellationToken ct) =>
         {
-            BusinessResult businessResult = await sender.Send(new RemoveOfferCommand(
+            BusinessResult businessResult = await sender.Send(new RemoveAuctionAdvertCommand(
                 userId,
                 offerId
                 ), ct);
