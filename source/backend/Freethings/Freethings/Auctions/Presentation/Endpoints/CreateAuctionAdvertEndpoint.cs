@@ -8,7 +8,7 @@ namespace Freethings.Auctions.Presentation.Endpoints;
 
 public static class CreateAuctionAdvertEndpoint
 {
-    private sealed record RequestBody
+    private sealed record CreateAuctionAdvertRequest
     {
         public AuctionType Type { get; init; }
         public string Title { get; init; }
@@ -20,7 +20,7 @@ public static class CreateAuctionAdvertEndpoint
     {
         group.MapPost("", async (
             [FromRoute] Guid userId,
-            [FromBody] RequestBody request,
+            [FromBody] CreateAuctionAdvertRequest request,
             ISender sender,
             CancellationToken ct) =>
         {

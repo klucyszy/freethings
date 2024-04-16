@@ -66,4 +66,15 @@ public sealed class AuctionAdvert : AggregateRoot
 
         return BusinessResult.Success();
     }
+    
+    public void ChangeAuctionMetadata(Title title, Description description)
+    {
+        Title = title;
+        Description = description;
+        
+        AddDomainEvent(new AuctionAdvertEvent.MetadataChanged(
+            Id,
+            Title.Value,
+            Description.Value));
+    }
 }

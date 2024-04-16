@@ -33,6 +33,15 @@ Authorization: Bearer {{token}}
 GET {{Freethings_HostAddress}}/api/users/{{userId}}/auctions
 Content-Type: application/json
 
+### Edit auction metadata
+
+PATCH {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}
+
+{
+  "title": "item",
+  "description": "item description",
+}
+
 ### Get auctions
 
 GET {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}

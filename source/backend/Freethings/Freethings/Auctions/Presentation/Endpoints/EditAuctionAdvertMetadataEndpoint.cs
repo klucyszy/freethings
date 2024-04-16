@@ -5,20 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Freethings.Auctions.Presentation.Endpoints;
 
-public static class EditAuctionEndpoint
+public static class EditAuctionAdvertMetadataEndpoint
 {
-    private sealed record RequestBody
+    private sealed record EditAuctionAdvertMetadataRequest
     {
         public string Title { get; init; }
         public string Description { get; init; }
     }
     
-    public static void MapEditAuctionEndpoint(this RouteGroupBuilder group)
+    public static RouteGroupBuilder MapEditAuctionAdvertMetadataEndpoint(this RouteGroupBuilder group)
     {
-        group.MapPut("/{auctionId:guid}", async Task<Results<NoContent, NotFound>>(
+        group.MapPatch("/{auctionId:guid}", async Task<Results<NoContent, NotFound>>(
             [FromRoute] Guid userId,
             [FromRoute] Guid auctionId,
-            [FromBody] RequestBody request,
+            [FromBody] EditAuctionAdvertMetadataRequest request,
             ISender sender,
             CancellationToken ct) =>
         {
@@ -33,5 +33,7 @@ public static class EditAuctionEndpoint
                 ? TypedResults.NoContent()
                 : TypedResults.NotFound();
         });
+
+        return group;
     }
 }
