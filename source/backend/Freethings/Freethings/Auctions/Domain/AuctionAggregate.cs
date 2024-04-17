@@ -95,7 +95,7 @@ public sealed class AuctionAggregate : AggregateRoot
                 .AsBusinessResult();
         }
 
-        claim.MarkAsReserved();
+        claim.Reserve();
         
         AddDomainEvent(new AuctionEvent.ItemsReserved(
             Id,
@@ -137,11 +137,24 @@ public sealed class AuctionAggregate : AggregateRoot
 
     public void ChangeAvailableQuantity(Quantity newQuantity)
     {
+        if (newQuantity < _availableQuantity)
+        {
+            List<AuctionClaim> reservedClaims = _auctionClaims
+                .Where(x => x.IsReserved)
+                .OrderByDescending(x => x.Timestamp)
+                .ToList();
+            int quantityToCancel = reservedClaims.Sum(x => x.Quantity.Value) - newQuantity.Value;
+
+            List<AuctionClaim> claimsToCancel = FindClaimsToBeCancelled(reservedClaims);
+            foreach (AuctionClaim claim in claimsToCancel)
+            {
+                claim.CancelReservation();
+            }
+        }
+        
         _availableQuantity = newQuantity;
-
-        // there should be validated if new quantity is not less than already reserved. If so, cancel reservations
     }
-
+    
     public sealed record ClaimCommand(
         Guid ClaimedById,
         Quantity Quantity,
@@ -154,4 +167,9 @@ public sealed class AuctionAggregate : AggregateRoot
     public sealed record HandOverCommand(
         Guid ClaimedById,
         Quantity? Quantity = null);
+    
+    private List<AuctionClaim> FindClaimsToBeCancelled(List<AuctionClaim> reservedClaims)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -24,8 +24,13 @@ public sealed class AuctionClaim
         IsReserved = isReserved;
     }
 
-    public void MarkAsReserved()
+    public void Reserve()
     {
         IsReserved = true;
+    }
+    
+    public void CancelReservation()
+    {
+        IsReserved = false;
     }
 }
