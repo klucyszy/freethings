@@ -143,9 +143,7 @@ public sealed class AuctionAggregate : AggregateRoot
                 .Where(x => x.IsReserved)
                 .OrderByDescending(x => x.Timestamp)
                 .ToList();
-            int quantityToCancel = reservedClaims.Sum(x => x.Quantity.Value) - newQuantity.Value;
-
-            List<AuctionClaim> claimsToCancel = FindClaimsToBeCancelled(reservedClaims);
+            List<AuctionClaim> claimsToCancel = FindClaimsToBeCancelled(reservedClaims, newQuantity);
             foreach (AuctionClaim claim in claimsToCancel)
             {
                 claim.CancelReservation();
@@ -168,8 +166,27 @@ public sealed class AuctionAggregate : AggregateRoot
         Guid ClaimedById,
         Quantity? Quantity = null);
     
-    private List<AuctionClaim> FindClaimsToBeCancelled(List<AuctionClaim> reservedClaims)
+    private List<AuctionClaim> FindClaimsToBeCancelled(List<AuctionClaim> reservedClaims, Quantity newQuantity)
     {
-        throw new NotImplementedException();
+        // Find claims which should stay reserved, which means that the new quantity is less or equal to sum of N reserved claims
+        // Then I need to find other claims that needs to be cancelled
+        // E.g. Auction has 5 items, there are 3 claims each for 1 item.
+        // Owner select new quantity set to 1. Oldest reservation should be kept, other should be cancelled.
+        
+        
+        var sortedClaims = reservedClaims.OrderBy(claim => claim.Timestamp).ToList();
+        int totalQuantity = 0;
+        
+        List<AuctionClaim> claimsToKeep = new List<AuctionClaim>();
+        foreach (var claim in sortedClaims)
+        {
+            if (totalQuantity + claim.Quantity.Value <= newQuantity.Value)
+            {
+                totalQuantity += claim.Quantity.Value;
+                claimsToKeep.Add(claim);
+            }
+        }
+
+        return sortedClaims.Except(claimsToKeep).ToList();
     }
 }
