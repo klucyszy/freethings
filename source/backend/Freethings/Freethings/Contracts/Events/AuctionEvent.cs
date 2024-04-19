@@ -27,6 +27,11 @@ public abstract record AuctionEvent : IDomainEvent
         Guid ReservedById,
         int ClaimedQuantity,
         DateTimeOffset Timestamp) : AuctionEvent;
+    
+    public sealed record ItemsReservationCancelled(
+        Guid AuctionId,
+        Guid ReservedById,
+        DateTimeOffset Timestamp) : AuctionEvent;
 
     public sealed record ItemsHandedOver(
         Guid AuctionId,

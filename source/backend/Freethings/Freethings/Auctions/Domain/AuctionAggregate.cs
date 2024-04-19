@@ -135,7 +135,7 @@ public sealed class AuctionAggregate : AggregateRoot
             _availableQuantity.Value);
     }
 
-    public void ChangeAvailableQuantity(Quantity newQuantity)
+    public void ChangeAvailableQuantity(Quantity newQuantity, DateTimeOffset currentTime)
     {
         if (newQuantity < _availableQuantity)
         {
@@ -147,6 +147,11 @@ public sealed class AuctionAggregate : AggregateRoot
             foreach (AuctionClaim claim in claimsToCancel)
             {
                 claim.CancelReservation();
+                
+                AddDomainEvent(new AuctionEvent.ItemsReservationCancelled(
+                    Id,
+                    claim.ClaimedById,
+                    currentTime));
             }
         }
         
@@ -168,25 +173,25 @@ public sealed class AuctionAggregate : AggregateRoot
     
     private List<AuctionClaim> FindClaimsToBeCancelled(List<AuctionClaim> reservedClaims, Quantity newQuantity)
     {
-        // Find claims which should stay reserved, which means that the new quantity is less or equal to sum of N reserved claims
-        // Then I need to find other claims that needs to be cancelled
-        // E.g. Auction has 5 items, there are 3 claims each for 1 item.
-        // Owner select new quantity set to 1. Oldest reservation should be kept, other should be cancelled.
+        reservedClaims = reservedClaims
+            .OrderBy(claim => claim.Timestamp)
+            .ToList();
         
+        int accumulatedQuantity = 0;
+        List<AuctionClaim> claimsToCancel = new List<AuctionClaim>();
         
-        var sortedClaims = reservedClaims.OrderBy(claim => claim.Timestamp).ToList();
-        int totalQuantity = 0;
-        
-        List<AuctionClaim> claimsToKeep = new List<AuctionClaim>();
-        foreach (var claim in sortedClaims)
+        foreach (AuctionClaim claim in reservedClaims)
         {
-            if (totalQuantity + claim.Quantity.Value <= newQuantity.Value)
+            if (accumulatedQuantity + claim.Quantity.Value <= newQuantity.Value)
             {
-                totalQuantity += claim.Quantity.Value;
-                claimsToKeep.Add(claim);
+                accumulatedQuantity += claim.Quantity.Value;
+            }
+            else
+            {
+                claimsToCancel.Add(claim);
             }
         }
 
-        return sortedClaims.Except(claimsToKeep).ToList();
+        return claimsToCancel;
     }
 }

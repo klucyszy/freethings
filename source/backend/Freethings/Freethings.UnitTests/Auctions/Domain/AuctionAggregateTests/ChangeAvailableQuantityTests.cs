@@ -1,6 +1,7 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Freethings.Auctions.Domain;
+using Freethings.Contracts.Events;
 
 namespace Freethings.UnitTests.Auctions.Domain.AuctionAggregateTests;
 
@@ -21,12 +22,14 @@ public sealed class ChangeAvailableQuantityTests
         auctionAggregate.Claim(claim2, DateTimeOffset.UtcNow);
         auctionAggregate.Reserve(new AuctionAggregate.ReserveCommand(claim2.ClaimedById));
         
-        auctionAggregate.ChangeAvailableQuantity(Quantity.Create(1));
+        auctionAggregate.ChangeAvailableQuantity(Quantity.Create(1), DateTimeOffset.UtcNow);
         
         // assert
         using (new AssertionScope())
         {
             auctionAggregate.AvailableQuantity.Value.Should().Be(1);
+            auctionAggregate.DomainEvents.OfType<AuctionEvent.ItemsReservationCancelled>()
+                .Count().Should().Be(1);
             auctionAggregate.Claims.Count.Should().Be(2);
             auctionAggregate.Claims
                 .FirstOrDefault(x => x.ClaimedById == claim1.ClaimedById)!
@@ -58,12 +61,14 @@ public sealed class ChangeAvailableQuantityTests
         auctionAggregate.Claim(claim4, DateTimeOffset.UtcNow);
         auctionAggregate.Reserve(new AuctionAggregate.ReserveCommand(claim4.ClaimedById));
         
-        auctionAggregate.ChangeAvailableQuantity(Quantity.Create(2));
+        auctionAggregate.ChangeAvailableQuantity(Quantity.Create(2), DateTimeOffset.UtcNow);
         
         // assert
         using (new AssertionScope())
         {
             auctionAggregate.AvailableQuantity.Value.Should().Be(2);
+            auctionAggregate.DomainEvents.OfType<AuctionEvent.ItemsReservationCancelled>()
+                .Count().Should().Be(2);
             auctionAggregate.Claims
                 .FirstOrDefault(x => x.ClaimedById == claim1.ClaimedById)!
                 .IsReserved.Should().BeTrue();
