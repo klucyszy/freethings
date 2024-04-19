@@ -1,3 +1,4 @@
+using Freethings.Auctions.Application.Errors;
 using Freethings.Auctions.Domain;
 using Freethings.Shared.Abstractions.Domain;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
@@ -17,8 +18,27 @@ internal sealed class ChangeAvailableItemsQuantityHandler
     private readonly IEventBus _eventBus;
     private readonly ICurrentTime _currentTime;
     
-    public Task<BusinessResult> Handle(ChangeAvailableItemsQuantityCommand request, CancellationToken cancellationToken)
+    public async Task<BusinessResult> Handle(ChangeAvailableItemsQuantityCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        Quantity quantity = Quantity.Create(request.Quantity);
+        
+        AuctionAggregate aggregate = await _repository.GetAsync(request.AuctionId, cancellationToken);
+
+        if (aggregate is null)
+        {
+            return BusinessResult.Failure(AuctionErrorDefinition.AuctionNotFound);
+        }
+        
+        aggregate.ChangeAvailableQuantity(quantity, _currentTime.UtcNow());
+        
+        List<IDomainEvent> domainEvents = await _repository
+            .SaveAsync(aggregate, cancellationToken);
+
+        foreach (IDomainEvent domainEvent in domainEvents)
+        {
+            await _eventBus.PublishAsync(domainEvent, cancellationToken);
+        }
+        
+        return BusinessResult.Success();
     }
 }
