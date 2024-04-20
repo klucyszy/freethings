@@ -17,7 +17,15 @@ internal sealed class ChangeAvailableItemsQuantityHandler
     private readonly IAggregateRootRepository<AuctionAggregate> _repository;
     private readonly IEventBus _eventBus;
     private readonly ICurrentTime _currentTime;
-    
+
+    public ChangeAvailableItemsQuantityHandler(IAggregateRootRepository<AuctionAggregate> repository,
+        IEventBus eventBus, ICurrentTime currentTime)
+    {
+        _repository = repository;
+        _eventBus = eventBus;
+        _currentTime = currentTime;
+    }
+
     public async Task<BusinessResult> Handle(ChangeAvailableItemsQuantityCommand request, CancellationToken cancellationToken)
     {
         Quantity quantity = Quantity.Create(request.Quantity);

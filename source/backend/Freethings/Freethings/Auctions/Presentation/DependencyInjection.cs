@@ -19,6 +19,7 @@ internal static class DependencyInjection
             .MapGetAuctionsEndpoint()
             .MapGetAuctionEndpoint()
             .MapEditAuctionAdvertMetadataEndpoint()
+            .MapChangeAvailableQuantityEndpoint()
             .WithTags("Auctions");
         
         return app;

@@ -36,6 +36,7 @@ Content-Type: application/json
 ### Edit auction metadata
 
 PATCH {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}
+Content-Type: application/json
 
 {
   "title": "item",
@@ -46,4 +47,11 @@ PATCH {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}
 
 GET {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}
 
+### Change auction quantity
 
+PUT {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}/quantity
+Content-Type: application/json
+
+{
+  "quantity": 2
+}

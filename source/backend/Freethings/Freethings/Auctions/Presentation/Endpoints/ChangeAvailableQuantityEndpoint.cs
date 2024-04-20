@@ -6,30 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Freethings.Auctions.Presentation.Endpoints;
 
-public static class ClaimAuctionItemEndpoint
+public static class ChangeAvailableQuantityEndpoint
 {
-    private sealed record QueryParameters(
+    private sealed record ChangeAvailableQuantityRequestBody(
         [Range(1, Int32.MaxValue)] int Quantity = 1);
 
-    public static RouteGroupBuilder MapClaimAuctionItemEndpoint(this RouteGroupBuilder group)
+    public static RouteGroupBuilder MapChangeAvailableQuantityEndpoint(this RouteGroupBuilder group)
     {
         group
-            .MapPost("/{auctionId:guid}/claim", async (
+            .MapPut("/{auctionId:guid}/quantity", async (
                     [FromRoute] Guid userId,
                     [FromRoute] Guid auctionId,
-                    [AsParameters] QueryParameters parameters,
+                    [FromBody] ChangeAvailableQuantityRequestBody parameters,
                     ISender sender,
                     CancellationToken ct)
                 =>
             {
-                BusinessResult result = await sender.Send(new ClaimItemsCommand(
+                BusinessResult result = await sender.Send(new ChangeAvailableItemsQuantityCommand(
                     auctionId,
                     userId,
                     parameters.Quantity), ct);
 
                 return ApiResultMapper.MapToEndpointResult(result);
-            })
-            .RequireAuthorization();
+            });
+            //.RequireAuthorization();
 
         return group;
     }

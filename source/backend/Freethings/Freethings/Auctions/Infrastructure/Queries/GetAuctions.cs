@@ -25,7 +25,9 @@ internal sealed class GetAuctionsHandler : IRequestHandler<GetAuctionsQuery, Lis
                 o.Id,
                 o.Title.Value,
                 o.Description.Value,
-                o.State.ToString()))
+                o.State.ToString(),
+                o.Quantity.Value,
+                0))
             .ToListAsync(cancellationToken);
     }
 }

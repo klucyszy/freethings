@@ -4,4 +4,6 @@ public sealed record AuctionDto(
     Guid Id,
     string Title,
     string Description,
-    string State);
+    string State,
+    int AvailableItems,
+    int ClaimedItems);
