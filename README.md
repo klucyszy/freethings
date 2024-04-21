@@ -12,8 +12,8 @@ My idea is to improve the concept and extend this, that really valuable things c
 - [ ] **Item Listings**: Users can list items they want to give away. Listings should include a title, description, and photo.
 - [ ] **Item Search**: Users can search for items they are interested in.
 - [ ] **Interest Expression Mechanism**: Possibility to select how you want to give away your item:
-  - [ ] **First-Come, First-Served Option**: The first user to express interest is automatically granted the item. 
-  - [ ] **New Owner Manual Selection**: The owner reviews interested parties and selects who receives the item.
+  - [x] **First-Come, First-Served Option**: The first user to express interest is automatically granted the item. 
+  - [x] **New Owner Manual Selection**: The owner reviews interested parties and selects who receives the item.
   - [ ] **Bidding for Charity**: An auction-like feature where the highest pledge to a selected charity wins the item.pledge to a selected charity wins the item.
 
 ## Tech Stack & Ideology behing the project
