@@ -1,4 +1,6 @@
+using Freethings.PublicApi.Events.Users;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
+using Freethings.Shared.Abstractions.Messaging;
 using Freethings.Users.Application.Services;
 using Freethings.Users.Domain;
 using Freethings.Users.Domain.Repositories;
@@ -21,13 +23,18 @@ internal sealed class CreateApplicationUserCommanddHandler : IRequestHandler<Cre
 {
     private readonly IIdentityProviderService _identityProviderService;
     private readonly IUserRepository _userRepository;
+    private readonly IEventBus _eventBus;
+    private readonly ICurrentTime _currentTime;
 
     public CreateApplicationUserCommanddHandler(
         IIdentityProviderService identityProviderService,
-        IUserRepository userRepository)
+        IUserRepository userRepository,
+        IEventBus eventBus, ICurrentTime currentTime)
     {
         _identityProviderService = identityProviderService;
         _userRepository = userRepository;
+        _eventBus = eventBus;
+        _currentTime = currentTime;
     }
 
     public async Task<BusinessResult> Handle(CreateApplicationUserCommand request, CancellationToken cancellationToken)
@@ -42,7 +49,8 @@ internal sealed class CreateApplicationUserCommanddHandler : IRequestHandler<Cre
 
         User user = new User(
             request.Auth0UserIdentifier,
-            request.Username
+            request.Username,
+            _currentTime.UtcNow()
         );
 
         user = await _userRepository.AddAsync(user, cancellationToken);
@@ -50,6 +58,10 @@ internal sealed class CreateApplicationUserCommanddHandler : IRequestHandler<Cre
         await _identityProviderService.SaveUserIdAsync(
             request.Auth0UserIdentifier,
             user.Id.ToString(), cancellationToken);
+        
+        await _eventBus.PublishAsync(new UserEvent.UserCreated(
+                user.Id,
+                user.CreatedAt), cancellationToken);
 
         return BusinessResult.Success();
     }

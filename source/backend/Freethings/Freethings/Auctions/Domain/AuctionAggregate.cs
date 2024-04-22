@@ -1,6 +1,6 @@
 using Freethings.Auctions.Domain.Exceptions;
 using Freethings.Auctions.Domain.Strategies.ClaimedItemsReservationStrategy;
-using Freethings.Contracts.Events;
+using Freethings.PublicApi.Events.Auctions;
 using Freethings.Shared.Abstractions.Domain;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 

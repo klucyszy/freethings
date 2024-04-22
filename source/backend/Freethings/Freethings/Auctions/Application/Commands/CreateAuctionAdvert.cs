@@ -1,6 +1,6 @@
 using Freethings.Auctions.Domain;
 using Freethings.Auctions.Domain.Repositories;
-using Freethings.Contracts.Events;
+using Freethings.PublicApi.Events.Auctions;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Freethings.Shared.Abstractions.Messaging;
 

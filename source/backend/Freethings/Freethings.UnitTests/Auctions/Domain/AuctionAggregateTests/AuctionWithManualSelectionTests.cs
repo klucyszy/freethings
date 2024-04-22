@@ -2,7 +2,7 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using Freethings.Auctions.Domain;
 using Freethings.Auctions.Domain.Exceptions;
-using Freethings.Contracts.Events;
+using Freethings.PublicApi.Events.Auctions;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 
 namespace Freethings.UnitTests.Auctions.Domain.AuctionAggregateTests;

@@ -1,7 +1,7 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Freethings.Auctions.Domain;
-using Freethings.Contracts.Events;
+using Freethings.PublicApi.Events.Auctions;
 
 namespace Freethings.UnitTests.Auctions.Domain.AuctionAggregateTests;
 

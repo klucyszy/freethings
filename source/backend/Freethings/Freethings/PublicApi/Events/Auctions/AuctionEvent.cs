@@ -1,6 +1,6 @@
 using Freethings.Shared.Abstractions.Domain;
 
-namespace Freethings.Contracts.Events;
+namespace Freethings.PublicApi.Events.Auctions;
 
 public abstract record AuctionEvent : IDomainEvent
 {
