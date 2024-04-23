@@ -1,6 +1,6 @@
 namespace Freethings.Shared.Abstractions.Context;
 
-public class ICurrentUser
+public interface ICurrentUser
 {
     
 }
