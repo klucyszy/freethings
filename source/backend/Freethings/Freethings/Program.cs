@@ -2,6 +2,7 @@ using System.Reflection;
 using Freethings.Auctions;
 using Freethings.Auctions.Presentation;
 using Freethings.Shared.Infrastructure;
+using Freethings.Shared.Infrastructure.Auth.Context;
 using Freethings.Shared.Infrastructure.Authentication;
 using Freethings.Shared.Infrastructure.Persistence;
 using Freethings.Users;
@@ -34,10 +35,10 @@ if (app.Environment.IsDevelopment())
 app.MapAuctionsEndpoints()
    .MapUsersEndpoints();
 
-app.UseAuth0();
-
-app.UseHttpsRedirection();
-app.UseExceptionHandler();
-
+app
+    .UseAuth0()
+    .UseCurrentUserContext()
+    .UseHttpsRedirection()
+    .UseExceptionHandler();
 
 app.Run();

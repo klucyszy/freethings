@@ -32,9 +32,11 @@ public static class Extensions
         return services;
     }
     
-    public static void UseAuth0(this IApplicationBuilder app)
+    public static IApplicationBuilder UseAuth0(this IApplicationBuilder app)
     {
         app.UseAuthentication();
         app.UseAuthorization();
+
+        return app;
     }
 }
