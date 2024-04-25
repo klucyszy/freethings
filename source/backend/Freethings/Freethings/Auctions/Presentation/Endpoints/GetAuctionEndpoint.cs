@@ -23,7 +23,8 @@ public static class GetAuctionEndpoint
             return result is null
                 ? TypedResults.NotFound()
                 : TypedResults.Ok(result);
-        });
+        })
+        .RequireAuthorization();
 
         return group;
     }

@@ -32,7 +32,8 @@ public static class EditAuctionAdvertMetadataEndpoint
             return businessResult.IsSuccess
                 ? TypedResults.NoContent()
                 : TypedResults.NotFound();
-        });
+        })
+        .RequireAuthorization();
 
         return group;
     }

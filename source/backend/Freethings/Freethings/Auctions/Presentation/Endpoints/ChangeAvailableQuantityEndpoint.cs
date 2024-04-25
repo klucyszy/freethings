@@ -28,8 +28,8 @@ public static class ChangeAvailableQuantityEndpoint
                     parameters.Quantity), ct);
 
                 return ApiResultMapper.MapToEndpointResult(result);
-            });
-            //.RequireAuthorization();
+            })
+            .RequireAuthorization();
 
         return group;
     }

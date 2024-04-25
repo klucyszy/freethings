@@ -15,26 +15,27 @@ public static class CreateAuctionAdvertEndpoint
         public string Description { get; init; }
         public int Quantity { get; init; }
     }
-    
+
     public static RouteGroupBuilder MapCreateAuctionAdvertEndpoint(this RouteGroupBuilder group)
     {
         group.MapPost("", async (
-            [FromRoute] Guid userId,
-            [FromBody] CreateAuctionAdvertRequest request,
-            ISender sender,
-            CancellationToken ct) =>
-        {
-            BusinessResult<Guid> result = await sender.Send(new CreateAuctionAdvertCommand(
-                userId,
-                request.Type,
-                request.Title,
-                request.Description,
-                request.Quantity
+                [FromRoute] Guid userId,
+                [FromBody] CreateAuctionAdvertRequest request,
+                ISender sender,
+                CancellationToken ct) =>
+            {
+                BusinessResult<Guid> result = await sender.Send(new CreateAuctionAdvertCommand(
+                    userId,
+                    request.Type,
+                    request.Title,
+                    request.Description,
+                    request.Quantity
                 ), ct);
 
-            return ApiResultMapper.MapToEndpointResult(result);
-        });
-        
+                return ApiResultMapper.MapToEndpointResult(result);
+            })
+            .RequireAuthorization();
+
         return group;
     }
 }

@@ -1,3 +1,5 @@
+using Freethings.Shared.Abstractions.Auth.Context;
+
 namespace Freethings.Shared.Infrastructure.Auth.Context;
 
 public static class Extensions
@@ -13,8 +15,10 @@ public static class Extensions
     {
         app.Use((httpContext, next) =>
         {
-            httpContext.RequestServices.GetRequiredService<CurrentUserContextAccessor>().CurrentUser
-                = new CurrentUser(httpContext);
+            CurrentUserContextAccessor currentUserContextAccessor = httpContext
+                .RequestServices.GetRequiredService<CurrentUserContextAccessor>();
+            
+            currentUserContextAccessor.CurrentUser = new CurrentUser(httpContext);
 
             return next();
         });

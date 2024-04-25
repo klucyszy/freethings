@@ -1,4 +1,5 @@
 using Freethings.Shared.Abstractions.Messaging;
+using Freethings.Shared.Infrastructure.Auth.Context;
 using Freethings.Shared.Infrastructure.Authentication;
 using Freethings.Shared.Infrastructure.Messaging;
 using Freethings.Shared.Infrastructure.Middleware;
@@ -17,6 +18,7 @@ internal static class DependencyInjection
         services.AddProblemDetails();
 
         services.AddAuth0Authentication(configuration);
+        services.AddCurrentUserContext();
         
         return services;
     }

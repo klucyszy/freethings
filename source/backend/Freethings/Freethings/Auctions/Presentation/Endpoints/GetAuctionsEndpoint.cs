@@ -18,7 +18,8 @@ public static class GetAuctionsEndpoint
                 ), ct);
 
             return TypedResults.Ok(result);
-        });
+        })
+        .RequireAuthorization();
 
         return group;
     }

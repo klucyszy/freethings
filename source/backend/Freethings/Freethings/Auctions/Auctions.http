@@ -1,7 +1,7 @@
 @Freethings_HostAddress = http://localhost:5289
 @userId = 00000000-0000-0000-0000-000000000001
 @auctionId = 0d71fb06-edcb-4736-9fd4-90343688294a
-@token = 
+@token = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii1KQzVUalhSeXFpMFBtdWNzaWpoQSJ9.eyJodHRwczovL2ZyZWV0aGluZ3MvYXBpL3JvbGVzIjpbImFkbWluIiwiY3VzdG9tZXIiXSwiaHR0cHM6Ly9mcmVldGhpbmdzL2FwaS9hcHBVc2VySWQiOiJmNzhhZjUzZC05Njk3LTQ2NTAtYjcyNC1hYTI3ODY3MWZiNDQiLCJpc3MiOiJodHRwczovL2Rldi12ZjhlZXFmMTF4M3VkOG51LnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDEwNjgyNTQ1Njg4NDcxODU3NTExMCIsImF1ZCI6WyJodHRwczovL2ZyZWV0aGluZ3MvYXBpIiwiaHR0cHM6Ly9kZXYtdmY4ZWVxZjExeDN1ZDhudS51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNzE0MDU0Njg5LCJleHAiOjE3MTQxNDEwODksInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgcmVhZHdyaXRlOmF1Y3Rpb25zIiwiYXpwIjoiYlNqN0pLaURDcHBpTVA4eFduNGdtWVdkSVZTZjZUaTcifQ.D2SSEhcoiC2W2oZZS6CI7zhxHnQTiJMXvy5LvrDw5BxP0KEEbHlvw2BnjdP6_BItJnfFWnaRKvi1-mMWs_MhsuODKWtTQnHRcBd2z6dQtxpdPDqKr1_cLgfwJXz52LcWxTFZZ74JMqHkbXIun4cP2faw_hIeN1n36hwHx3o4E7sYLFi2gWKF5aBvbcfmHBb1WGd0jDRo7tV-4fzeqFrGC-7fyKtbpJODb7uv0cO7_4aaKVfiIXcsBDP-XD_CXQPSJv7SXzulsicd5zgF1OTt0wgQbhQVuRMUUTlBscu8MqI7XwxW33r3JTSnmaiyqdVIQkHTLYx8y7SYaefh1iDHvg
 
 ## Create Auction advert
 
@@ -32,25 +32,29 @@ Authorization: Bearer {{token}}
 
 GET {{Freethings_HostAddress}}/api/users/{{userId}}/auctions
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Edit auction metadata
 
 PATCH {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "title": "item",
-  "description": "item description",
+  "description": "item description"
 }
 
 ### Get auctions
 
 GET {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}
+Authorization: Bearer {{token}}
 
 ### Change auction quantity
 
 PUT {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}/quantity
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "quantity": 2

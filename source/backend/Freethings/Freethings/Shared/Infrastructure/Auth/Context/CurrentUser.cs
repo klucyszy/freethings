@@ -5,6 +5,8 @@ namespace Freethings.Shared.Infrastructure.Auth.Context;
 
 internal sealed class CurrentUser : ICurrentUser
 {
+    private const string AppUserIdClaimType = "https://freethings/api/appUserId";
+    
     public Guid? Identity { get; }
     public bool IsAuthenticated { get; }
 
@@ -14,7 +16,7 @@ internal sealed class CurrentUser : ICurrentUser
         
         IsAuthenticated = user.Identity?.IsAuthenticated ?? false;
         Identity = IsAuthenticated
-            ? Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!)
+            ? Guid.Parse(user.FindFirstValue(AppUserIdClaimType)!)
             : null;
     }
 }

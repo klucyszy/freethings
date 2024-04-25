@@ -2,7 +2,7 @@ using Freethings.Shared.Abstractions.Auth.Context;
 
 namespace Freethings.Shared.Infrastructure.Auth.Context;
 
-internal sealed class CurrentUserContextAccessor : ICurrentUserContextAccessor
+internal sealed class CurrentUserContextAccessor
 {
     private static readonly AsyncLocal<CurrentUserContextHolder> _holder = new();
     

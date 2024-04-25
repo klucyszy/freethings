@@ -27,7 +27,8 @@ public static class ReserveAuctionItemEndpoint
                 true), ct);
 
             return TypedResults.NoContent();
-        });
+        })
+        .RequireAuthorization();
 
         return group;
     }
