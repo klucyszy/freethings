@@ -1,5 +1,6 @@
 using Freethings.Auctions.Application.Commands;
 using Freethings.Auctions.Domain;
+using Freethings.Shared.Abstractions.Auth.Context;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Freethings.Shared.Infrastructure.Api;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +20,21 @@ public static class CreateAuctionAdvertEndpoint
     public static RouteGroupBuilder MapCreateAuctionAdvertEndpoint(this RouteGroupBuilder group)
     {
         group.MapPost("", async (
-                [FromRoute] Guid userId,
                 [FromBody] CreateAuctionAdvertRequest request,
                 ISender sender,
-                CancellationToken ct) =>
+                ICurrentUser currentUser,
+                CancellationToken ct,
+                [FromQuery] Guid? userId = null) =>
             {
+                if (userId is not null && !currentUser.IsAdmin)
+                {
+                    return TypedResults.Forbid();
+                }
+
+                userId ??= currentUser.Identity;
+
                 BusinessResult<Guid> result = await sender.Send(new CreateAuctionAdvertCommand(
-                    userId,
+                    userId!.Value,
                     request.Type,
                     request.Title,
                     request.Description,

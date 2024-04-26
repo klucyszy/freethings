@@ -4,4 +4,5 @@ public interface ICurrentUser
 {
     public Guid? Identity { get; }
     public bool IsAuthenticated { get; }
+    public bool IsAdmin { get; }
 }

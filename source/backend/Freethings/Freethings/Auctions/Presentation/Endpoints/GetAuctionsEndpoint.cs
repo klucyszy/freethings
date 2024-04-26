@@ -9,7 +9,7 @@ public static class GetAuctionsEndpoint
     public static RouteGroupBuilder MapGetAuctionsEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("", async (
-            [FromRoute] Guid userId,
+            [FromQuery] Guid userId,
             ISender sender,
             CancellationToken ct) =>
         {

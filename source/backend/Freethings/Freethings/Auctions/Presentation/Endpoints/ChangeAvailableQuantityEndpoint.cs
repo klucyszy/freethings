@@ -15,7 +15,7 @@ public static class ChangeAvailableQuantityEndpoint
     {
         group
             .MapPut("/{auctionId:guid}/quantity", async (
-                    [FromRoute] Guid userId,
+                    [FromQuery] Guid userId,
                     [FromRoute] Guid auctionId,
                     [FromBody] ChangeAvailableQuantityRequestBody parameters,
                     ISender sender,

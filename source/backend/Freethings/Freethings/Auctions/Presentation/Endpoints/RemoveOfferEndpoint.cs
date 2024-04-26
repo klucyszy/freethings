@@ -10,7 +10,7 @@ public static class RemoveAuctionAdvertEndpoint
     public static void MapRemoveAuctionAdvertEndpoint(this RouteGroupBuilder group)
     {
         group.MapDelete("/{auctionId:guid}", async Task<Results<NoContent, NotFound>> (
-                [FromRoute] Guid userId,
+                [FromQuery] Guid userId,
                 [FromRoute] Guid auctionId,
                 ISender sender,
                 CancellationToken ct) =>

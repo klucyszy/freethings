@@ -10,7 +10,7 @@ public static class GetAuctionEndpoint
     public static RouteGroupBuilder MapGetAuctionEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("/{auctionId:guid}", async Task<Results<Ok<AuctionDto>, NotFound>> (
-            [FromRoute] Guid userId,
+            [FromQuery] Guid userId,
             [FromRoute] Guid auctionId,
             ISender sender,
             CancellationToken ct) =>

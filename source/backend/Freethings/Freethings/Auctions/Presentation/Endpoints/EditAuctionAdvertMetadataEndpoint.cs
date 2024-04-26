@@ -16,7 +16,7 @@ public static class EditAuctionAdvertMetadataEndpoint
     public static RouteGroupBuilder MapEditAuctionAdvertMetadataEndpoint(this RouteGroupBuilder group)
     {
         group.MapPatch("/{auctionId:guid}", async Task<Results<NoContent, NotFound>>(
-            [FromRoute] Guid userId,
+            [FromQuery] Guid userId,
             [FromRoute] Guid auctionId,
             [FromBody] EditAuctionAdvertMetadataRequest request,
             ISender sender,

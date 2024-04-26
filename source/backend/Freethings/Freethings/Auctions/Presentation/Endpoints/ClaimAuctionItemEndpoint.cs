@@ -15,7 +15,7 @@ public static class ClaimAuctionItemEndpoint
     {
         group
             .MapPost("/{auctionId:guid}/claim", async (
-                    [FromRoute] Guid userId,
+                    [FromQuery] Guid userId,
                     [FromRoute] Guid auctionId,
                     [AsParameters] QueryParameters parameters,
                     ISender sender,
