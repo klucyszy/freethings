@@ -5,7 +5,10 @@ using Microsoft.EntityFrameworkCore;
 namespace Freethings.Auctions.Infrastructure.Queries;
 
 public sealed record GetAuctionsQuery(
-    Guid UserId)
+    Guid UserId,
+    int Page,
+    int ElementsPerPage,
+    string SearchText)
     : IRequest<List<AuctionDto>>;
 
 internal sealed class GetAuctionsHandler : IRequestHandler<GetAuctionsQuery, List<AuctionDto>>
