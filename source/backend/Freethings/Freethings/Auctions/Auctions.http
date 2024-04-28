@@ -2,7 +2,13 @@
 @userId = 00000000-0000-0000-0000-000000000001
 @auctionId = 0d71fb06-edcb-4736-9fd4-90343688294a
 @token = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii1KQzVUalhSeXFpMFBtdWNzaWpoQSJ9.eyJodHRwczovL2ZyZWV0aGluZ3MvYXBpL3JvbGVzIjpbImFkbWluIiwiY3VzdG9tZXIiXSwiaHR0cHM6Ly9mcmVldGhpbmdzL2FwaS9hcHBVc2VySWQiOiJmNzhhZjUzZC05Njk3LTQ2NTAtYjcyNC1hYTI3ODY3MWZiNDQiLCJpc3MiOiJodHRwczovL2Rldi12ZjhlZXFmMTF4M3VkOG51LnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDEwNjgyNTQ1Njg4NDcxODU3NTExMCIsImF1ZCI6WyJodHRwczovL2ZyZWV0aGluZ3MvYXBpIiwiaHR0cHM6Ly9kZXYtdmY4ZWVxZjExeDN1ZDhudS51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNzE0MTU4OTUxLCJleHAiOjE3MTQyNDUzNTEsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgcmVhZHdyaXRlOmF1Y3Rpb25zIiwiYXpwIjoiYlNqN0pLaURDcHBpTVA4eFduNGdtWVdkSVZTZjZUaTcifQ.Mck4TYphbv8u-6FYkf9oN1Gw_LXSsXHR_q7OJX1RtVPsxbx_EP9HrhgF9DsWaBLcM3QLgDb0gvxHrExbmpKp2TADKm6wpKF15PzQZsUI_w9BAh2gT2CiTmqadr4RJy_PCV9mhKYpUVN6sx0q-OoXscllXpu8bVXHr9YaALVGwq6JdhKCMr6XnLYL91lncziHe8-VLtHRAfwBzm8q72NollXXbTnwvEKXivzViJKnPqI5b_7NR5q_yYjUlOJ3MlrzEsThjkSJfDyTFBXIC2IOu55xelg0a-Ur-UcD9Axb4mBV_ARKeq2za6l4O8MDZXH35QIFNrqqKNke1UrtjvzdJA
-## Create Auction advert
+
+### Search for auctions
+POST {{Freethings_HostAddress}}/api/auctions/search?searchText=book
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Create Auction advert
 
 POST {{Freethings_HostAddress}}/api/auctions
 Content-Type: application/json
@@ -17,25 +23,25 @@ Authorization: Bearer {{token}}
 
 ### Claim auction item
 
-POST {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}/claim
+POST {{Freethings_HostAddress}}/api/auctions/{{auctionId}}/claim
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Reserve claim
 
-POST {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}/claim/{claimId}/reserve
+POST {{Freethings_HostAddress}}/api/auctions/{{auctionId}}/claim/{claimId}/reserve
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Get auctions
 
-GET {{Freethings_HostAddress}}/api/users/{{userId}}/auctions
+GET {{Freethings_HostAddress}}/api/auctions
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Edit auction metadata
 
-PATCH {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}
+PATCH {{Freethings_HostAddress}}/api/auctions/{{auctionId}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -46,12 +52,12 @@ Authorization: Bearer {{token}}
 
 ### Get auctions
 
-GET {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}
+GET {{Freethings_HostAddress}}/api/auctions/{{auctionId}}
 Authorization: Bearer {{token}}
 
 ### Change auction quantity
 
-PUT {{Freethings_HostAddress}}/api/users/{{userId}}/auctions/{{auctionId}}/quantity
+PUT {{Freethings_HostAddress}}/api/auctions/{{auctionId}}/quantity
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
