@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Freethings.Auctions.Application.Commands;
+using Freethings.Shared.Abstractions.Auth.Context;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Freethings.Shared.Infrastructure.Api;
 using Microsoft.AspNetCore.Mvc;
@@ -15,16 +16,16 @@ public static class ChangeAvailableQuantityEndpoint
     {
         group
             .MapPut("/{auctionId:guid}/quantity", async (
-                    [FromQuery] Guid userId,
                     [FromRoute] Guid auctionId,
                     [FromBody] ChangeAvailableQuantityRequestBody parameters,
                     ISender sender,
+                    ICurrentUser currentUser,
                     CancellationToken ct)
                 =>
             {
                 BusinessResult result = await sender.Send(new ChangeAvailableItemsQuantityCommand(
                     auctionId,
-                    userId,
+                    currentUser.Identity.Value,
                     parameters.Quantity), ct);
 
                 return ApiResultMapper.MapToEndpointResult(result);

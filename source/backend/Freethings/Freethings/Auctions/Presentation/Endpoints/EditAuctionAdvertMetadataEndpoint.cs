@@ -1,4 +1,5 @@
 using Freethings.Auctions.Application.Commands;
+using Freethings.Shared.Abstractions.Auth.Context;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +17,14 @@ public static class EditAuctionAdvertMetadataEndpoint
     public static RouteGroupBuilder MapEditAuctionAdvertMetadataEndpoint(this RouteGroupBuilder group)
     {
         group.MapPatch("/{auctionId:guid}", async Task<Results<NoContent, NotFound>>(
-            [FromQuery] Guid userId,
             [FromRoute] Guid auctionId,
             [FromBody] EditAuctionAdvertMetadataRequest request,
             ISender sender,
+            ICurrentUser currentUser,
             CancellationToken ct) =>
         {
             BusinessResult businessResult = await sender.Send(new EditAuctionAdvertMetadataCommand(
-                userId,
+                currentUser.Identity.Value,
                 auctionId,
                 request.Title,
                 request.Description

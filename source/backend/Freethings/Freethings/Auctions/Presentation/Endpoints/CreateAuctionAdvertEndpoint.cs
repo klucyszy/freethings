@@ -26,15 +26,8 @@ public static class CreateAuctionAdvertEndpoint
                 CancellationToken ct,
                 [FromQuery] Guid? userId = null) =>
             {
-                if (userId is not null && !currentUser.IsAdmin)
-                {
-                    return TypedResults.Forbid();
-                }
-
-                userId ??= currentUser.Identity;
-
                 BusinessResult<Guid> result = await sender.Send(new CreateAuctionAdvertCommand(
-                    userId!.Value,
+                    currentUser.Identity.Value,
                     request.Type,
                     request.Title,
                     request.Description,

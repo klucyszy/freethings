@@ -12,7 +12,6 @@ public static class ReserveAuctionItemEndpoint
     public static RouteGroupBuilder MapReserveAuctionItemEndpoint(this RouteGroupBuilder group)
     {
         group.MapPost("/{auctionId:guid}/claim/{claimId}/reserve", async (
-                [FromQuery] Guid userId,
                 [FromRoute] Guid auctionId,
                 [FromRoute] Guid claimId,
                 [AsParameters] QueryParameters parameters,

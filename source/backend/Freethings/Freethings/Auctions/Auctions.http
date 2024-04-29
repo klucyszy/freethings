@@ -1,7 +1,7 @@
 @Freethings_HostAddress = http://localhost:5289
 @userId = 00000000-0000-0000-0000-000000000001
-@auctionId = 0d71fb06-edcb-4736-9fd4-90343688294a
-@token = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii1KQzVUalhSeXFpMFBtdWNzaWpoQSJ9.eyJodHRwczovL2ZyZWV0aGluZ3MvYXBpL3JvbGVzIjpbImFkbWluIiwiY3VzdG9tZXIiXSwiaHR0cHM6Ly9mcmVldGhpbmdzL2FwaS9hcHBVc2VySWQiOiJmNzhhZjUzZC05Njk3LTQ2NTAtYjcyNC1hYTI3ODY3MWZiNDQiLCJpc3MiOiJodHRwczovL2Rldi12ZjhlZXFmMTF4M3VkOG51LnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDEwNjgyNTQ1Njg4NDcxODU3NTExMCIsImF1ZCI6WyJodHRwczovL2ZyZWV0aGluZ3MvYXBpIiwiaHR0cHM6Ly9kZXYtdmY4ZWVxZjExeDN1ZDhudS51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNzE0MTU4OTUxLCJleHAiOjE3MTQyNDUzNTEsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgcmVhZHdyaXRlOmF1Y3Rpb25zIiwiYXpwIjoiYlNqN0pLaURDcHBpTVA4eFduNGdtWVdkSVZTZjZUaTcifQ.Mck4TYphbv8u-6FYkf9oN1Gw_LXSsXHR_q7OJX1RtVPsxbx_EP9HrhgF9DsWaBLcM3QLgDb0gvxHrExbmpKp2TADKm6wpKF15PzQZsUI_w9BAh2gT2CiTmqadr4RJy_PCV9mhKYpUVN6sx0q-OoXscllXpu8bVXHr9YaALVGwq6JdhKCMr6XnLYL91lncziHe8-VLtHRAfwBzm8q72NollXXbTnwvEKXivzViJKnPqI5b_7NR5q_yYjUlOJ3MlrzEsThjkSJfDyTFBXIC2IOu55xelg0a-Ur-UcD9Axb4mBV_ARKeq2za6l4O8MDZXH35QIFNrqqKNke1UrtjvzdJA
+@auctionId = 42361fba-3885-49da-a3ee-6065c2b2fb21
+@token = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii1KQzVUalhSeXFpMFBtdWNzaWpoQSJ9.eyJodHRwczovL2ZyZWV0aGluZ3MvYXBpL3JvbGVzIjpbImFkbWluIiwiY3VzdG9tZXIiXSwiaHR0cHM6Ly9mcmVldGhpbmdzL2FwaS9hcHBVc2VySWQiOiJmNzhhZjUzZC05Njk3LTQ2NTAtYjcyNC1hYTI3ODY3MWZiNDQiLCJpc3MiOiJodHRwczovL2Rldi12ZjhlZXFmMTF4M3VkOG51LnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDEwNjgyNTQ1Njg4NDcxODU3NTExMCIsImF1ZCI6WyJodHRwczovL2ZyZWV0aGluZ3MvYXBpIiwiaHR0cHM6Ly9kZXYtdmY4ZWVxZjExeDN1ZDhudS51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNzE0NDA0ODI2LCJleHAiOjE3MTQ0OTEyMjYsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgcmVhZHdyaXRlOmF1Y3Rpb25zIiwiYXpwIjoiYlNqN0pLaURDcHBpTVA4eFduNGdtWVdkSVZTZjZUaTcifQ.A8btOr1sbRnTe8B0NKFvnPOn8m8ipHZUqcwsFNAaPYnggP60klZb5Dx8eA8SxlJExHevJqFku8gmRK23uoVVA0ptcempB4hLUT4VeJjQz6Lf0VpBkd0Ftelh8ragmtC1tBi2c0KRXp1TUXUX_544V3O9-VY0GCk1NWzVmSyrK56U7Cu_cKpupDTP8ZK6LtOwoOCWXK1lWQ7Z9Uwq00PusvNqb3b9Tzu7qaGKBYaR3dWdfwqWL-zD88WXQD9RCwzTBr3YaWaOD86CqVvqw1noVRJQD6L3khP0vS60JGQPZodXlqCMPCa3xbGAeJ5QgWR-wIT0aSk8UB7tx7sc1bCjQg
 
 ### Search for auctions
 POST {{Freethings_HostAddress}}/api/auctions/search?searchText=book
@@ -9,38 +9,32 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Create Auction advert
-
 POST {{Freethings_HostAddress}}/api/auctions
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "title": "item",
-  "description": "item description",
+  "title": "bla item 2",
+  "description": "item description 2",
   "type": 0,
-  "quantity": 1
+  "quantity": 3
 }
 
-### Claim auction item
+### Get auction
+GET {{Freethings_HostAddress}}/api/auctions/{{auctionId}}
+Authorization: Bearer {{token}}
 
+### Claim auction item
 POST {{Freethings_HostAddress}}/api/auctions/{{auctionId}}/claim
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Reserve claim
-
 POST {{Freethings_HostAddress}}/api/auctions/{{auctionId}}/claim/{claimId}/reserve
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
-### Get auctions
-
-GET {{Freethings_HostAddress}}/api/auctions
-Content-Type: application/json
-Authorization: Bearer {{token}}
-
 ### Edit auction metadata
-
 PATCH {{Freethings_HostAddress}}/api/auctions/{{auctionId}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -51,12 +45,10 @@ Authorization: Bearer {{token}}
 }
 
 ### Get auctions
-
-GET {{Freethings_HostAddress}}/api/auctions/{{auctionId}}
+GET {{Freethings_HostAddress}}/api/auctions?page=1&elementsPerPage=10&searchText=bl
 Authorization: Bearer {{token}}
 
 ### Change auction quantity
-
 PUT {{Freethings_HostAddress}}/api/auctions/{{auctionId}}/quantity
 Content-Type: application/json
 Authorization: Bearer {{token}}

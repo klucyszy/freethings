@@ -1,4 +1,5 @@
 using Freethings.Auctions.Application.Commands;
+using Freethings.Shared.Abstractions.Auth.Context;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +11,13 @@ public static class RemoveAuctionAdvertEndpoint
     public static void MapRemoveAuctionAdvertEndpoint(this RouteGroupBuilder group)
     {
         group.MapDelete("/{auctionId:guid}", async Task<Results<NoContent, NotFound>> (
-                [FromQuery] Guid userId,
                 [FromRoute] Guid auctionId,
                 ISender sender,
+                ICurrentUser currentUser,
                 CancellationToken ct) =>
             {
                 BusinessResult businessResult = await sender.Send(new RemoveAuctionAdvertCommand(
-                    userId,
+                    currentUser.Identity.Value,
                     auctionId
                 ), ct);
 

@@ -23,7 +23,10 @@ internal sealed class GetAuctionsHandler : IRequestHandler<GetAuctionsQuery, Lis
     public async Task<List<AuctionDto>> Handle(GetAuctionsQuery request, CancellationToken cancellationToken)
     {
         return await _context.Auctions
-            .Where(q => q.UserId == request.UserId)
+            .Where(q => q.UserId == request.UserId
+                && (string.IsNullOrEmpty(request.SearchText)
+                    || EF.Functions.Like(q.Title.Value, $"%{request.SearchText}%")
+                    || EF.Functions.Like(q.Description.Value, $"%{request.SearchText}%")))
             .Select(o => new AuctionDto(
                 o.Id,
                 o.Title.Value,
@@ -31,6 +34,8 @@ internal sealed class GetAuctionsHandler : IRequestHandler<GetAuctionsQuery, Lis
                 o.State.ToString(),
                 o.Quantity.Value,
                 0))
+            .Take(request.ElementsPerPage)
+            .Skip(request.ElementsPerPage * request.Page)
             .ToListAsync(cancellationToken);
     }
 }

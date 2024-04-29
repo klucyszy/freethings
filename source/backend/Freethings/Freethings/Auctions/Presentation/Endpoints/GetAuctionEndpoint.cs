@@ -1,5 +1,6 @@
 using Freethings.Auctions.Infrastructure.Queries;
 using Freethings.Auctions.Infrastructure.Queries.Models;
+using Freethings.Shared.Abstractions.Auth.Context;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,13 +11,13 @@ public static class GetAuctionEndpoint
     public static RouteGroupBuilder MapGetAuctionEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("/{auctionId:guid}", async Task<Results<Ok<AuctionDto>, NotFound>> (
-            [FromQuery] Guid userId,
             [FromRoute] Guid auctionId,
             ISender sender,
+            ICurrentUser currentUser,
             CancellationToken ct) =>
         {
             AuctionDto result = await sender.Send(new GetAuctionQuery(
-                userId,
+                currentUser.Identity.Value,
                 auctionId
             ), ct);
 
