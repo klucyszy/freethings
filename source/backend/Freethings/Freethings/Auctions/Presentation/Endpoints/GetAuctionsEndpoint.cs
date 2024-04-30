@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Freethings.Auctions.Infrastructure.Queries;
 using Freethings.Auctions.Infrastructure.Queries.Models;
 using Freethings.Shared.Abstractions.Auth.Context;
+using Freethings.Shared.Infrastructure.Api;
 
 namespace Freethings.Auctions.Presentation.Endpoints;
 
@@ -39,7 +40,7 @@ public static class GetAuctionsEndpoint
             ICurrentUser currentUser,
             CancellationToken ct) =>
         {
-            if (!TryValidateModel(parameters, out IEnumerable<ValidationResult> results))
+            if (!parameters.TryValidate(out IEnumerable<ValidationResult> results))
             {
                 return Results.BadRequest(results);
             }
@@ -56,13 +57,5 @@ public static class GetAuctionsEndpoint
         .RequireAuthorization();
 
         return group;
-    }
-    
-    private static bool TryValidateModel(IValidatableObject model, out IEnumerable<ValidationResult> results)
-    {
-        ValidationContext context = new(model, serviceProvider: null, items: null);
-        results = model.Validate(context);
-        
-        return Validator.TryValidateObject(model, context, results.ToHashSet(), validateAllProperties: true);
     }
 }
