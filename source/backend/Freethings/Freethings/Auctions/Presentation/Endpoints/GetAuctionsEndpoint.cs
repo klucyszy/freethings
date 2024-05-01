@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Freethings.Auctions.Infrastructure.Queries;
 using Freethings.Auctions.Infrastructure.Queries.Models;
 using Freethings.Shared.Abstractions.Auth.Context;
-using Freethings.Shared.Infrastructure.Api;
+using Freethings.Shared.Infrastructure.Api.Filters;
 
 namespace Freethings.Auctions.Presentation.Endpoints;
 
@@ -19,7 +19,7 @@ public static class GetAuctionsEndpoint
             {
                 yield return new ValidationResult($"{nameof(SearchText)} must be in range 3-25 characters");
             }
-            
+
             if (Page < 1)
             {
                 yield return new ValidationResult("Page must be greater than 0");
@@ -31,31 +31,27 @@ public static class GetAuctionsEndpoint
             }
         }
     };
-    
+
     public static RouteGroupBuilder MapGetAuctionsEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("", async (
-            [AsParameters] GetAuctionsEndpointQueryParameters parameters,
-            ISender sender,
-            ICurrentUser currentUser,
-            CancellationToken ct) =>
-        {
-            if (!parameters.TryValidate(out IEnumerable<ValidationResult> results))
+                [AsParameters] GetAuctionsEndpointQueryParameters parameters,
+                ISender sender,
+                ICurrentUser currentUser,
+                CancellationToken ct) =>
             {
-                return Results.BadRequest(results);
-            }
-            
-            List<AuctionDto> result = await sender.Send(new GetAuctionsQuery(
-                currentUser.Identity.Value,
-                parameters.Page,
-                parameters.ElementsPerPage,
-                parameters.SearchText
+                List<AuctionDto> result = await sender.Send(new GetAuctionsQuery(
+                    currentUser.Identity.Value,
+                    parameters.Page,
+                    parameters.ElementsPerPage,
+                    parameters.SearchText
                 ), ct);
 
-            return TypedResults.Ok(result);
-        })
-        .RequireAuthorization();
-
+                return TypedResults.Ok(result);
+            })
+            .RequireAuthorization()
+            .RequireInputValidation();
+        
         return group;
     }
 }

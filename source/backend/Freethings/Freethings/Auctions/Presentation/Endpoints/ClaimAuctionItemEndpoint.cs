@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Freethings.Auctions.Application.Commands;
 using Freethings.Shared.Abstractions.Auth.Context;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
-using Freethings.Shared.Infrastructure.Api;
+using Freethings.Shared.Infrastructure.Api.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Freethings.Auctions.Presentation.Endpoints;

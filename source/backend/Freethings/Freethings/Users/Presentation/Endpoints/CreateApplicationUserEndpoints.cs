@@ -1,5 +1,5 @@
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
-using Freethings.Shared.Infrastructure.Api;
+using Freethings.Shared.Infrastructure.Api.Results;
 using Freethings.Users.Application.Commands;
 
 namespace Freethings.Users.Presentation.Endpoints;
