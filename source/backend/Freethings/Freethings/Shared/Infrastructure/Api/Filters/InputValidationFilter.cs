@@ -5,7 +5,7 @@ namespace Freethings.Shared.Infrastructure.Api.Filters;
 
 public static class InputValidationFilterExtensions
 {
-    public static RouteHandlerBuilder RequireInputValidation(this RouteHandlerBuilder builder)
+    public static IEndpointConventionBuilder RequireInputValidation(this IEndpointConventionBuilder builder)
     {
         builder.AddEndpointFilter(new InputValidationFilter());
 

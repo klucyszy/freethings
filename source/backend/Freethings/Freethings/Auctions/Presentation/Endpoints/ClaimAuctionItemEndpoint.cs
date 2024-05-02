@@ -9,15 +9,24 @@ namespace Freethings.Auctions.Presentation.Endpoints;
 
 public static class ClaimAuctionItemEndpoint
 {
-    private sealed record QueryParameters(
-        [Range(1, Int32.MaxValue)] int Quantity = 1);
+    private sealed record ClaimAuctionItemQueryParameters(
+        int Quantity = 1) : IValidatableObject
+    {
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Quantity < 1)
+            {
+                yield return new ValidationResult("Quantity must be greater than 0");
+            }
+        }
+    }
 
     public static RouteGroupBuilder MapClaimAuctionItemEndpoint(this RouteGroupBuilder group)
     {
         group
             .MapPost("/{auctionId:guid}/claim", async (
                     [FromRoute] Guid auctionId,
-                    [AsParameters] QueryParameters parameters,
+                    [AsParameters] ClaimAuctionItemQueryParameters parameters,
                     ISender sender,
                     ICurrentUser currentUser,
                     CancellationToken ct)
@@ -29,8 +38,7 @@ public static class ClaimAuctionItemEndpoint
                     parameters.Quantity), ct);
 
                 return ApiResultMapper.MapToEndpointResult(result);
-            })
-            .RequireAuthorization();
+            });
 
         return group;
     }

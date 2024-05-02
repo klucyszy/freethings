@@ -1,4 +1,5 @@
 using Freethings.Auctions.Presentation.Endpoints;
+using Freethings.Shared.Infrastructure.Api.Filters;
 
 namespace Freethings.Auctions.Presentation;
 
@@ -20,7 +21,9 @@ internal static class DependencyInjection
             .MapGetAuctionEndpoint()
             .MapEditAuctionAdvertMetadataEndpoint()
             .MapChangeAvailableQuantityEndpoint()
-            .WithTags("Auctions");
+            .WithTags("Auctions")
+            .RequireInputValidation()
+            .RequireAuthorization();
         
         return app;
     }

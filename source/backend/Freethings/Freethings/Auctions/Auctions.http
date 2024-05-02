@@ -45,7 +45,7 @@ Authorization: Bearer {{token}}
 }
 
 ### Get auctions
-GET {{Freethings_HostAddress}}/api/auctions?page=1&elementsPerPage=12&searchText=bla
+GET {{Freethings_HostAddress}}/api/auctions?page=1&elementsPerPage=12&searchText=a
 Authorization: Bearer {{token}}
 
 ### Change auction quantity

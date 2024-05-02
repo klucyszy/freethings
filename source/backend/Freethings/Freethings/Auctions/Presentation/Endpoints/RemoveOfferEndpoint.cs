@@ -11,20 +11,19 @@ public static class RemoveAuctionAdvertEndpoint
     public static void MapRemoveAuctionAdvertEndpoint(this RouteGroupBuilder group)
     {
         group.MapDelete("/{auctionId:guid}", async Task<Results<NoContent, NotFound>> (
-                [FromRoute] Guid auctionId,
-                ISender sender,
-                ICurrentUser currentUser,
-                CancellationToken ct) =>
-            {
-                BusinessResult businessResult = await sender.Send(new RemoveAuctionAdvertCommand(
-                    currentUser.Identity.Value,
-                    auctionId
-                ), ct);
+            [FromRoute] Guid auctionId,
+            ISender sender,
+            ICurrentUser currentUser,
+            CancellationToken ct) =>
+        {
+            BusinessResult businessResult = await sender.Send(new RemoveAuctionAdvertCommand(
+                currentUser.Identity.Value,
+                auctionId
+            ), ct);
 
-                return businessResult.IsSuccess
-                    ? TypedResults.NoContent()
-                    : TypedResults.NotFound();
-            })
-            .RequireAuthorization();
+            return businessResult.IsSuccess
+                ? TypedResults.NoContent()
+                : TypedResults.NotFound();
+        });
     }
 }

@@ -35,22 +35,20 @@ public static class GetAuctionsEndpoint
     public static RouteGroupBuilder MapGetAuctionsEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("", async (
-                [AsParameters] GetAuctionsEndpointQueryParameters parameters,
-                ISender sender,
-                ICurrentUser currentUser,
-                CancellationToken ct) =>
-            {
-                List<AuctionDto> result = await sender.Send(new GetAuctionsQuery(
-                    currentUser.Identity.Value,
-                    parameters.Page,
-                    parameters.ElementsPerPage,
-                    parameters.SearchText
-                ), ct);
+            [AsParameters] GetAuctionsEndpointQueryParameters parameters,
+            ISender sender,
+            ICurrentUser currentUser,
+            CancellationToken ct) =>
+        {
+            List<AuctionDto> result = await sender.Send(new GetAuctionsQuery(
+                currentUser.Identity.Value,
+                parameters.Page,
+                parameters.ElementsPerPage,
+                parameters.SearchText
+            ), ct);
 
-                return TypedResults.Ok(result);
-            })
-            .RequireAuthorization()
-            .RequireInputValidation();
+            return TypedResults.Ok(result);
+        });
         
         return group;
     }

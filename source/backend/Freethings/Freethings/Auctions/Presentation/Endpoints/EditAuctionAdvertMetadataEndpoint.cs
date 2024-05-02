@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Freethings.Auctions.Application.Commands;
 using Freethings.Shared.Abstractions.Auth.Context;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
@@ -8,17 +9,21 @@ namespace Freethings.Auctions.Presentation.Endpoints;
 
 public static class EditAuctionAdvertMetadataEndpoint
 {
-    private sealed record EditAuctionAdvertMetadataRequest
+    private sealed record EditAuctionAdvertMetadataRequestBody(
+        string Title,
+        string Description) : IValidatableObject
     {
-        public string Title { get; init; }
-        public string Description { get; init; }
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            return Enumerable.Empty<ValidationResult>();
+        }
     }
     
     public static RouteGroupBuilder MapEditAuctionAdvertMetadataEndpoint(this RouteGroupBuilder group)
     {
-        group.MapPatch("/{auctionId:guid}", async Task<Results<NoContent, NotFound>>(
+        group.MapPatch("/{auctionId:guid}", async Task<Results<NoContent, NotFound>> (
             [FromRoute] Guid auctionId,
-            [FromBody] EditAuctionAdvertMetadataRequest request,
+            [FromBody] EditAuctionAdvertMetadataRequestBody request,
             ISender sender,
             ICurrentUser currentUser,
             CancellationToken ct) =>
@@ -28,13 +33,12 @@ public static class EditAuctionAdvertMetadataEndpoint
                 auctionId,
                 request.Title,
                 request.Description
-                ), ct);
-            
+            ), ct);
+
             return businessResult.IsSuccess
                 ? TypedResults.NoContent()
                 : TypedResults.NotFound();
-        })
-        .RequireAuthorization();
+        });
 
         return group;
     }

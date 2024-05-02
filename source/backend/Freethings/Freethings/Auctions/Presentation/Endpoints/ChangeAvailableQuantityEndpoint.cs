@@ -10,7 +10,16 @@ namespace Freethings.Auctions.Presentation.Endpoints;
 public static class ChangeAvailableQuantityEndpoint
 {
     private sealed record ChangeAvailableQuantityRequestBody(
-        [Range(1, Int32.MaxValue)] int Quantity = 1);
+        int Quantity = 1) : IValidatableObject
+    {
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Quantity < 1)
+            {
+                yield return new ValidationResult("Quantity must be greater than 0");
+            }
+        }
+    }
 
     public static RouteGroupBuilder MapChangeAvailableQuantityEndpoint(this RouteGroupBuilder group)
     {
@@ -29,8 +38,7 @@ public static class ChangeAvailableQuantityEndpoint
                     parameters.Quantity), ct);
 
                 return ApiResultMapper.MapToEndpointResult(result);
-            })
-            .RequireAuthorization();
+            });
 
         return group;
     }

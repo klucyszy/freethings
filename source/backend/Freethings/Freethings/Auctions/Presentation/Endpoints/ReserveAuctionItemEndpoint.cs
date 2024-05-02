@@ -6,15 +6,24 @@ namespace Freethings.Auctions.Presentation.Endpoints;
 
 public static class ReserveAuctionItemEndpoint
 {
-    private sealed record QueryParameters(
-        [Range(1, Int32.MaxValue)] int Quantity = 1);
+    private sealed record ReserveAuctionItemQueryParameters(
+        int Quantity = 1) : IValidatableObject
+    {
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Quantity < 1)
+            {
+                yield return new ValidationResult("Quantity must be greater than 0");
+            }
+        }
+    }
 
     public static RouteGroupBuilder MapReserveAuctionItemEndpoint(this RouteGroupBuilder group)
     {
         group.MapPost("/{auctionId:guid}/claim/{claimId}/reserve", async (
                 [FromRoute] Guid auctionId,
                 [FromRoute] Guid claimId,
-                [AsParameters] QueryParameters parameters,
+                [AsParameters] ReserveAuctionItemQueryParameters parameters,
                 ISender sender,
                 CancellationToken ct)
             =>
@@ -26,8 +35,7 @@ public static class ReserveAuctionItemEndpoint
                 true), ct);
 
             return TypedResults.NoContent();
-        })
-        .RequireAuthorization();
+        });
 
         return group;
     }
