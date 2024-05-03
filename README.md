@@ -50,8 +50,3 @@ Here is link to Miro, where I'm exploring the domain: [freethings miro](https://
 1. Run `docker-compose.yml` located in the `source/backend/Freethings/Freethings`.
 2. Using connection string `Server=localhost,1435;Database=master;User=sa;Password=FreethingsSql1!;` login to database and create database called `freethings`.
 
-### Running migrations
-
-`dotnet ef migrations add "Init" -o Infrastructure/Offers/Persistence/Migrations -p Freethings/Freethings.csproj -c OffersContext`
-`dotnet ef database update -p Freethings/Freethings.csproj -c OffersContext`
-
