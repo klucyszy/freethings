@@ -1,29 +1,30 @@
+using Freethings.Auctions.Domain;
 using Freethings.Auctions.Infrastructure.Persistence;
 using Freethings.Auctions.Infrastructure.Queries.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Freethings.Auctions.Infrastructure.Queries;
 
-public sealed record GetAuctionsQuery(
-    Guid UserId,
+public sealed record SearchAuctionsQuery(
     int Page,
     int ElementsPerPage,
-    string SearchText)
+    string SearchText,
+    string Category)
     : IRequest<List<AuctionDto>>;
 
-internal sealed class GetAuctionsHandler : IRequestHandler<GetAuctionsQuery, List<AuctionDto>>
+internal sealed class SearchAuctionsHandler : IRequestHandler<SearchAuctionsQuery, List<AuctionDto>>
 {
     private readonly AuctionsContext _context;
 
-    public GetAuctionsHandler(AuctionsContext context)
+    public SearchAuctionsHandler(AuctionsContext context)
     {
         _context = context;
     }
 
-    public async Task<List<AuctionDto>> Handle(GetAuctionsQuery request, CancellationToken cancellationToken)
+    public async Task<List<AuctionDto>> Handle(SearchAuctionsQuery request, CancellationToken cancellationToken)
     {
         return await _context.Auctions
-            .Where(q => q.UserId == request.UserId
+            .Where(q => q.State == AuctionState.Published
                 && (string.IsNullOrEmpty(request.SearchText)
                     || EF.Functions.Like(q.Title.Value, $"%{request.SearchText}%")
                     || EF.Functions.Like(q.Description.Value, $"%{request.SearchText}%")))

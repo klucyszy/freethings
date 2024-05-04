@@ -21,6 +21,7 @@ internal static class DependencyInjection
             .MapGetAuctionEndpoint()
             .MapEditAuctionAdvertMetadataEndpoint()
             .MapChangeAvailableQuantityEndpoint()
+            .MapSearchAuctionsEndpoint()
             .WithTags("Auctions")
             .RequireInputValidation()
             .RequireAuthorization();
