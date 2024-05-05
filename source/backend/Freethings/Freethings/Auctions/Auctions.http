@@ -3,10 +3,6 @@
 @auctionId = 27892446-31fa-4021-a424-ab9856607f54
 @token = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii1KQzVUalhSeXFpMFBtdWNzaWpoQSJ9.eyJodHRwczovL2ZyZWV0aGluZ3MvYXBpL3JvbGVzIjpbImFkbWluIiwiY3VzdG9tZXIiXSwiaHR0cHM6Ly9mcmVldGhpbmdzL2FwaS9hcHBVc2VySWQiOiJmNzhhZjUzZC05Njk3LTQ2NTAtYjcyNC1hYTI3ODY3MWZiNDQiLCJpc3MiOiJodHRwczovL2Rldi12ZjhlZXFmMTF4M3VkOG51LnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDEwNjgyNTQ1Njg4NDcxODU3NTExMCIsImF1ZCI6WyJodHRwczovL2ZyZWV0aGluZ3MvYXBpIiwiaHR0cHM6Ly9kZXYtdmY4ZWVxZjExeDN1ZDhudS51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNzE0ODM0NjI1LCJleHAiOjE3MTQ5MjEwMjUsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgcmVhZHdyaXRlOmF1Y3Rpb25zIiwiYXpwIjoiYlNqN0pLaURDcHBpTVA4eFduNGdtWVdkSVZTZjZUaTcifQ.ZuXxhz9pxj4saJAZ3QG0_iZRxCUQ9DumItBrA3p9uhmaiawqjosf3EBT_wEwmGnmBNWOUePdjWJWfngxWwzPLaWgL1IBIUzvBFOy8s9KcDsxbP20pXTxZIouMXBC-9HLpqfA3-6TIByMXExhOOutDHNBHnLP9VaOfiqkjX81WSsd3k-0R5jy2NCNPrKIcQRSjtgrPSFYEAfDgf52APUjOzp-Lh1mqudybiM2J31WLWIln_5kLGpbHXCvlbiSESweLzWlShCE8_4xJ3e1UkPirpB1uoBH9gbZ9fpcI_k1Dy0hs46RGlVxKt_R9CvocKDuFb7p5RdwLSv5AinWo6UtmA
 
-### Search for auctions
-GET {{Freethings_HostAddress}}/api/auctions/search?page=1&elementsPerPage=10&searchText=bla
-Content-Type: application/json
-
 ### Create Auction advert
 POST {{Freethings_HostAddress}}/api/auctions
 Content-Type: application/json
@@ -18,6 +14,10 @@ Authorization: Bearer {{token}}
   "type": 0,
   "quantity": 3
 }
+
+### Search for auctions
+GET {{Freethings_HostAddress}}/api/auctions/search?page=1&elementsPerPage=10&searchText=bla
+Content-Type: application/json
 
 ### Get auction
 GET {{Freethings_HostAddress}}/api/auctions/{{auctionId}}
