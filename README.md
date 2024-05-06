@@ -23,6 +23,7 @@ Behind building the working MVP of the project, I want to to focus on delivering
 ### Tech stack
 - **.NET 8.0, Minimal API** - this is my main technology stack. I want to use the newest version of .NET and the new Minimal API feature, which is a really interesting approach to building Web APIs. I feel comfortable with C# and .NET, so I think it's a good choice for me.
 - ~~**Vue.js + Nuxt.js + Typescript** - I have lack of experience in using frontend frameworks so this will be a great opportunity for me to finally build some working concept with Vue.js. I want to use Typescript to make the code more maintainable and to learn it better.~~
+- **Auth0** - as identity provider.
 
 ### Analysis & exploration
 
