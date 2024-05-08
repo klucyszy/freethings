@@ -1,3 +1,5 @@
+using Freethings.Shared.Infrastructure.Context;
+
 namespace Freethings.Shared.Infrastructure.Auth.Context;
 
 public static class Extensions

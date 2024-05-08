@@ -1,6 +1,6 @@
 using Freethings.Shared.Abstractions.Auth.Context;
 
-namespace Freethings.Shared.Infrastructure.Auth.Context;
+namespace Freethings.Shared.Infrastructure.Context;
 
 internal sealed class CurrentUserContextAccessor
 {
