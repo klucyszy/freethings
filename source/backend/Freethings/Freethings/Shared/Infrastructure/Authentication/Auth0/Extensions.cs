@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Freethings.Shared.Infrastructure.Authentication.Auth0;
 using Freethings.Shared.Infrastructure.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -25,7 +26,8 @@ public static class Extensions
                 {
                     NameClaimType = ClaimTypes.NameIdentifier
                 };
-            });
+            })
+            .Add;
 
         services.AddAuthorization();
 

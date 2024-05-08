@@ -52,7 +52,7 @@ public sealed class ClaimItemCommandTests
             .SaveAsync(
                 Arg.Is<AuctionAggregate>(p => p.DomainEvents.Count > 0),
                 Arg.Any<CancellationToken>())
-            .Returns(new List<IDomainEvent>());
+            .Returns([]);
         
         // Act
         BusinessResult businessResult = await Act(command);

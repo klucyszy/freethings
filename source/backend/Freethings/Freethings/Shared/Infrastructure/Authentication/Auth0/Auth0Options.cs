@@ -1,4 +1,4 @@
-namespace Freethings.Shared.Infrastructure.Authentication;
+namespace Freethings.Shared.Infrastructure.Authentication.Auth0;
 
 public sealed record Auth0Options
 {

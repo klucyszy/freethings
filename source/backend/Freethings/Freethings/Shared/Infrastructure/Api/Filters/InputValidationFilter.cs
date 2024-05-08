@@ -21,7 +21,7 @@ internal sealed class InputValidationFilter : IEndpointFilter
             .OfType<IValidatableObject>()
             .ToList();
 
-        List<ValidationResult> validationResults = new();
+        List<ValidationResult> validationResults = [];
         foreach (IValidatableObject validatable in validatableArgs)
         {
             validatable.TryValidate(out IEnumerable<ValidationResult> results);

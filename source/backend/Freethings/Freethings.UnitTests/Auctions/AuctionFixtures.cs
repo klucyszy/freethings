@@ -8,7 +8,7 @@ public static class AuctionFixtures
     {
         AuctionAggregate auctionAggregate = new AuctionAggregate(
             Guid.NewGuid(),
-            new List<AuctionClaim>(),
+            [],
             Quantity.Create(availableQuantity),
             auctionType);
 

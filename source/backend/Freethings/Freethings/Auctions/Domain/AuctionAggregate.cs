@@ -178,7 +178,7 @@ public sealed class AuctionAggregate : AggregateRoot
             .ToList();
         
         int accumulatedQuantity = 0;
-        List<AuctionClaim> claimsToCancel = new List<AuctionClaim>();
+        List<AuctionClaim> claimsToCancel = [];
         
         foreach (AuctionClaim claim in reservedClaims)
         {
