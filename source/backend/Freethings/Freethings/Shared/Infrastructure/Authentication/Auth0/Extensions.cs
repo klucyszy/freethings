@@ -1,44 +1,27 @@
 using System.Security.Claims;
-using Freethings.Shared.Infrastructure.Authentication.Auth0;
 using Freethings.Shared.Infrastructure.Options;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Freethings.Shared.Infrastructure.Authentication;
+namespace Freethings.Shared.Infrastructure.Authentication.Auth0;
 
 public static class Extensions
 {
-    public static IServiceCollection AddAuth0Authentication(this IServiceCollection services, IConfiguration configuration)
+    public static AuthenticationBuilder AddAuth0(this AuthenticationBuilder authenticationBuilder,
+        IConfiguration configuration)
     {
         Auth0Options auth0Options = configuration.GetOptions<Auth0Options>("Shared:Authentication:Auth0");
         
-        services
-            .AddAuthentication(options =>
+        authenticationBuilder.AddJwtBearer(options =>
+        {
+            options.Authority = auth0Options.Authority;
+            options.Audience = auth0Options.Audience;
+            options.TokenValidationParameters = new TokenValidationParameters
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.Authority = auth0Options.Authority;
-                options.Audience = auth0Options.Audience;   
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    NameClaimType = ClaimTypes.NameIdentifier
-                };
-            })
-            .Add;
+                NameClaimType = ClaimTypes.NameIdentifier
+            };
+        });
 
-        services.AddAuthorization();
-
-        return services;
-    }
-    
-    public static IApplicationBuilder UseAuth0(this IApplicationBuilder app)
-    {
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        return app;
+        return authenticationBuilder;
     }
 }

@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Freethings.Auctions.Infrastructure.Queries;
 using Freethings.Auctions.Infrastructure.Queries.Models;
-using Freethings.Shared.Abstractions.Auth.Context;
-using Freethings.Shared.Infrastructure.Api.Filters;
 
 namespace Freethings.Auctions.Presentation.Endpoints;
 

@@ -1,19 +1,36 @@
+using System.ComponentModel.DataAnnotations;
 using Freethings.Shared.Abstractions.Domain.BusinessOperations;
 using Freethings.Shared.Infrastructure.Api.Results;
-using Freethings.Shared.Infrastructure.Authentication;
+using Freethings.Shared.Infrastructure.Authentication.ApiKey;
 using Freethings.Users.Application.Commands;
 
 namespace Freethings.Users.Presentation.Endpoints;
 
 public static class CreateApplicationUser
 {
-    private sealed record Body(string Auth0UserIdentifier, string Username);
+    private sealed record CreateApplicationUserRequestBody(
+        string Auth0UserIdentifier,
+        string Username) : IValidatableObject
+    {
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (string.IsNullOrWhiteSpace(Auth0UserIdentifier))
+            {
+                yield return new ValidationResult($"{nameof(Auth0UserIdentifier)} is required");
+            }
+
+            if (string.IsNullOrWhiteSpace(Username))
+            {
+                yield return new ValidationResult($"{nameof(Username)} is required");
+            }
+        }
+    };
 
     public static RouteGroupBuilder MapCreateApplicationUserEndpoint(this RouteGroupBuilder group)
     {
         group
             .MapPost("", async (
-                    Body body,
+                    CreateApplicationUserRequestBody body,
                     ISender sender,
                     CancellationToken ct)
                 =>
@@ -23,10 +40,7 @@ public static class CreateApplicationUser
 
                 return ApiResultMapper.MapToEndpointResult(result);
             })
-            .RequireAuthorization(builder =>
-            {
-                builder.AuthenticationSchemes.Add(AuthSchemas.ApiKey);
-            });
+            .RequireApiKeyAuthorization();
 
         return group;
     }

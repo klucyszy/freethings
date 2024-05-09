@@ -1,3 +1,4 @@
+using Freethings.Shared.Infrastructure.Authentication;
 using Freethings.Shared.Infrastructure.Context;
 
 namespace Freethings.Shared.Infrastructure.Auth.Context;
@@ -15,11 +16,14 @@ public static class Extensions
     {
         app.Use((httpContext, next) =>
         {
-            CurrentUserContextAccessor currentUserContextAccessor = httpContext
-                .RequestServices.GetRequiredService<CurrentUserContextAccessor>();
+            if (httpContext.User.Identity?.AuthenticationType != AuthSchemas.ApiKey)
+            {
+                CurrentUserContextAccessor currentUserContextAccessor = httpContext
+                    .RequestServices.GetRequiredService<CurrentUserContextAccessor>();
             
-            currentUserContextAccessor.CurrentUser = new CurrentUser(httpContext);
-
+                currentUserContextAccessor.CurrentUser = new CurrentUser(httpContext);
+            }
+            
             return next();
         });
 

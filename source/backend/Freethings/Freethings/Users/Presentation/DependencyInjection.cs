@@ -1,3 +1,4 @@
+using Freethings.Shared.Infrastructure.Api.Filters;
 using Freethings.Users.Presentation.Endpoints;
 
 namespace Freethings.Users.Presentation;
@@ -14,6 +15,7 @@ internal static class DependencyInjection
         app
             .MapGroup("api/users")
             .MapCreateApplicationUserEndpoint()
+            .RequireInputValidation()
             .WithTags("Users");
         
         return app;

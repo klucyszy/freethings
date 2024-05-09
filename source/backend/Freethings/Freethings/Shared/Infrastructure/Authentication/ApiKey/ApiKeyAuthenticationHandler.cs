@@ -3,6 +3,7 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
+using Microsoft.Net.Http.Headers;
 
 namespace Freethings.Shared.Infrastructure.Authentication.ApiKey;
 
@@ -17,19 +18,23 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKey
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (!Request.Headers.TryGetValue(ApiKeyOptions.HeaderName, out StringValues apiKeyHeaderValues))
+        if (!Request.Headers.TryGetValue(HeaderNames.Authorization, out StringValues apiKeyHeaderValues))
         {
-            return Task.FromResult(AuthenticateResult.Fail($"{ApiKeyOptions.HeaderName} was not provided."));
+            return Task.FromResult(AuthenticateResult.Fail($"{HeaderNames.Authorization} was not provided."));
         }
 
-        string providedApiKey = apiKeyHeaderValues.FirstOrDefault();
+        string providedApiKey = apiKeyHeaderValues
+            .FirstOrDefault()
+            ?.Replace(AuthSchemas.ApiKey, string.Empty)
+            ?.Trim();
 
         if (string.IsNullOrWhiteSpace(providedApiKey))
         {
             return Task.FromResult(AuthenticateResult.Fail($"Invalid {ApiKeyOptions.HeaderName}."));
         }
         
-        if (providedApiKey != Options.PrimaryValue && providedApiKey != Options.SecondaryValue)
+        if (!providedApiKey.Equals(Options.PrimaryValue, StringComparison.Ordinal)
+            && !providedApiKey.Equals(Options.SecondaryValue, StringComparison.Ordinal))
         {
             return Task.FromResult(AuthenticateResult.Fail("Invalid API key."));
         }

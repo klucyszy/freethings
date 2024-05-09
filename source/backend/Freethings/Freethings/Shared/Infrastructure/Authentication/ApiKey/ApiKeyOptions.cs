@@ -7,6 +7,6 @@ internal sealed class ApiKeyOptions : AuthenticationSchemeOptions
     public const string HeaderName = "ApiKey";
     public const string Scheme = "ApiKey";
     
-    public string PrimaryValue { get; init; }
-    public string SecondaryValue { get; init; }
+    public string PrimaryValue { get; set; }
+    public string SecondaryValue { get; set; }
 }

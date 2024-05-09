@@ -1,19 +1,19 @@
+using Freethings.Shared.Infrastructure.Options;
+using Microsoft.AspNetCore.Authentication;
+
 namespace Freethings.Shared.Infrastructure.Authentication.ApiKey;
 
-public static class Extensions
+internal static class Extensions
 {
-    public static IServiceCollection AddApiKeyAuthentication(this IServiceCollection services)
+    internal static AuthenticationBuilder AddApiKey(this AuthenticationBuilder authenticationBuilder, IConfiguration configuration)
     {
-        services.AddAuthentication(options =>
+        ApiKeyOptions apiKeyOptions = configuration.GetOptions<ApiKeyOptions>("Shared:Authentication:ApiKey");
+        return authenticationBuilder.AddScheme<ApiKeyOptions, ApiKeyAuthenticationHandler>(ApiKeyOptions.Scheme,
+            options =>
             {
-                options.DefaultAuthenticateScheme = ApiKeyDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = ApiKeyDefaults.AuthenticationScheme;
-            })
-            .AddApiKey(options => { });
-
-        services.AddAuthorization();
-
-        return services;
+                options.PrimaryValue = apiKeyOptions.PrimaryValue;
+                options.SecondaryValue = apiKeyOptions.SecondaryValue;
+            });
     }
     
     public static IEndpointConventionBuilder RequireApiKeyAuthorization(this IEndpointConventionBuilder builder)

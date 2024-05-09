@@ -1,12 +1,15 @@
 @Freethings_HostAddress = http://localhost:5289
 @auth0Identity = google-oauth2|106825456884718575110
+@apiKey = 123
 
 ## Create application user
 
 POST {{Freethings_HostAddress}}/api/users/
 Content-Type: application/json
+Authorization: ApiKey {{apiKey}}
 
 {
-  "auth0UserIdentifier": "{{auth0Identity}}"
+  "auth0UserIdentifier": "{{auth0Identity}}",
+  "username": "testuser"
 }
 

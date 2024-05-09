@@ -36,7 +36,7 @@ app.MapAuctionsEndpoints()
    .MapUsersEndpoints();
 
 app
-    .UseAuth0()
+    .UseAppAuthentication()
     .UseCurrentUserContext()
     .UseHttpsRedirection()
     .UseExceptionHandler();
