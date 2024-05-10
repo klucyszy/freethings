@@ -4,7 +4,7 @@
 
 ## Create application user
 
-POST {{Freethings_HostAddress}}/api/users/
+POST {{Freethings_HostAddress}}/api/users
 Content-Type: application/json
 Authorization: ApiKey {{apiKey}}
 
