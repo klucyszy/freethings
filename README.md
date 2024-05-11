@@ -34,11 +34,11 @@ Here is link to Miro, where I'm exploring the domain: [freethings miro](https://
 ### Technical infrastructure
 
 - The application will be hosted on Azure.
-  - Azure Container Apps for hosting the application.
-  - Database (to be decided). (Primarily I use SQL Server, so thinking about using other provider to learn something new).
+  - Azure Container Apps.
+  - Azure SQL Database.
   - Azure Blob Storage for storing images.
-  - Authentication & Authorization (TBD).
-  - SignalR for real-time communication (TBD).
+  - Authentication & Authorization - Auth0.
+  - SignalR for real-time communication (TBD) - out of scope for MVP.
   - Message broker (TBD).
     - Only in memory? (TBD) 
     - Azure Service Bus - Pub/Sub not available in free tier.
