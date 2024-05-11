@@ -35,7 +35,7 @@ Here is link to Miro, where I'm exploring the domain: [freethings miro](https://
 
 - The application will be hosted on Azure.
   - Azure Container Apps.
-  - Azure SQL Database.
+  - CosmosDB relational.
   - Azure Blob Storage for storing images.
   - Authentication & Authorization - Auth0.
   - SignalR for real-time communication (TBD) - out of scope for MVP.
